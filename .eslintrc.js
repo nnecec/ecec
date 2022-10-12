@@ -1,10 +1,15 @@
+/**
+ * @type {import('eslint').Linter.Config}
+ */
 module.exports = {
+  env: {
+    jest: true
+  },
   root: true,
-  // This tells ESLint to load the config from the package `eslint-config-custom`
-  extends: ["custom"],
+  extends: ['@nnecec/eslint-config/react', "@nnecec/eslint-config/typescript"],
   settings: {
     next: {
-      rootDir: ["apps/*/"],
-    },
-  },
-};
+      rootDir: ['apps/*/']
+    }
+  }
+}

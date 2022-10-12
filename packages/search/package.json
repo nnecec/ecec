@@ -1,0 +1,27 @@
+{
+  "name": "@afojs/search",
+  "version": "0.0.1",
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format esm,cjs --dts --external react",
+    "dev": "tsup src/index.ts --format esm,cjs --watch --dts --external react"
+  },
+  "dependencies": {
+    "@afojs/emitter": "workspace:*",
+    "@afojs/remember": "workspace:*",
+    "jotai": "^1.8.5"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.21",
+    "@types/react-dom": "^18.0.6",
+    "react": "^18.2.0",
+    "tsup": "^6.2.3"
+  }
+}

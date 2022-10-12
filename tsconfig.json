@@ -1,0 +1,5 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "@nnecec/tsconfig/react.json",
+  "exclude": ["dist", "build", "node_modules"]
+}
