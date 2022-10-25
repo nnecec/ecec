@@ -6,7 +6,7 @@ module.exports = {
     jest: true
   },
   root: true,
-  extends: ['@nnecec/eslint-config/react', "@nnecec/eslint-config/typescript"],
+  extends: ['@nnecec/eslint-config/react'],
   settings: {
     next: {
       rootDir: ['apps/*/']

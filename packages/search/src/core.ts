@@ -1,17 +1,20 @@
-import React, { useMemo } from 'react'
-import { Atom, atom, useAtom } from 'jotai'
+import React from 'react'
+import { useAtom, WritableAtom } from 'jotai'
 
 import { Params, RegisterOptions, Search } from './types'
 
 
 const defaultGetValueFromEvent = (e: unknown) => {
   if (e !== null && typeof e === 'object' && 'target' in e) {
-    return (e as React.ChangeEvent<HTMLInputElement>).target.value
+    if ((e as React.ChangeEvent<HTMLInputElement>).target.value) {
+      return (e as React.ChangeEvent<HTMLInputElement>).target.value
+    }
+
   }
   return e
 }
 
-export const useStore = (searchAtom: Atom<Params>): Search => {
+export const useStore = (searchAtom: WritableAtom<Params, Params>): Search => {
   const [params, setParams] = useAtom(searchAtom)
 
   const register = (name: string, options: RegisterOptions = {}) => {
@@ -27,7 +30,7 @@ export const useStore = (searchAtom: Atom<Params>): Search => {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { [name]: dropValue, ...restParams } = params
 
-        // remove unuse key
+        // remove unused key
         let nextParams
         if (value === null || value === undefined || value === '') {
           nextParams = restParams
@@ -39,7 +42,6 @@ export const useStore = (searchAtom: Atom<Params>): Search => {
       }
     }
   }
-
 
   return { params, register }
 }

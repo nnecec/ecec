@@ -6,24 +6,21 @@
 import { useSearch } from '@afojs/search-box'
 import useSWR from 'swr'
 
-
 export const App = () =>{
-  const [query, setQuery] = useState({})
-
-  const { register, reset } = useSearch({
-    onSearch (values) {
-      setQuery(new URLSearchParams(values).toString())
-    }
+  const { params, register } = useSearch('test')
+  const { data } =  useSWR(['/api', params],(url) => {
+    const search = new URLSearchParams(params)
+    fetch(`${url}?${search.toString()}`)
   })
-
-  const { data } =  useSWR(`/api?${query}`,(url) => fetch(url))
 
   return <div>
     <input {...register('name')} />
-
-    <CustomInput {...register('custom', { trigger: 'onConfirm' })} />
+    <SearchInput {...register('search', { trigger: 'onConfirm' })} />
+    <CustomInput {...register('custom', { getValueFromEvent: e => e.target.value })}>
   </div>
 }
 ```
 
 ## API
+
+### useSearch(namespace?:string)
