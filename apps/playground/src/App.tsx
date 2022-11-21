@@ -1,40 +1,100 @@
 import { useEffect } from 'react'
 import { useSearch } from '@afojs/search'
-import { Switch, Tabs } from 'antd-mobile'
+import { Card, Switch, Tabs, Input, Spin } from 'antd'
+import useSWR from 'swr'
+
+const fetcher = (params: Record<string, any>) => new Promise<string>((resolve) => {
+  setTimeout(() => {
+    resolve(Object.entries(params).map(([key, value]) => `${key}: ${value}`).join(','))
+  }, 1500);
+})
 
 export default function Index() {
-  const { params, register } = useSearch('test')
+  const [pa, ra] = useSearch('sectionA')
+  const [pb, rb] = useSearch('sectionB')
 
-  useEffect(() => {
-    console.log(params)
-  }, [params])
+
+  const { data: da, isLoading: la } = useSWR(['sectionA', pa], () => fetcher(pa))
+  const { data: db, isLoading: lb } = useSWR(['sectionA', pb], () => fetcher(pb))
+
 
   return (
+
     <div>
-      <input
-        type="text"
-        {...register('name')}
-      />
+      <Card title="Section A">
+        <input
+          type="text"
+          {...ra('name', { getValueFromEvent: (e: React.ChangeEvent<HTMLInputElement>) => e.target.value })}
+        />
+        <Input
+          type="text"
+          {...ra('description')}
+        />
 
-      <Tabs
-        {...register('status', {
-          valuePropName: 'activeKey',
-        })}>
-        <Tabs.Tab title="水果" key="fruits">
-          菠萝
-        </Tabs.Tab>
-        <Tabs.Tab title="蔬菜" key="vegetables">
-          西红柿
-        </Tabs.Tab>
-        <Tabs.Tab title="动物" key="animals">
-          蚂蚁
-        </Tabs.Tab>
-      </Tabs>
+        <Tabs
+          items={[
+            {
+              label: `Tab 1`,
+              key: '1',
+            },
+            {
+              label: `Tab 2`,
+              key: '2',
+            },
+            {
+              label: `Tab 3`,
+              key: '3',
+            },
+          ]}
+          {...ra('tab', { valuePropName: 'activeKey' })}
+        >
+        </Tabs>
 
-      <Switch
-        {...register('opened', {
-          valuePropName: 'checked'
-        })} />
+        <Switch
+          {...ra('opened', {
+            valuePropName: 'checked'
+          })} />
+
+        <div>get string from params: {la ? <Spin /> : da}</div>
+
+      </Card>
+      <Card title="Section B">
+        <input
+          type="text"
+          {...rb('name')}
+        />
+        <Input
+          type="text"
+          {...rb('description')}
+        />
+
+        <Tabs
+          items={[
+            {
+              label: `Tab 1`,
+              key: '1',
+            },
+            {
+              label: `Tab 2`,
+              key: '2',
+            },
+            {
+              label: `Tab 3`,
+              key: '3',
+            },
+          ]}
+          {...rb('tab', { valuePropName: 'activeKey' })}
+        >
+        </Tabs>
+
+        <Switch
+          {...rb('opened', {
+            valuePropName: 'checked'
+          })} />
+      </Card>
+
+      <div>get string from params: {lb ? <Spin /> : db}</div>
+
     </div>
   )
 }

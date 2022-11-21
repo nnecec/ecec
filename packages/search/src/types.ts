@@ -7,12 +7,12 @@ export interface Params {
 
 export interface RegisterOptions {
   trigger?: string
-  getValueFromEvent?: <T extends Element>(e: React.ChangeEvent<T> | unknown) => ParamValue
+  getValueFromEvent?: (...args: any[]) => ParamValue
   valuePropName?: string
 }
 
-export interface Search {
-  params: Params
+export type Search = [
+  params: Params,
   register: (name: string, options?: RegisterOptions) => any
-}
+]
 

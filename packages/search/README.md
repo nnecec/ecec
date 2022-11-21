@@ -1,4 +1,6 @@
-# search
+# @afojs/search
+
+Headless params collector.
 
 ## Usage
 
@@ -7,7 +9,7 @@ import { useSearch } from '@afojs/search-box'
 import useSWR from 'swr'
 
 export const App = () =>{
-  const { params, register } = useSearch('test')
+  const [params, register] = useSearch('test')
   const { data } =  useSWR(['/api', params],(url) => {
     const search = new URLSearchParams(params)
     fetch(`${url}?${search.toString()}`)
@@ -23,4 +25,23 @@ export const App = () =>{
 
 ## API
 
-### useSearch(namespace?:string)
+### useSearch: (namespace?:string) => [Record<string, any>, Register]
+
+Generate `Search` instance with the namespace.
+
+Take the `Search` instance register controlled component to collect param.
+
+```jsx
+
+const [params, register] = useSearch('test')
+
+return (
+  <input {...register('text')} />
+)
+```
+
+#### Register: (name: string, options: Options) => { value, onChange }
+
+`name`: param key
+
+#### Options: { getValueFromEvent: (e)=> any, valuePropName: string }

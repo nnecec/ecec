@@ -8,8 +8,6 @@ import { Params } from './types'
 export const useSearch = (namespace = 'afo/search') => {
   const reme = useMemo(() => remember(namespace, createLocationStorage()), [namespace])
 
-
-
   const searchAtom = useMemo(() => {
     const originAtom = atom(reme.get() ?? {})
 

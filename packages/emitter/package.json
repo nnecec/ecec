@@ -14,6 +14,6 @@
     "dev": "tsup src/index.ts --format esm,cjs --watch --dts --external react"
   },
   "devDependencies": {
-    "tsup": "^6.3.0"
+    "tsup": "^6.5.0"
   }
 }

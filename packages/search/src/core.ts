@@ -21,7 +21,6 @@ export const useStore = (searchAtom: WritableAtom<Params, Params>): Search => {
     const { trigger = 'onChange', getValueFromEvent, valuePropName = 'value' } = options
 
     return {
-      name,
       [valuePropName]: params[name] || undefined,
       [trigger]: (e: unknown) => {
 
@@ -30,7 +29,7 @@ export const useStore = (searchAtom: WritableAtom<Params, Params>): Search => {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { [name]: dropValue, ...restParams } = params
 
-        // remove unused key
+        // remove nullish key
         let nextParams
         if (value === null || value === undefined || value === '') {
           nextParams = restParams
@@ -43,5 +42,5 @@ export const useStore = (searchAtom: WritableAtom<Params, Params>): Search => {
     }
   }
 
-  return { params, register }
+  return [params, register]
 }
