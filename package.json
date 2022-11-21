@@ -15,7 +15,6 @@
   },
   "devDependencies": {
     "@nnecec/eslint-config": "^0.0.8",
-    "@nnecec/prettier-config": "^0.0.6",
     "@nnecec/tsconfig": "^0.0.3",
     "@testing-library/dom": "^8.19.0",
     "@testing-library/react": "^13.4.0",

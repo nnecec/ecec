@@ -5,7 +5,6 @@ importers:
   .:
     specifiers:
       '@nnecec/eslint-config': ^0.0.8
-      '@nnecec/prettier-config': ^0.0.6
       '@nnecec/tsconfig': ^0.0.3
       '@testing-library/dom': ^8.19.0
       '@testing-library/react': ^13.4.0
@@ -16,7 +15,6 @@ importers:
       turbo: ^1.6.3
     devDependencies:
       '@nnecec/eslint-config': 0.0.8
-      '@nnecec/prettier-config': 0.0.6
       '@nnecec/tsconfig': 0.0.3
       '@testing-library/dom': 8.19.0
       '@testing-library/react': 13.4.0
@@ -854,13 +852,6 @@ packages:
       - eslint-import-resolver-webpack
       - supports-color
       - typescript
-    dev: true
-
-  /@nnecec/prettier-config/0.0.6:
-    resolution: {integrity: sha512-8qoVI9IErC9KX2f/ZcLF8XNqtjOutabz1nEKDon+KciAqvQQbheJgxxlz5lJuESlG1m1gHv5GG2H0KFvL+Z/1Q==}
-    dependencies:
-      prettier: 2.7.1
-      prettier-plugin-tailwindcss: 0.1.13_prettier@2.7.1
     dev: true
 
   /@nnecec/tsconfig/0.0.3:
@@ -4073,21 +4064,6 @@ packages:
   /prelude-ls/1.1.2:
     resolution: {integrity: sha512-ESF23V4SKG6lVSGZgYNpbsiaAkdab6ZgOxe52p7+Kid3W3u3bxR4Vfd/o21dmN7jSt0IwgZ4v5MUd26FEtXE9w==}
     engines: {node: '>= 0.8.0'}
-    dev: true
-
-  /prettier-plugin-tailwindcss/0.1.13_prettier@2.7.1:
-    resolution: {integrity: sha512-/EKQURUrxLu66CMUg4+1LwGdxnz8of7IDvrSLqEtDqhLH61SAlNNUSr90UTvZaemujgl3OH/VHg+fyGltrNixw==}
-    engines: {node: '>=12.17.0'}
-    peerDependencies:
-      prettier: '>=2.2.0'
-    dependencies:
-      prettier: 2.7.1
-    dev: true
-
-  /prettier/2.7.1:
-    resolution: {integrity: sha512-ujppO+MkdPqoVINuDFDRLClm7D78qbDt0/NR+wp5FqEZOoTNAjPHWj17QRhu7geIHJfcNhRk1XVQmF8Bp3ye+g==}
-    engines: {node: '>=10.13.0'}
-    hasBin: true
     dev: true
 
   /pretty-format/27.5.1:
