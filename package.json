@@ -14,9 +14,9 @@
     "test": "jest --coverage"
   },
   "devDependencies": {
-    "@nnecec/eslint-config": "^0.0.8",
-    "@nnecec/tsconfig": "^0.0.3",
-    "@nnecec/prettier-config": "^0.0.6",
+    "@nnecec/eslint-config": "^0.1.0",
+    "@nnecec/tsconfig": "^0.1.0",
+    "@nnecec/prettier-config": "^0.1.0",
     "@testing-library/dom": "^8.19.0",
     "@testing-library/react": "^13.4.0",
     "@types/jest": "^29.2.4",
