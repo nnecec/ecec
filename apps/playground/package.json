@@ -4,11 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "tsc && vite build",
-    "build-storybook": "storybook build",
-    "dev": "vite",
-    "preview": "vite preview",
-    "storybook": "storybook dev -p 6006"
+    "build": "storybook build",
+    "dev": "storybook dev -p 6006"
   },
   "dependencies": {
     "@afojs/search": "workspace:*",
