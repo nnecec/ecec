@@ -1,18 +1,20 @@
+// .storybook/main.ts
+
+// Imports the Storybook's configuration API
+import type { StorybookConfig } from '@storybook/types'
+
 export default {
-  stories: [
-    "../stories/**/*.mdx",
-    "../stories/**/*.stories.@(js|jsx|ts|tsx)",
-  ],
+  stories: ['../stories/**/*.mdx', '../stories/**/*.stories.@(js|jsx|ts|tsx)'],
   addons: [
-    "@storybook/addon-links",
-    "@storybook/addon-essentials",
-    "@storybook/addon-interactions",
+    '@storybook/addon-links',
+    '@storybook/addon-essentials',
+    '@storybook/addon-interactions'
   ],
   framework: {
-    name: "@storybook/react-vite",
-    options: {},
+    name: '@storybook/react-vite',
+    options: {}
   },
   docs: {
-    docsPage: true,
-  },
-};
+    docsPage: true
+  }
+} as StorybookConfig
