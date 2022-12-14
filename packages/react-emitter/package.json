@@ -2,26 +2,27 @@
   "name": "@afojs/react-emitter",
   "version": "0.0.1",
   "license": "MIT",
-  "types": "./dist/index.d.ts",
-  "files": [
-    "dist",
-    "src"
-  ],
   "exports": {
     "require": "./dist/index.js",
     "import": "./dist/index.mjs",
     "module": "./dist/index.esm.js"
   },
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
   "scripts": {
     "build": "bunchee src/index.ts --format esm,cjs --dts",
     "dev": "bunchee src/index.ts --format esm,cjs --watch --dts"
   },
-  "devDependencies": {
-    "bunchee": "^2.1.7",
-    "@types/react": "^18.0.26"
-  },
   "dependencies": {
     "@afojs/emitter": "workspace:*",
     "react": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.26",
+    "bunchee": "^2.1.7",
+    "typescript": "^4.9.4"
   }
 }

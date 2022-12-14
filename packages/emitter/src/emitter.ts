@@ -3,7 +3,7 @@ import {
   EventHandlerMap,
   EventType,
   GenericEventHandler,
-  WildCardEventHandlerList
+  WildCardEventHandlerList,
 } from './types'
 
 export class Emitter<Events extends Record<EventType, unknown>> {
@@ -21,7 +21,7 @@ export class Emitter<Events extends Record<EventType, unknown>> {
    */
   public on<Key extends keyof Events>(
     type: Key,
-    handler: GenericEventHandler<Events>
+    handler: GenericEventHandler<Events>,
   ) {
     const handlers: Array<GenericEventHandler<Events>> | undefined =
       this.__all!.get(type)
@@ -39,9 +39,9 @@ export class Emitter<Events extends Record<EventType, unknown>> {
    * @param {Function} [handler] Handler function to remove
    * @memberOf emitter
    */
-  off<Key extends keyof Events>(
+  public off<Key extends keyof Events>(
     type: Key,
-    handler?: GenericEventHandler<Events>
+    handler?: GenericEventHandler<Events>,
   ) {
     const handlers: Array<GenericEventHandler<Events>> | undefined =
       this.__all.get(type)
@@ -64,10 +64,10 @@ export class Emitter<Events extends Record<EventType, unknown>> {
    * @param {Any} [evt] Any value (object is recommended and powerful), passed to each handler
    * @memberOf emitter
    */
-  emit<Key extends keyof Events>(type: Key, evt?: Events[Key]) {
+  public emit<Key extends keyof Events>(type: Key, evt?: Events[Key]) {
     let handlers = this.__all!.get(type)
     if (handlers) {
-      (handlers as EventHandlerList<Events[keyof Events]>)
+      ;(handlers as EventHandlerList<Events[keyof Events]>)
         .slice()
         .map(handler => {
           handler(evt!)
@@ -76,7 +76,7 @@ export class Emitter<Events extends Record<EventType, unknown>> {
 
     handlers = this.__all!.get('*')
     if (handlers) {
-      (handlers as WildCardEventHandlerList<Events>).slice().map(handler => {
+      ;(handlers as WildCardEventHandlerList<Events>).slice().map(handler => {
         handler(type, evt!)
       })
     }
@@ -84,7 +84,7 @@ export class Emitter<Events extends Record<EventType, unknown>> {
 }
 
 export function emitter<Events extends Record<EventType, unknown>>(
-  all?: EventHandlerMap<Events>
+  all?: EventHandlerMap<Events>,
 ): Emitter<Events> {
   return new Emitter(all)
 }

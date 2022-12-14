@@ -2,18 +2,21 @@
   "name": "@afojs/emitter",
   "version": "0.0.1",
   "license": "MIT",
-  "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
+  "exports": {
+    "require": "./dist/index.js",
+    "import": "./dist/index.mjs",
+    "module": "./dist/index.esm.js"
+  },
   "types": "./dist/index.d.ts",
   "files": [
     "dist",
     "src"
   ],
   "scripts": {
-    "build": "tsup src/index.ts --format esm,cjs --dts",
-    "dev": "tsup src/index.ts --format esm,cjs --watch --dts"
+    "build": "bunchee src/index.ts --format esm,cjs --dts",
+    "dev": "bunchee src/index.ts --format esm,cjs --watch --dts"
   },
   "devDependencies": {
-    "tsup": "^6.5.0"
+    "bunchee": "^2.1.7"
   }
 }

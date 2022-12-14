@@ -30,19 +30,21 @@ export const App = () => {
 Or use with Context, `useEmitter` will catch the nearly `Context` value
 
 ```tsx
-import { EmitterProvider } from '@afojs/react-emitter'
+import { createEmitterContext } from '@afojs/react-emitter'
+
+const EmitterContext = createEmitterContext()
 
 export const App = () => {
   return (
-    <EmitterProvider>
+    <EmitterContext.Provider>
       <Child1 />
       <Child2 />
-    </EmitterProvider>
+    </EmitterContext.Provider>
   )
 }
 
 export const Child1 = () => {
-  const emitter = useEmitter()
+  const emitter = useContext(EmitterContext)
 
   const send = () => {
     emitter.emit('say', 'afo')
@@ -52,7 +54,7 @@ export const Child1 = () => {
 }
 
 export const Child2 = () => {
-  const emitter = useEmitter()
+  const emitter = useContext(EmitterContext)
 
   useEffect(() => {
     emitter.on('say', data => {

@@ -1,12 +1,6 @@
-import { useContext, useMemo } from 'react'
-import { emitter, Emitter } from '@afojs/emitter'
-import { EmitterContext } from './provider'
+import { useMemo } from 'react'
+import { emitter, EventType } from '@afojs/emitter'
 
-export const useEmitter = <T>() => {
-  const contextEmitter = useContext(EmitterContext)
-
-  return useMemo<Emitter<T>>(
-    () => (contextEmitter instanceof Emitter ? contextEmitter : emitter<T>()),
-    [],
-  )
+export const useEmitter = <T extends Record<EventType, unknown>>() => {
+  return useMemo(() => emitter<T>(), [])
 }
