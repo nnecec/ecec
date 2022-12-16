@@ -9,14 +9,12 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev --parallel",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "lint": "turbo run lint",
     "test": "jest --coverage"
   },
   "devDependencies": {
     "@nnecec/eslint-config": "^0.1.0",
     "@nnecec/tsconfig": "^0.1.0",
-    "@nnecec/prettier-config": "^0.1.0",
     "@testing-library/dom": "^8.19.0",
     "@testing-library/react": "^13.4.0",
     "@types/jest": "^29.2.4",

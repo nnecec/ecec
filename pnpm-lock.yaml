@@ -5,7 +5,6 @@ importers:
   .:
     specifiers:
       '@nnecec/eslint-config': ^0.1.0
-      '@nnecec/prettier-config': ^0.1.0
       '@nnecec/tsconfig': ^0.1.0
       '@testing-library/dom': ^8.19.0
       '@testing-library/react': ^13.4.0
@@ -17,7 +16,6 @@ importers:
       typescript: ^4.9.4
     devDependencies:
       '@nnecec/eslint-config': 0.1.0_typescript@4.9.4
-      '@nnecec/prettier-config': 0.1.0
       '@nnecec/tsconfig': 0.1.0
       '@testing-library/dom': 8.19.0
       '@testing-library/react': 13.4.0
@@ -30,7 +28,7 @@ importers:
 
   apps/playground:
     specifiers:
-      '@afojs/search': workspace:*
+      '@afojs/hooks': workspace:*
       '@mdx-js/react': ^2.1.5
       '@storybook/addon-docs': ^7.0.0-beta.3
       '@storybook/addon-essentials': ^7.0.0-beta.3
@@ -52,7 +50,7 @@ importers:
       typescript: ^4.9.4
       vite: ^4.0.0
     dependencies:
-      '@afojs/search': link:../../packages/search
+      '@afojs/hooks': link:../../packages/hooks
       antd: 5.0.5_biqbaboplfbrettd7655fr4n2y
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
@@ -81,6 +79,25 @@ importers:
     devDependencies:
       bunchee: 2.1.7
 
+  packages/hooks:
+    specifiers:
+      '@afojs/emitter': workspace:*
+      '@afojs/remember': workspace:*
+      '@types/react': ^18.0.26
+      '@types/react-dom': ^18.0.9
+      bunchee: ^2.1.7
+      jotai: ^1.11.1
+      react: ^18.2.0
+    dependencies:
+      '@afojs/emitter': link:../emitter
+      '@afojs/remember': link:../remember
+      jotai: 1.11.1_react@18.2.0
+    devDependencies:
+      '@types/react': 18.0.26
+      '@types/react-dom': 18.0.9
+      bunchee: 2.1.7
+      react: 18.2.0
+
   packages/react-emitter:
     specifiers:
       '@afojs/emitter': workspace:*
@@ -101,25 +118,6 @@ importers:
       bunchee: ^2.1.7
     devDependencies:
       bunchee: 2.1.7
-
-  packages/search:
-    specifiers:
-      '@afojs/emitter': workspace:*
-      '@afojs/remember': workspace:*
-      '@types/react': ^18.0.26
-      '@types/react-dom': ^18.0.9
-      bunchee: ^2.1.7
-      jotai: ^1.11.1
-      react: ^18.2.0
-    dependencies:
-      '@afojs/emitter': link:../emitter
-      '@afojs/remember': link:../remember
-      jotai: 1.11.1_react@18.2.0
-    devDependencies:
-      '@types/react': 18.0.26
-      '@types/react-dom': 18.0.9
-      bunchee: 2.1.7
-      react: 18.2.0
 
 packages:
 
@@ -2069,12 +2067,6 @@ packages:
       - typescript
     dev: true
 
-  /@nnecec/prettier-config/0.1.0:
-    resolution: {integrity: sha512-RbML7kss+ze0ihwpj3fzfKowNmxMRT4Mrbqv8NoauyahqF/QND5QWOjl4RCt47hWV3z4DHwpa/aRikX1USEvCg==}
-    dependencies:
-      prettier: 2.8.1
-    dev: true
-
   /@nnecec/tsconfig/0.1.0:
     resolution: {integrity: sha512-mycEzSlNVYkph0NIs03vZGn2PJxMxhmxhFunNjnyfqiMt1sCyTugIjd6WftEp8hBj/vPsY1917OTOVP4LwVsPA==}
     dev: true
@@ -2351,7 +2343,7 @@ packages:
       '@storybook/components': 7.0.0-beta.3_biqbaboplfbrettd7655fr4n2y
       '@storybook/csf-plugin': 7.0.0-beta.3
       '@storybook/csf-tools': 7.0.0-beta.3
-      '@storybook/mdx2-csf': 0.1.0-next.8
+      '@storybook/mdx2-csf': 1.0.0-next.2
       '@storybook/node-logger': 7.0.0-beta.3
       '@storybook/postinstall': 7.0.0-beta.3
       '@storybook/preview-api': 7.0.0-beta.3
@@ -2633,7 +2625,7 @@ packages:
       '@storybook/client-logger': 7.0.0-beta.3
       '@storybook/core-common': 7.0.0-beta.3_typescript@4.9.4
       '@storybook/csf-plugin': 7.0.0-beta.3
-      '@storybook/mdx2-csf': 0.1.0-next.8
+      '@storybook/mdx2-csf': 1.0.0-next.2
       '@storybook/node-logger': 7.0.0-beta.3
       '@storybook/preview': 7.0.0-beta.3
       '@storybook/preview-api': 7.0.0-beta.3
@@ -2838,7 +2830,7 @@ packages:
       '@storybook/core-events': 7.0.0-beta.3
       '@storybook/csf': 0.0.2-next.8
       '@storybook/csf-tools': 7.0.0-beta.3
-      '@storybook/docs-mdx': 0.0.1-next.4
+      '@storybook/docs-mdx': 0.0.1-next.5
       '@storybook/node-logger': 7.0.0-beta.3
       '@storybook/preview-api': 7.0.0-beta.3
       '@storybook/telemetry': 7.0.0-beta.3_typescript@4.9.4
@@ -2911,8 +2903,8 @@ packages:
       type-fest: 2.19.0
     dev: true
 
-  /@storybook/docs-mdx/0.0.1-next.4:
-    resolution: {integrity: sha512-a1wiJbxBzikxl73dxyteeylPN7fpVd2JHrcnpX8O3ztPiaX2XQOJM4+7u0xndvn07ZtZzOnH5m9iHP8BJOwXZQ==}
+  /@storybook/docs-mdx/0.0.1-next.5:
+    resolution: {integrity: sha512-EowXFPq4TBZQguKCdU8y7EzpuSv2vSu5gy7pgF/1P5mq7LG9h8YIrerOW9DL4zfp9E0GHIWlSXR5KuFIqqKc/Q==}
     dev: true
 
   /@storybook/docs-tools/7.0.0-beta.3_typescript@4.9.4:
@@ -2973,10 +2965,8 @@ packages:
     resolution: {integrity: sha512-qRIMeBfkMFbmUXKsuJMsKJxkpfCNJv1PLuj0MIf5C1/QEymilakVohIi8LalREy716JgkhuOq2HPnMnsK8s3VA==}
     dev: true
 
-  /@storybook/mdx2-csf/0.1.0-next.8:
-    resolution: {integrity: sha512-fl8BxHzkypAaFYjBkbYfiDUy/3bzPaSXsDTCuPTBIVu8CwkVntpFrjSujZH/pgJig8/9P4VdUJw0H+beMXpktg==}
-    dependencies:
-      loader-utils: 2.0.4
+  /@storybook/mdx2-csf/1.0.0-next.2:
+    resolution: {integrity: sha512-Mg6pYKhuuMrzF/DcCI5dEA36jx7156bBnCk9uFInthFrr1sLYlj+HfRMibFa/VdJx8L0Wsf/15cIu3xPWriinA==}
     dev: true
 
   /@storybook/node-logger/7.0.0-beta.3:
@@ -4204,10 +4194,6 @@ packages:
     engines: {node: '>=0.6'}
     dev: true
 
-  /big.js/5.2.2:
-    resolution: {integrity: sha512-vyL2OymJxmarO8gxMr0mhChsO9QGwhynfuu4+MHTAW6czfq9humCB7rKpUjDd9YUiDPU4mzpyupFSvOClAwbmQ==}
-    dev: true
-
   /binary-extensions/2.2.0:
     resolution: {integrity: sha512-jDctJ/IVQbZoJykoeHbhXpOlNBqGNcwXJKJog42E5HDPUwQTSdjCHdihjj0DlnheQ7blbT6dHOafNAiS8ooQKA==}
     engines: {node: '>=8'}
@@ -5145,11 +5131,6 @@ packages:
 
   /emoji-regex/9.2.2:
     resolution: {integrity: sha512-L18DaJsXSUk2+42pv8mLs5jJT2hqFkFE4j21wOmgbUqsZ2hL72NsUU785g9RXgo3s0ZNgVl42TiHp3ZtOv/Vyg==}
-    dev: true
-
-  /emojis-list/3.0.0:
-    resolution: {integrity: sha512-/kyM18EfinwXZbno9FyUGeFh87KC8HRQBQGildHZbEuRyWFOmv1U10o9BBp8XVZDVNNuQKyIGIu5ZYAAXJ0V2Q==}
-    engines: {node: '>= 4'}
     dev: true
 
   /encodeurl/1.0.2:
@@ -7660,15 +7641,6 @@ packages:
 
   /lines-and-columns/1.2.4:
     resolution: {integrity: sha512-7ylylesZQ/PV29jhEDl3Ufjo6ZX7gCqJr5F7PKrqc93v7fzSymt1BpwEU8nAUXs8qzzvqhbjhK5QZg6Mt/HkBg==}
-    dev: true
-
-  /loader-utils/2.0.4:
-    resolution: {integrity: sha512-xXqpXoINfFhgua9xiqD8fPFHgkoq1mmmpE92WlDbm9rNRd/EbRb+Gqf908T2DMfuHjjJlksiK2RbHVOdD/MqSw==}
-    engines: {node: '>=8.9.0'}
-    dependencies:
-      big.js: 5.2.2
-      emojis-list: 3.0.0
-      json5: 2.2.1
     dev: true
 
   /locate-path/3.0.0:

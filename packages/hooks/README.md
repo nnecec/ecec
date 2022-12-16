@@ -1,11 +1,11 @@
-# @afojs/search
+# @afojs/hooks
 
-Headless params collector.
+- useSearch
 
 ## Usage
 
 ```jsx
-import { useSearch } from '@afojs/search-box'
+import { useSearch } from '@afojs/hooks'
 import useSWR from 'swr'
 
 export const App = () =>{
