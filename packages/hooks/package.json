@@ -19,12 +19,12 @@
   "dependencies": {
     "@afojs/emitter": "workspace:*",
     "@afojs/remember": "workspace:*",
-    "jotai": "^1.11.1"
+    "jotai": "^2.0.1",
+    "react": "^18.2.0"
   },
   "devDependencies": {
-    "@types/react": "^18.0.26",
-    "@types/react-dom": "^18.0.9",
-    "bunchee": "^2.1.7",
-    "react": "^18.2.0"
-  }
+    "@types/react": "^18.0.28",
+    "@types/react-dom": "^18.0.10",
+    "bunchee": "^2.2.0"
+    }
 }

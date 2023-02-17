@@ -1,0 +1,27 @@
+{
+  "name": "docs",
+  "version": "0.0.0",
+  "description": "",
+  "license": "MIT",
+  "author": "nnecec",
+  "main": "index.js",
+  "scripts": {
+    "build": "next build",
+    "dev": "next dev",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@afojs/hooks": "workspace:*",
+    "antd": "^5.2.1",
+    "next": "^13.1.6",
+    "nextra": "^2.2.14",
+    "nextra-theme-docs": "^2.2.14",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "swr": "^2.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "18.11.10",
+    "typescript": "^4.9.5"
+  }
+}
