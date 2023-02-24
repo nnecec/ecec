@@ -1,4 +1,5 @@
 {
   "cSpell.words": ["afojs"],
-  "files.exclude": {}
+  "files.exclude": {},
+  "typescript.tsdk": "node_modules/typescript/lib"
 }

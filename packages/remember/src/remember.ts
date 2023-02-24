@@ -1,62 +1,74 @@
 import { createCacheStorage } from './adapter'
-import { Storage, Value, Values } from './types'
-import { toParsed, toStringify } from './utils'
+import { Options, Storage, Value, Values } from './types'
+import { checkExpired, isPlainObject, toParsed, toStringify } from './utils'
 
 export class Remember {
   storage: Storage
   name: string
+  maxAge: number | null
+  expiredAt?: number
 
-  constructor(name: string, storage?: Storage) {
+  constructor(name: string, options: Options = {}) {
     this.name = name
-    this.storage = storage ?? createCacheStorage()
+    this.storage = options.storage ?? createCacheStorage()
+    this.maxAge =
+      typeof options.maxAge === 'number' ? options.maxAge * 1000 : null
   }
 
-  set(key: string | Record<string, Value>, value?: Value) {
-    if (key !== undefined && value !== undefined) {
-      const cachedValue = this.get()
-      cachedValue[key as string] = value
+  set(path: Value | Values): void
+  set(path: string, value: Value | Values): void
+  @checkExpired
+  set(path: string | Value | Values, value?: Value | Values): void {
+    if (typeof path === 'string' && value !== undefined) {
+      let cachedValue = this.get()
+
+      if (isPlainObject(cachedValue)) {
+        cachedValue[path] = value
+      } else {
+        cachedValue = value
+      }
+
       this.storage.set(this.name, toStringify(cachedValue))
-    } else if (key !== undefined && value === undefined) {
-      this.storage.set(this.name, toStringify(key as Record<string, Value>))
+    } else if (path !== undefined && value === undefined) {
+      this.storage.set(this.name, toStringify(path))
     }
   }
 
-  get(key: string): Value
-  get(key: string[]): Record<string, Value>
-  get(): Values
-  get(key?: string | string[]) {
+  @checkExpired
+  get(path?: string | string[]): Values | undefined {
     const cached = this.storage.get(this.name)
     if (cached === null) {
-      return null
+      return undefined
     }
     const values = toParsed(cached)
 
-    if (Array.isArray(key)) {
+    if (Array.isArray(path)) {
       return values
     }
-    return values as Values
+    return values
   }
 
-  remove(keys?: string | string[]) {
-    const removedKeys = keys ? (Array.isArray(keys) ? keys : [keys]) : []
-    const values = this.get() as Record<string, Value>
+  @checkExpired
+  remove(keys?: string | string[]): void {
+    const values = this.get()
+    if (keys && isPlainObject(values)) {
+      const removedKeys = Array.isArray(keys) ? keys : [keys]
 
-    for (const key of removedKeys) {
-      delete values[key]
+      for (const key of removedKeys) {
+        delete values[key]
+      }
+      this.storage.set(this.name, toStringify(values))
+    } else {
+      this.storage.clear()
     }
-
-    this.storage.set(this.name, toStringify(values))
   }
 
+  @checkExpired
   clear() {
     this.storage.remove(this.name)
   }
-
-  reset() {
-    this.storage.clear()
-  }
 }
 
-export const remember = (name: string, storage?: Storage) => {
-  return new Remember(name, storage)
+export const remember = (name: string, options?: Options) => {
+  return new Remember(name, options)
 }

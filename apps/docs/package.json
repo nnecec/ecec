@@ -12,16 +12,16 @@
   },
   "dependencies": {
     "@afojs/hooks": "workspace:*",
-    "antd": "^5.2.1",
-    "next": "^13.1.6",
-    "nextra": "^2.2.14",
-    "nextra-theme-docs": "^2.2.14",
+    "antd": "^5.2.2",
+    "next": "^13.2.1",
+    "nextra": "^2.2.15",
+    "nextra-theme-docs": "^2.2.15",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "swr": "^2.0.3"
   },
   "devDependencies": {
-    "@types/node": "18.11.10",
+    "@types/node": "18.14.1",
     "typescript": "^4.9.5"
   }
 }
