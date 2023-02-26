@@ -23,7 +23,7 @@
     "prettier": "^2.8.4",
     "ts-jest": "^29.0.5",
     "turbo": "^1.8.2",
-    "typescript": "beta"
+    "typescript": "^4.9.5"
   },
   "packageManager": "pnpm@7.8.0",
   "engines": {

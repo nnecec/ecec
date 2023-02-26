@@ -1,6 +1,6 @@
 import { createCacheStorage } from './adapter'
 import { Options, Storage, Value, Values } from './types'
-import { checkExpired, isPlainObject, toParsed, toStringify } from './utils'
+import { isPlainObject, toParsed, toStringify } from './utils'
 
 export class Remember {
   storage: Storage
@@ -13,12 +13,13 @@ export class Remember {
     this.storage = options.storage ?? createCacheStorage()
     this.maxAge =
       typeof options.maxAge === 'number' ? options.maxAge * 1000 : null
+    this.checkExpired()
   }
 
   set(path: Value | Values): void
   set(path: string, value: Value | Values): void
-  @checkExpired
   set(path: string | Value | Values, value?: Value | Values): void {
+    this.checkExpired()
     if (typeof path === 'string' && value !== undefined) {
       let cachedValue = this.get()
 
@@ -34,8 +35,8 @@ export class Remember {
     }
   }
 
-  @checkExpired
   get(path?: string | string[]): Values | undefined {
+    this.checkExpired()
     const cached = this.storage.get(this.name)
     if (cached === null) {
       return undefined
@@ -48,8 +49,8 @@ export class Remember {
     return values
   }
 
-  @checkExpired
   remove(keys?: string | string[]): void {
+    this.checkExpired()
     const values = this.get()
     if (keys && isPlainObject(values)) {
       const removedKeys = Array.isArray(keys) ? keys : [keys]
@@ -63,9 +64,30 @@ export class Remember {
     }
   }
 
-  @checkExpired
   clear() {
     this.storage.remove(this.name)
+  }
+
+  // TODO: refactor: TypeScript 5.0 decorator 
+  private checkExpired() {
+    if (this.maxAge) {
+      const lifePath = `__${this.name}_life__`
+      const last = this.get(lifePath)
+
+      if (last) {
+        this.expiredAt = Number(last) + this.maxAge
+      } else {
+        this.expiredAt = Date.now() + this.maxAge
+      }
+
+      if (this.expiredAt) {
+        if (Date.now() >= this.expiredAt) {
+          this.clear()
+        } else {
+          this.set(lifePath, this.expiredAt)
+        }
+      }
+    }
   }
 }
 
