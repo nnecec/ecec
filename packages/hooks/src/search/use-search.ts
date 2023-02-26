@@ -1,8 +1,8 @@
-import { remember, createLocationStorage } from '@afojs/remember'
+import React, { useMemo } from 'react'
+import { createLocationStorage, remember } from '@afojs/remember'
 import { atom, useAtom } from 'jotai'
-import { useMemo } from 'react'
-import React from 'react'
-import { Params, RegisterOptions } from './types'
+
+import { Params, RegisterOptions, Search } from './types'
 
 const defaultGetValue = (e: unknown) => {
   if (
@@ -16,7 +16,7 @@ const defaultGetValue = (e: unknown) => {
   return e
 }
 
-export const useSearch = (scope = 'afo/search') => {
+export const useSearch = (scope = 'afo/search'): Search => {
   const reme = useMemo(
     () => remember(scope, { storage: createLocationStorage() }),
     [scope],
@@ -41,14 +41,13 @@ export const useSearch = (scope = 'afo/search') => {
         const value =
           typeof getValue === 'function' ? getValue(e) : defaultGetValue(e)
 
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { [name]: dropParam, ...restParams } = params
         // remove nullish key
-        let nextParams
-        if (value === null || value === undefined || value === '') {
-          nextParams = restParams
-        } else {
-          nextParams = { ...restParams, [name]: value }
-        }
+        const nextParams =
+          value === null || value === undefined || value === ''
+            ? restParams
+            : { ...restParams, [name]: value }
 
         setParams(nextParams)
       },

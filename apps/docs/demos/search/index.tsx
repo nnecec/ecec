@@ -1,32 +1,31 @@
-import { useSearch } from "@afojs/hooks";
-import { Card, Input, Spin, Switch, Tabs } from "antd";
-import useSWR from "swr";
+import { useSearch } from '@afojs/hooks'
+import { Card, Input, Spin, Switch, Tabs } from 'antd'
+import useSWR from 'swr'
 
 const fetcher = (params: Record<string, any>) =>
-  new Promise<string>((resolve) => {
+  new Promise<string>(resolve => {
     setTimeout(() => {
       resolve(
         Object.entries(params)
           .map(([key, value]) => `${key}: ${value}`)
-          .join(",")
-      );
-    }, 1000);
-  });
+          .join(','),
+      )
+    }, 1000)
+  })
 
 export const SearchExample = () => {
-  const [params, register] = useSearch();
+  const [params, register] = useSearch()
 
-  const { data, isLoading, isValidating } = useSWR(["sectionA", params], () => {
-    console.log(params);
-    return fetcher(params);
-  });
+  const { data, isLoading, isValidating } = useSWR(['sectionA', params], () => {
+    return fetcher(params)
+  })
 
   return (
     <div>
       <Card title="Section A">
         <Input
           type="text"
-          {...register("name", {
+          {...register('name', {
             getValue: (e: React.ChangeEvent<HTMLInputElement>) =>
               e.target.value,
           })}
@@ -35,24 +34,24 @@ export const SearchExample = () => {
         <Tabs
           items={[
             {
-              label: `Tab 1`,
-              key: "1",
+              label: 'Tab 1',
+              key: '1',
             },
             {
-              label: `Tab 2`,
-              key: "2",
+              label: 'Tab 2',
+              key: '2',
             },
             {
-              label: `Tab 3`,
-              key: "3",
+              label: 'Tab 3',
+              key: '3',
             },
           ]}
-          {...register("tab", { valuePropName: "activeKey" })}
+          {...register('tab', { valuePropName: 'activeKey' })}
         ></Tabs>
 
         <Switch
-          {...register("opened", {
-            valuePropName: "checked",
+          {...register('opened', {
+            valuePropName: 'checked',
           })}
         />
 
@@ -61,5 +60,5 @@ export const SearchExample = () => {
         </div>
       </Card>
     </div>
-  );
-};
+  )
+}
