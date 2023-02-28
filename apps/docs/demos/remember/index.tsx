@@ -1,20 +1,29 @@
-import {
-  SandpackCodeEditor,
-  SandpackConsole,
-  SandpackLayout,
-  SandpackProvider,
-} from '@codesandbox/sandpack-react'
+import { createLocationStorage, remember } from '@afojs/remember'
+
+const count = remember('count', { storage: createLocationStorage() })
 
 export const RememberExample = () => {
-  const files = {
-    '/index.js': 'console.log(\'Hello world!\')',
-  }
   return (
-    <SandpackProvider files={files} theme="auto" template="vanilla">
-      <SandpackLayout>
-        <SandpackCodeEditor />
-        <SandpackConsole />
-      </SandpackLayout>
-    </SandpackProvider>
+    <div className="flex gap-2">
+      <button onClick={() => count.set({ num: 0 })}>initial</button>
+      <button
+        onClick={() => {
+          const num = count.get('num')
+          console.log(num)
+          count.set({ num: num + 1 })
+        }}
+      >
+        increment
+      </button>
+      <button
+        onClick={() => {
+          const num = count.get('num')
+          count.set({ num: num - 1 })
+        }}
+      >
+        decrement
+      </button>
+      <button onClick={() => console.log(count.get())}>print</button>
+    </div>
   )
 }
