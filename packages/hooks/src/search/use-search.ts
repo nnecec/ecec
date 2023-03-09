@@ -1,8 +1,10 @@
-import React, { useMemo } from 'react'
+import { useMemo } from 'react'
 import { createLocationStorage, remember } from '@afojs/remember'
 import { atom, useAtom } from 'jotai'
 
-import { Params, RegisterOptions, Search } from './types'
+import type React from 'react';
+
+import type { Params, RegisterOptions, Search } from './types'
 
 const defaultGetValue = (e: unknown) => {
   if (

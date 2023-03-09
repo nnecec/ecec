@@ -17,14 +17,14 @@ const storageMock = (() => {
     },
     removeItem(key: string) {
       delete store[key]
-    }
+    },
   }
 })()
 Object.defineProperty(window, 'localStorage', {
-  value: storageMock
+  value: storageMock,
 })
 Object.defineProperty(window, 'sessionStorage', {
-  value: storageMock
+  value: storageMock,
 })
 
 describe('remember', () => {

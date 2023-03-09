@@ -6,7 +6,7 @@ module.exports = {
     jest: true,
   },
   root: true,
-  extends: ['@nnecec/eslint-config/react'],
+  extends: ['@nnecec/eslint-config/react-universal'],
   settings: {
     next: {
       rootDir: ['apps/*/'],

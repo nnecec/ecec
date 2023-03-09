@@ -1,4 +1,4 @@
-import {
+import type {
   EventHandlerList,
   EventHandlerMap,
   EventType,
@@ -67,8 +67,7 @@ export class Emitter<Events extends Record<EventType, unknown>> {
   public emit<Key extends keyof Events>(type: Key, evt?: Events[Key]) {
     let handlers = this.__all!.get(type)
     if (handlers) {
-      ;(handlers as EventHandlerList<Events[keyof Events]>)
-        .slice()
+      [...(handlers as EventHandlerList<Events[keyof Events]>)]
         .map(handler => {
           handler(evt!)
         })
@@ -76,7 +75,7 @@ export class Emitter<Events extends Record<EventType, unknown>> {
 
     handlers = this.__all!.get('*')
     if (handlers) {
-      ;(handlers as WildCardEventHandlerList<Events>).slice().map(handler => {
+      [...(handlers as WildCardEventHandlerList<Events>)].map(handler => {
         handler(type, evt!)
       })
     }

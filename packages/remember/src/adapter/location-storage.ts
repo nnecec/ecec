@@ -19,6 +19,6 @@ export const createLocationStorage = () => {
     clear: () => {
       const url = `${location.pathname}`
       history.replaceState({ url }, '', url)
-    }
+    },
   }
 }

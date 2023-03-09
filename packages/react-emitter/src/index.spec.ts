@@ -1,13 +1,9 @@
 import { useEmitter } from '.'
 
 describe('useEmitter', () => {
-  it('should export Emitter(class), emitter(function)', () => {
-    
-  })
+  it('should export Emitter(class), emitter(function)', () => {})
 
-  it('should accept an optional event handler map', () => {
- 
-  })
+  it('should accept an optional event handler map', () => {})
 })
 
 type Events = {

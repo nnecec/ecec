@@ -1,5 +1,6 @@
 import { Emitter, emitter } from './emitter'
-import { EventHandlerMap } from './types'
+
+import type { EventHandlerMap } from './types'
 
 describe('emitter', () => {
   it('should export Emitter(class), emitter(function)', () => {
@@ -180,8 +181,8 @@ describe('mitt#', () => {
     })
 
     it('should NOT ignore case', () => {
-      const onFoo = jest.fn(),
-        onFOO = jest.fn()
+      const onFoo = jest.fn();
+        const onFOO = jest.fn()
       events.set('Foo', [onFoo])
       events.set('FOO', [onFOO])
 
@@ -193,9 +194,9 @@ describe('mitt#', () => {
     })
 
     it('should invoke * handlers', () => {
-      const star = jest.fn(),
-        ea = { a: 'a' },
-        eb = { b: 'b' }
+      const star = jest.fn();
+        const ea = { a: 'a' };
+        const eb = { b: 'b' }
 
       events.set('*', [star])
 

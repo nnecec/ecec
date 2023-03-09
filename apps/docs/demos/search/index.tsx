@@ -47,7 +47,7 @@ export const SearchExample = () => {
             },
           ]}
           {...register('tab', { valuePropName: 'activeKey' })}
-        ></Tabs>
+         />
 
         <Switch
           {...register('opened', {

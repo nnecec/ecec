@@ -1,4 +1,4 @@
-import { Storage } from '../types'
+import type { Storage } from '../types'
 
 export const createCacheStorage = (): Storage => {
   let state: Record<string, string> = {}
@@ -14,6 +14,6 @@ export const createCacheStorage = (): Storage => {
     },
     clear: () => {
       state = {}
-    }
+    },
   }
 }

@@ -6,7 +6,7 @@ interface Options {
 export const createLocalStorage = ({ expired = 0 }: Options) => {
   const time = {
     previousTime: Date.now(),
-    expired
+    expired,
   }
   console.log(time)
 
@@ -22,6 +22,6 @@ export const createLocalStorage = ({ expired = 0 }: Options) => {
     },
     clear: () => {
       window.localStorage.clear()
-    }
+    },
   }
 }

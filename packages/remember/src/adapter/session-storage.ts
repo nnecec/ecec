@@ -1,4 +1,4 @@
-import { Storage } from '../types'
+import type { Storage } from '../types'
 
 export const createSessionStorage = (): Storage => {
   return {
@@ -13,6 +13,6 @@ export const createSessionStorage = (): Storage => {
     },
     clear() {
       window.sessionStorage.clear()
-    }
+    },
   }
 }

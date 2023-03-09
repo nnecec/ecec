@@ -1,6 +1,7 @@
 import { createCacheStorage } from './adapter'
-import { Options, Storage, Value, Values } from './types'
 import { isPlainObject, toParsed, toStringify } from './utils'
+
+import type { Options, Storage, Value, Values } from './types'
 
 export class Remember {
   storage: Storage

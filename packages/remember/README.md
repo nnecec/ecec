@@ -5,14 +5,14 @@ Declare a named space to remember values.
 ## Usage
 
 ```ts
-import { remember, Remember, createLocationCache } from '@afojs/remember'
+import { createLocationCache,Remember, remember } from '@afojs/remember'
 
 const reme = new Remember('cache')
 // or
 const reme = remember('cache')
 
 reme.set({
-  age: 18
+  age: 18,
 })
 
 reme.set('name', 'wayne')

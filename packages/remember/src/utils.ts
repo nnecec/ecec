@@ -1,5 +1,6 @@
 import { Remember } from './remember'
-import { Value } from './types'
+
+import type { Value } from './types'
 
 export function toStringify(value: any): string {
   try {

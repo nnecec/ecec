@@ -32,7 +32,6 @@ Generate `Search` instance with the namespace.
 Take the `Search` instance register controlled component to collect param.
 
 ```jsx
-
 const [params, register] = useSearch('test')
 
 return (
