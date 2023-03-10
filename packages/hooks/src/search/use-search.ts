@@ -1,8 +1,8 @@
-import { useMemo } from 'react'
+import type React from 'react'
+import { useMemo, useState } from 'react'
 import { createLocationStorage, remember } from '@afojs/remember'
-import { atom, useAtom } from 'jotai'
 
-import type React from 'react';
+import { useMemoizedFn } from '../utils/use-memozied-fn'
 
 import type { Params, RegisterOptions, Search } from './types'
 
@@ -23,38 +23,37 @@ export const useSearch = (scope = 'afo/search'): Search => {
     () => remember(scope, { storage: createLocationStorage() }),
     [scope],
   )
-  const searchAtom = useMemo(
-    () =>
-      atom<Params, Params[], any>({}, (_get, set, update) => {
-        set(searchAtom, update)
-        reme.set(update)
-      }),
-    [reme],
+
+  const [params, setParams] = useState<Params>({})
+
+  const register = useMemoizedFn(
+    (name: string, options: RegisterOptions = {}) => {
+      const {
+        trigger = 'onChange',
+        getValue,
+        valuePropName = 'value',
+      } = options
+
+      return {
+        [valuePropName]: params[name] || undefined,
+        [trigger]: (e: unknown) => {
+          const value =
+            typeof getValue === 'function' ? getValue(e) : defaultGetValue(e)
+
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          const { [name]: dropParam, ...restParams } = params
+          // remove nullish key
+          const nextParams =
+            value === null || value === undefined || value === ''
+              ? restParams
+              : { ...restParams, [name]: value }
+
+          setParams(nextParams)
+          reme.set(nextParams)
+        },
+      }
+    },
   )
-
-  const [params, setParams] = useAtom(searchAtom)
-
-  const register = (name: string, options: RegisterOptions = {}) => {
-    const { trigger = 'onChange', getValue, valuePropName = 'value' } = options
-
-    return {
-      [valuePropName]: params[name] || undefined,
-      [trigger]: (e: unknown) => {
-        const value =
-          typeof getValue === 'function' ? getValue(e) : defaultGetValue(e)
-
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { [name]: dropParam, ...restParams } = params
-        // remove nullish key
-        const nextParams =
-          value === null || value === undefined || value === ''
-            ? restParams
-            : { ...restParams, [name]: value }
-
-        setParams(nextParams)
-      },
-    }
-  }
 
   return [params, register]
 }
