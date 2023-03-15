@@ -12,7 +12,7 @@ export const UseThemeExampleInternal = () => {
       </select>
 
       <div>
-        You are choose: {theme} mode!
+        You are choose {selectedTheme} mode, current theme is {theme}.
       </div>
     </div>
   )

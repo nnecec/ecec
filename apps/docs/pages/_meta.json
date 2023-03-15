@@ -1,0 +1,7 @@
+{
+  "index":{
+    "title": "Get Started"
+  },
+  "hooks": "@afojs/hooks",
+  "remember": "@afojs/remember"
+}
