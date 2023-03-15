@@ -9,7 +9,7 @@ import type {
 export class Emitter<Events extends Record<EventType, unknown>> {
   private __all: EventHandlerMap<Events>
 
-  constructor(all?: EventHandlerMap<Events>) {
+  constructor (all?: EventHandlerMap<Events>) {
     this.__all = all || new Map()
   }
 
@@ -19,7 +19,7 @@ export class Emitter<Events extends Record<EventType, unknown>> {
    * @param {Function} handler Function to call in response to given event
    * @memberOf emitter
    */
-  public on<Key extends keyof Events>(
+  public on<Key extends keyof Events> (
     type: Key,
     handler: GenericEventHandler<Events>,
   ) {
@@ -39,7 +39,7 @@ export class Emitter<Events extends Record<EventType, unknown>> {
    * @param {Function} [handler] Handler function to remove
    * @memberOf emitter
    */
-  public off<Key extends keyof Events>(
+  public off<Key extends keyof Events> (
     type: Key,
     handler?: GenericEventHandler<Events>,
   ) {
@@ -64,7 +64,7 @@ export class Emitter<Events extends Record<EventType, unknown>> {
    * @param {Any} [evt] Any value (object is recommended and powerful), passed to each handler
    * @memberOf emitter
    */
-  public emit<Key extends keyof Events>(type: Key, evt?: Events[Key]) {
+  public emit<Key extends keyof Events> (type: Key, evt?: Events[Key]) {
     let handlers = this.__all!.get(type)
     if (handlers) {
       [...(handlers as EventHandlerList<Events[keyof Events]>)]
@@ -82,7 +82,7 @@ export class Emitter<Events extends Record<EventType, unknown>> {
   }
 }
 
-export function emitter<Events extends Record<EventType, unknown>>(
+export function emitter<Events extends Record<EventType, unknown>> (
   all?: EventHandlerMap<Events>,
 ): Emitter<Events> {
   return new Emitter(all)

@@ -1,15 +1,4 @@
-interface Options {
-  // localstorage expired duration
-  expired: number
-}
-
-export const createLocalStorage = ({ expired = 0 }: Options) => {
-  const time = {
-    previousTime: Date.now(),
-    expired,
-  }
-  console.log(time)
-
+export const createLocalStorage = () => {
   return {
     set: (key: string, value: string) => {
       window.localStorage.setItem(key, value)

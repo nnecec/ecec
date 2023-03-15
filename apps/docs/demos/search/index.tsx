@@ -1,5 +1,5 @@
 import { useSearch } from '@afojs/hooks'
-import { Card, Input, Spin, Switch, Tabs } from 'antd'
+import { Button, Card, Form, Input, Spin, Switch, Tabs } from 'antd'
 import useSWR from 'swr'
 
 const fetcher = (params: Record<string, any>) =>
@@ -23,13 +23,20 @@ export const SearchExample = () => {
   return (
     <div>
       <Card title="Section A">
-        <Input
-          type="text"
-          {...register('name', {
-            getValue: (e: React.ChangeEvent<HTMLInputElement>) =>
-              e.target.value,
+        <Form
+          {...register('form', {
+            trigger: 'onFinish',
+            getValue: values => {
+              return values
+            },
           })}
-        />
+        >
+          <Form.Item name="name" label="name">
+            <Input type="text" />
+          </Form.Item>
+
+          <Button htmlType="submit">Submit</Button>
+        </Form>
 
         <Tabs
           items={[
@@ -47,7 +54,7 @@ export const SearchExample = () => {
             },
           ]}
           {...register('tab', { valuePropName: 'activeKey' })}
-         />
+        />
 
         <Switch
           {...register('opened', {
@@ -55,9 +62,7 @@ export const SearchExample = () => {
           })}
         />
 
-        <div>
-          get string from params: {isLoading || isValidating ? <Spin /> : data}
-        </div>
+        <div>get string from params: {isLoading || isValidating ? <Spin /> : data}</div>
       </Card>
     </div>
   )

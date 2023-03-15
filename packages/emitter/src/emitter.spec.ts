@@ -181,8 +181,8 @@ describe('mitt#', () => {
     })
 
     it('should NOT ignore case', () => {
-      const onFoo = jest.fn();
-        const onFOO = jest.fn()
+      const onFoo = jest.fn()
+      const onFOO = jest.fn()
       events.set('Foo', [onFoo])
       events.set('FOO', [onFOO])
 
@@ -194,9 +194,9 @@ describe('mitt#', () => {
     })
 
     it('should invoke * handlers', () => {
-      const star = jest.fn();
-        const ea = { a: 'a' };
-        const eb = { b: 'b' }
+      const star = jest.fn()
+      const ea = { a: 'a' }
+      const eb = { b: 'b' }
 
       events.set('*', [star])
 

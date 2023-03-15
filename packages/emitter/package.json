@@ -17,6 +17,6 @@
     "dev": "bunchee src/index.ts --format esm,cjs --watch --dts"
   },
   "devDependencies": {
-    "bunchee": "^2.2.0"
+    "bunchee": "^2.2.1"
   }
 }

@@ -12,4 +12,5 @@ module.exports = {
       rootDir: ['apps/*/'],
     },
   },
+  ignorePatterns: ['target', 'packages/**/dist', 'packages/**/.turbo'],
 }

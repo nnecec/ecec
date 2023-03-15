@@ -2,7 +2,7 @@ import { Remember } from './remember'
 
 import type { Value } from './types'
 
-export function toStringify(value: any): string {
+export function toStringify (value: any): string {
   try {
     return JSON.stringify(value)
   } catch (error) {
@@ -11,7 +11,7 @@ export function toStringify(value: any): string {
   }
 }
 
-export function toParsed(value: string): any {
+export function toParsed (value: string): any {
   try {
     return JSON.parse(value)
   } catch (error) {

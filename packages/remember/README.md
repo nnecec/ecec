@@ -5,7 +5,7 @@ Declare a named space to remember values.
 ## Usage
 
 ```ts
-import { createLocationCache,Remember, remember } from '@afojs/remember'
+import { createLocationCache, Remember, remember } from '@afojs/remember'
 
 const reme = new Remember('cache')
 // or
