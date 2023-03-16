@@ -1,6 +1,11 @@
 {
   "name": "@afojs/hooks",
   "version": "0.0.1",
+  "homepage": "https://github.com/nnecec/afo/tree/main/packages/hooks",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nnecec/afo"
+  },
   "license": "MIT",
   "exports": {
     "require": "./dist/index.js",
@@ -19,7 +24,6 @@
   "dependencies": {
     "@afojs/emitter": "workspace:*",
     "@afojs/remember": "workspace:*",
-    "jotai": "^2.0.3",
     "react": "^18.2.0"
   },
   "devDependencies": {

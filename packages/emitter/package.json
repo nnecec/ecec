@@ -1,6 +1,11 @@
 {
   "name": "@afojs/emitter",
   "version": "0.0.1",
+  "homepage": "https://github.com/nnecec/afo/tree/main/packages/emitter",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nnecec/afo"
+  },
   "license": "MIT",
   "exports": {
     "require": "./dist/index.js",
