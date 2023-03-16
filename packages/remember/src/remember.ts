@@ -9,17 +9,16 @@ export class Remember {
   maxAge: number | null
   expiredAt?: number
 
-  constructor (name: string, options: Options = {}) {
+  constructor(name: string, options: Options = {}) {
     this.name = name
     this.storage = options.storage ?? createCacheStorage()
-    this.maxAge =
-      typeof options.maxAge === 'number' ? options.maxAge * 1000 : null
+    this.maxAge = typeof options.maxAge === 'number' ? options.maxAge * 1000 : null
     this.checkExpired()
   }
 
-  set(path: Value | Values): void
+  set(value: Value | Values): void
   set(path: string, value: Value | Values): void
-  set (path: string | Value | Values, value?: Value | Values): void {
+  set(path: string | Value | Values, value?: Value | Values): void {
     this.checkExpired()
     if (typeof path === 'string' && value !== undefined) {
       let cachedValue = this.get()
@@ -36,7 +35,7 @@ export class Remember {
     }
   }
 
-  get (path?: string | string[]): Values | undefined {
+  get(path?: string | string[]): Values | undefined {
     this.checkExpired()
     const cached = this.storage.get(this.name)
     if (cached === null) {
@@ -52,7 +51,7 @@ export class Remember {
     return values
   }
 
-  remove (keys?: string | string[]): void {
+  remove(keys?: string | string[]): void {
     this.checkExpired()
     const values = this.get()
     if (keys && isPlainObject(values)) {
@@ -67,12 +66,12 @@ export class Remember {
     }
   }
 
-  clear () {
+  clear() {
     this.storage.remove(this.name)
   }
 
   // TODO: refactor: TypeScript 5.0 decorator
-  private checkExpired () {
+  private checkExpired() {
     if (this.maxAge) {
       const lifePath = `__${this.name}_life__`
       const last = this.get(lifePath)

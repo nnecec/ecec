@@ -1,34 +1,54 @@
-import { createLocationStorage, remember } from '@afojs/remember'
+import {
+  createLocalStorage,
+  createLocationStorage,
+  createSessionStorage,
+  remember,
+} from '@afojs/remember'
 
-const count = remember('count', { storage: createLocationStorage() })
+const count = remember('count')
+const countLocation = remember('count', { storage: createLocationStorage() })
+const countLS = remember('count', { storage: createLocalStorage() })
+const countSS = remember('count', { storage: createSessionStorage() })
+
+const adapters = {
+  memory: count,
+  localStorage: countLS,
+  sessionStorage: countSS,
+  location: countLocation,
+}
 
 export const RememberExample = () => {
   return (
     <div>
-      <h4 className="text-3xl">open `devtool - console` to view. </h4>
-      <div className="mt-2">
-        <h5 className="text-xl">Remember with location</h5>
-        <div className="flex gap-2 rounded border p-4">
-          <button onClick={() => count.set({ num: 0 })}>initial</button>
-          <button
-            onClick={() => {
-              const num = count.get('num') as number
-              count.set({ num: num + 1 })
-            }}
-          >
-            increment
-          </button>
-          <button
-            onClick={() => {
-              const num = count.get('num') as number
-              count.set({ num: num - 1 })
-            }}
-          >
-            decrement
-          </button>
-          <button onClick={() => console.log(count.get())}>log</button>
-        </div>
-      </div>
+      <b>open `devtool - console` to view. </b>
+      {Object.entries(adapters).map(([name, adapter]) => {
+        const count = adapter
+        return (
+          <div className="mt-2" key={name}>
+            <h5 className="text-xl">Remember with {name}</h5>
+            <div className="flex gap-2 rounded border p-4">
+              <button onClick={() => count.set({ num: 0 })}>initial</button>
+              <button
+                onClick={() => {
+                  const num = count.get('num') as number
+                  count.set({ num: num + 1 })
+                }}
+              >
+                increment
+              </button>
+              <button
+                onClick={() => {
+                  const num = count.get('num') as number
+                  count.set({ num: num - 1 })
+                }}
+              >
+                decrement
+              </button>
+              <button onClick={() => console.log(count.get())}>log</button>
+            </div>
+          </div>
+        )
+      })}
     </div>
   )
 }

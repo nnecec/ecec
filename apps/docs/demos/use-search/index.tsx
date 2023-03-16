@@ -1,5 +1,5 @@
 import { useSearch } from '@afojs/hooks'
-import { Button, Card, Form, Input, Spin, Switch, Tabs } from 'antd'
+import { Card, Input, InputNumber, Spin, Switch, Tabs } from 'antd'
 import useSWR from 'swr'
 
 const fetcher = (params: Record<string, any>) =>
@@ -16,27 +16,24 @@ const fetcher = (params: Record<string, any>) =>
 export const SearchExample = () => {
   const [params, register] = useSearch()
 
-  const { data, isLoading, isValidating } = useSWR(['sectionA', params], () => {
-    return fetcher(params)
-  })
+  const { data, isLoading, isValidating } = useSWR(['sectionA', params], () => fetcher(params))
 
+  console.log(params)
   return (
     <div>
       <Card title="Section A">
-        <Form
-          {...register('form', {
-            trigger: 'onFinish',
-            getValue: values => {
-              return values
-            },
+        <Input
+          type="text"
+          {...register('name', {
+            trigger: 'onPressEnter',
           })}
-        >
-          <Form.Item name="name" label="name">
-            <Input type="text" />
-          </Form.Item>
+        />
 
-          <Button htmlType="submit">Submit</Button>
-        </Form>
+        <InputNumber
+          {...register('age', {
+            trigger: 'onPressEnter',
+          })}
+        />
 
         <Tabs
           items={[
@@ -57,9 +54,9 @@ export const SearchExample = () => {
         />
 
         <Switch
-          {...register('opened', {
-            valuePropName: 'checked',
-          })}
+        {...register('opened', {
+          valuePropName: 'checked',
+        })}
         />
 
         <div>get string from params: {isLoading || isValidating ? <Spin /> : data}</div>
