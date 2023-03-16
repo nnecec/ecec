@@ -12,7 +12,7 @@ export const RememberExample = () => {
           <button onClick={() => count.set({ num: 0 })}>initial</button>
           <button
             onClick={() => {
-              const num = count.get('num')
+              const num = count.get('num') as number
               count.set({ num: num + 1 })
             }}
           >
@@ -20,7 +20,7 @@ export const RememberExample = () => {
           </button>
           <button
             onClick={() => {
-              const num = count.get('num')
+              const num = count.get('num') as number
               count.set({ num: num - 1 })
             }}
           >
