@@ -1,5 +1,52 @@
-import { UseThemeExample } from "~/demos/use-theme";
+import { UseThemeExample } from '~/demos/use-theme'
 
 # useTheme
 
 <UseThemeExample />
+
+## Usage
+
+```tsx
+import { ThemeProvider, useTheme } from '@afojs/hooks'
+
+export const Root = () => {
+  return (
+    <ThemeProvider>
+      <App />
+    </ThemeProvider>
+  )
+}
+
+export const App = () => {
+  const { theme, setTheme, selectedTheme } = useTheme()
+  return (
+    <div>
+      <select value={selectedTheme} onChange={e => setTheme(e.target.value)}>
+        <option value="auto">auto</option>
+        <option value="light">light</option>
+        <option value="dark">dark</option>
+      </select>
+
+      <div>
+        You are choose {selectedTheme} mode, current theme is {theme}.
+      </div>
+    </div>
+  )
+}
+```
+
+## API
+
+### `useTheme(): { theme: Theme, setTheme: (theme: Theme) => void, selectedTheme: Theme }`
+
+- theme: current theme, has 2 option `dark`, `light`
+- setTheme: change theme
+- selectedTheme: user choosed theme
+
+```ts
+type Theme = 'dark' | 'light' | 'auto'
+```
+
+### ThemeProvider
+
+Wrap your appliction with `ThemeProvider`.

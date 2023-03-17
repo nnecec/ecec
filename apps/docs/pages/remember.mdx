@@ -3,3 +3,60 @@ import { RememberExample } from '../demos/remember'
 # Remember
 
 <RememberExample />
+
+## Usage
+
+```ts
+import { createLocalStorage, remember } from '@afojs/remember'
+
+// create Remember instance
+const count = remember('count', { storage: createLocationStorage() }) // or count = new Remember('count', { storage: createLocationStorage() })
+
+count.set(0)
+count.get() // 0
+
+count.set({ num: 0 })
+count.get() // { num: 0 }
+count.get('num') // 0
+
+count.set('num', 0)
+count.get() // { num: 0 }
+```
+
+## API
+
+### `new Remember(name: string, storeAdapter?: Storage)`
+
+There are 4 presets:
+
+- `createMemoryStorage` (default)
+- `createLocationStorage`
+- `createLocalStorage`
+- `createSessionStorage`
+
+`name` is a namespace.
+
+### `set(path?: string, value: Value | Record<string, Value>)`
+
+You can use `set(value)` directly, or seprate key and value just like `set(key, value)`
+
+### `get(path?: string | string[])`
+
+If you use `get` without `path` param, you'll get all values in cached.
+
+```js
+.get() // { a: 1, b: 1, c: 1, ... }
+.get('a') // 1
+.get(['a', 'b']) // {a: 1, b: 1}
+```
+
+### `remove(key?: string | string[])`
+
+If you use `remove` without `path` param, you'll clear the namespace's values.
+
+```js
+.get() // { a: 1, b: 1, c: 1, d: 1, ... }
+.remove('a') // {b: 1, c:1, d: 1, ...}
+.remove(['b','c']) // { d: 1, ...}
+.remove() // undefined
+```

@@ -27,14 +27,4 @@ reme.get()
 // }
 ```
 
-## API
 
-### `new Remember(name: string, storeAdapter?: Storage)`
-
-### set(key?: string, value: Value | Record<string, Value>)
-
-### get(key?: string)
-
-### remove(key?: string)
-
-### clear()

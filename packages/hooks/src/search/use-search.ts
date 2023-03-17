@@ -19,7 +19,7 @@ const defaultGetValue = (e: unknown) => {
   return e
 }
 
-export const useSearch = (scope = 'afo/search'): Search => {
+export const useSearch = (scope = 'afo-search'): Search => {
   const reme = useMemo(() => {
     if (typeof document !== 'undefined') {
       return remember(scope, { storage: createLocationStorage() })

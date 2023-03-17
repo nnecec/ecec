@@ -3,16 +3,26 @@ import React from 'react'
 import type { DocsThemeConfig } from 'nextra-theme-docs'
 
 const config: DocsThemeConfig = {
-  logo: <span>AFO</span>,
+  logo: <span>afo</span>,
   project: {
-    link: 'https://github.com/shuding/nextra-docs-template',
+    link: 'https://github.com/nnecec/afo',
   },
-  chat: {
-    link: 'https://discord.com',
-  },
-  docsRepositoryBase: 'https://github.com/shuding/nextra-docs-template',
+  docsRepositoryBase: 'https://github.com/nnecec/afo',
   footer: {
-    text: 'AFO Docs',
+    text: (
+      <div>
+        MIT {new Date().getFullYear()} ©{' '}
+        <a href="https://afo-docs.vercel.app" target="_blank" rel="noreferrer">
+          afo
+        </a>
+        .
+      </div>
+    ),
+  },
+  useNextSeoProps() {
+    return {
+      titleTemplate: '%s – afo',
+    }
   },
 }
 

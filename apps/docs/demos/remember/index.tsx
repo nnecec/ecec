@@ -27,19 +27,28 @@ export const RememberExample = () => {
           <div className="mt-2" key={name}>
             <h5 className="text-xl">Remember with {name}</h5>
             <div className="flex gap-2 rounded border p-4">
-              <button onClick={() => count.set({ num: 0 })}>initial</button>
               <button
                 onClick={() => {
-                  const num = count.get('num') as number
-                  count.set({ num: num + 1 })
+                  console.log('initial =', 0)
+                  count.set(0)
+                }}
+              >
+                initial
+              </button>
+              <button
+                onClick={() => {
+                  const num = count.get() as number
+                  console.log('increment 1 =', num)
+                  count.set(num + 1)
                 }}
               >
                 increment
               </button>
               <button
                 onClick={() => {
-                  const num = count.get('num') as number
-                  count.set({ num: num - 1 })
+                  const num = count.get() as number
+                  console.log('decrement 1 =', num)
+                  count.set(num - 1)
                 }}
               >
                 decrement

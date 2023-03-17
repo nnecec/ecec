@@ -6,13 +6,14 @@ import type { Options, Storage, Value, Values } from './types'
 export class Remember {
   storage: Storage
   name: string
-  maxAge: number | null
+  /** unit: seconds  */
+  maxAge?: number
   expiredAt?: number
 
   constructor(name: string, options: Options = {}) {
     this.name = name
     this.storage = options.storage ?? createCacheStorage()
-    this.maxAge = typeof options.maxAge === 'number' ? options.maxAge * 1000 : null
+    this.maxAge = typeof options.maxAge === 'number' ? options.maxAge * 1000 : undefined
     this.checkExpired()
   }
 
@@ -66,7 +67,7 @@ export class Remember {
     }
   }
 
-  clear() {
+  private clear() {
     this.storage.remove(this.name)
   }
 
