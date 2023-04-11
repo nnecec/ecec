@@ -26,8 +26,8 @@
     "react": "^18.2.0"
   },
   "devDependencies": {
-    "@types/react": "^18.0.28",
-    "bunchee": "^2.2.1",
-    "typescript": "^5.0.2"
+    "@types/react": "^18.0.34",
+    "bunchee": "^3.0.1",
+    "typescript": "^5.0.4"
   }
 }
