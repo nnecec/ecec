@@ -1,7 +1,7 @@
 {
-  "name": "@afojs/emitter",
+  "name": "@afojs/use-search",
   "version": "0.0.1",
-  "homepage": "https://github.com/nnecec/afo/tree/main/packages/emitter",
+  "homepage": "https://github.com/nnecec/afo/tree/main/packages/use-search",
   "repository": {
     "type": "git",
     "url": "https://github.com/nnecec/afo"
@@ -21,7 +21,14 @@
     "build": "bunchee src/index.ts --format esm,cjs --dts",
     "dev": "bunchee src/index.ts --format esm,cjs --watch --dts"
   },
+  "dependencies": {
+    "@afojs/emitter": "workspace:*",
+    "@afojs/react-utils": "workspace:*",
+    "@afojs/remember": "workspace:*",
+    "react": "^18.2.0"
+  },
   "devDependencies": {
+    "@types/react": "^18.0.37",
     "bunchee": "^3.1.0"
   }
 }

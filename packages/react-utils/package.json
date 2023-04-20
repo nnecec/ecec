@@ -1,7 +1,7 @@
 {
-  "name": "@afojs/hooks",
+  "name": "@afojs/react-utils",
   "version": "0.0.1",
-  "homepage": "https://github.com/nnecec/afo/tree/main/packages/hooks",
+  "homepage": "https://github.com/nnecec/afo/tree/main/packages/react-utils",
   "repository": {
     "type": "git",
     "url": "https://github.com/nnecec/afo"
@@ -22,13 +22,11 @@
     "dev": "bunchee src/index.ts --format esm,cjs --watch --dts"
   },
   "dependencies": {
-    "@afojs/emitter": "workspace:*",
-    "@afojs/remember": "workspace:*",
     "react": "^18.2.0"
   },
   "devDependencies": {
-    "@types/react": "^18.0.34",
-    "@types/react-dom": "^18.0.11",
-    "bunchee": "^3.0.1"
+    "@types/react": "^18.0.37",
+    "@types/node": "^18.15.12",
+    "bunchee": "^3.1.0"
   }
 }

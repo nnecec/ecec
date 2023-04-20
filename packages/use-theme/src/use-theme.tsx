@@ -1,9 +1,7 @@
 import { createContext, useContext } from 'react'
+import { useLocalStorage,useMedia } from '@afojs/react-utils'
 
 import type { Dispatch, ReactNode, SetStateAction } from 'react'
-
-import { useLocalStorage } from '../utils/use-local-storage'
-import { useMedia } from '../utils/use-media'
 
 export type Theme = 'auto' | 'dark' | 'light'
 

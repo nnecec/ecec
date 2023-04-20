@@ -1,9 +1,8 @@
 import { useMemo, useState } from 'react'
+import { useMemoizedFn } from '@afojs/react-utils'
 import { createLocationStorage, remember } from '@afojs/remember'
 
 import type React from 'react'
-
-import { useMemoizedFn } from '../utils/use-memozied-fn'
 
 import type { Params, RegisterOptions, Search } from './types'
 

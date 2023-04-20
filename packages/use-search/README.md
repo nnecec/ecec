@@ -1,11 +1,11 @@
-# @afojs/hooks
+# @afojs/use-search
 
 - useSearch
 
 ## Usage
 
 ```jsx
-import { useSearch } from '@afojs/hooks'
+import { useSearch } from '@afojs/use-search'
 import useSWR from 'swr'
 
 export const App = () =>{

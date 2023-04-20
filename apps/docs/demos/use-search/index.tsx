@@ -1,4 +1,4 @@
-import { useSearch } from '@afojs/hooks'
+import { useSearch } from '@afojs/use-search'
 import { Card, Input, InputNumber, Spin, Switch, Tabs } from 'antd'
 import useSWR from 'swr'
 

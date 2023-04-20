@@ -1,8 +1,9 @@
 {
-  "index":{
+  "index": {
     "title": "Get Started"
   },
   "emitter": "@afojs/emitter",
   "remember": "@afojs/remember",
-  "hooks": "@afojs/hooks"
+  "use-search": "@afojs/use-search",
+  "use-theme": "@afojs/use-theme"
 }

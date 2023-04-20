@@ -1,4 +1,4 @@
-import { ThemeProvider,useTheme } from '@afojs/hooks'
+import { ThemeProvider,useTheme } from '@afojs/use-theme'
 
 export const UseThemeExampleInternal = () => {
   const { theme, setTheme, selectedTheme } = useTheme()
