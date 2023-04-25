@@ -1,22 +1,46 @@
-use clap::Parser;
+use clap::{Parser, Subcommand};
 
-/// Simple program to greet a person
-#[derive(Parser, Debug)]
+#[derive(Parser)]
 #[command(author, version, about, long_about = None)]
-struct Args {
-    /// Name of the person to greet
-    #[arg(short, long)]
-    name: String,
+struct Cli {
+    /// Optional name to operate on
+    name: Option<String>,
 
-    /// Number of times to greet
-    #[arg(short, long, default_value_t = 1)]
-    count: u8,
+    #[command(subcommand)]
+    command: Option<Commands>,
+}
+
+#[derive(Subcommand)]
+enum Commands {
+    /// View registries list.
+    List {},
+    /// Add new registry.
+    Add {
+        name: Option<String>,
+        url: Option<String>,
+    },
+    /// Remove registry.
+    Remove { name: Option<String> },
+    /// Use selected registry.
+    Use { name: Option<String> },
 }
 
 fn main() {
-    let args = Args::parse();
+    let cli = Cli::parse();
 
-    for _ in 0..args.count {
-        println!("Hello {}!", args.name)
+    match &cli.command {
+        Some(Commands::List {}) => {
+            print!("Listing all registries...");
+        }
+        Some(Commands::Add { name, url }) => {
+            print!("Adding {name:?}: {url:?}");
+        }
+        Some(Commands::Use { name }) => {
+            print!("Using {name:?}");
+        }
+        Some(Commands::Remove { name }) => {
+            print!("Removing {name:?}");
+        }
+        None => {}
     }
 }
