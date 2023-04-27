@@ -23,7 +23,7 @@ const config: DocsThemeConfig = {
     return {
       titleTemplate: '%s – afo',
     }
-  },
+  }
 }
 
 export default config

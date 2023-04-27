@@ -1,3 +1,6 @@
+mod list;
+mod utils;
+
 use clap::{Parser, Subcommand};
 
 #[derive(Parser)]
@@ -14,6 +17,8 @@ struct Cli {
 enum Commands {
     /// View registries list.
     List {},
+    /// View current registry.
+    Current {},
     /// Add new registry.
     Add {
         name: Option<String>,
@@ -30,7 +35,10 @@ fn main() {
 
     match &cli.command {
         Some(Commands::List {}) => {
-            print!("Listing all registries...");
+            list::list()
+        }
+        Some(Commands::Current {}) => {
+            
         }
         Some(Commands::Add { name, url }) => {
             print!("Adding {name:?}: {url:?}");

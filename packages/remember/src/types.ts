@@ -5,11 +5,9 @@ export interface Storage {
   clear: () => void
 }
 
-export type Value = string | null | number | Value[] | object
+export type Values<T = any> = Record<string, T>
 
-export type Values = Value | Record<string, Value>
-
-export interface Options {
+export interface RememberOptions {
   storage?: Storage
   /** the life time of cache in seconds */
   maxAge?: number

@@ -1,17 +1,17 @@
-export type ParamKey = string | number;
-export type ParamValue = any;
+export type ParamKey = string | number
+export type ParamValue = any
 
 export type Params = {
-  [key: ParamKey]: ParamValue;
-};
-
-export interface RegisterOptions {
-  trigger?: string;
-  getValue?: (...args: any[]) => ParamValue;
-  valuePropName?: string;
+  [key: ParamKey]: ParamValue
 }
 
-export type Search = [
-  params: Params,
-  register: (name: string, options?: RegisterOptions) => any
-];
+export interface SearchOptions {
+  trigger?: string
+  getValueFromEvent?: (...args: any[]) => ParamValue
+  getValueProps?: (value: any) => Record<string, any>
+}
+
+export type UseSearchOptions = {
+  onSearch?: (params: Params) => void
+  onInitialize?: (params: Params) => void
+}

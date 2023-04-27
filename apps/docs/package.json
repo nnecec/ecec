@@ -7,29 +7,30 @@
   "main": "index.js",
   "scripts": {
     "build": "next build",
-    "dev": "next dev",
+    "dev": "PORT=7788 next dev",
     "start": "next start"
   },
   "dependencies": {
+    "@afojs/remember": "workspace:*",
     "@afojs/use-search": "workspace:*",
     "@afojs/use-theme": "workspace:*",
-    "@afojs/remember": "workspace:*",
     "@codesandbox/sandpack-react": "^2.6.1",
-    "antd": "^5.4.3",
+    "antd": "^5.4.6",
+    "antd-mobile": "^5.29.1",
     "autoprefixer": "^10.4.14",
     "framer-motion": "^10.12.4",
-    "next": "^13.3.0",
-    "nextra": "^2.4.0",
-    "nextra-theme-docs": "^2.4.0",
+    "next": "^13.3.1",
+    "nextra": "^2.4.2",
+    "nextra-theme-docs": "^2.4.2",
     "postcss": "^8.4.23",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "swr": "^2.1.3",
-    "tailwindcss": "^3.3.1"
+    "swr": "^2.1.5",
+    "tailwindcss": "^3.3.2"
   },
   "devDependencies": {
-    "@next/eslint-plugin-next": "^13.3.0",
-    "@types/node": "18.15.12",
+    "@next/eslint-plugin-next": "^13.3.1",
+    "@types/node": "18.16.1",
     "typescript": "^5.0.4"
   }
 }

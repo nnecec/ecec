@@ -1,33 +1,33 @@
 import { createCacheStorage } from './adapter'
 import { isPlainObject, toParsed, toStringify } from './utils'
 
-import type { Options, Storage, Value, Values } from './types'
+import type { RememberOptions, Storage, Values } from './types'
 
-export class Remember {
+export class Remember<T = any> {
   storage: Storage
   name: string
   /** unit: seconds  */
   maxAge?: number
   expiredAt?: number
 
-  constructor(name: string, options: Options = {}) {
+  constructor(name: string, options: RememberOptions = {}) {
     this.name = name
     this.storage = options.storage ?? createCacheStorage()
     this.maxAge = typeof options.maxAge === 'number' ? options.maxAge * 1000 : undefined
     this.checkExpired()
   }
 
-  set(value: Value | Values): void
-  set(path: string, value: Value | Values): void
-  set(path: string | Value | Values, value?: Value | Values): void {
+  set(value: Values<T>): void
+  set(path: string, value: T | Values<T>): void
+  set(path: string | Values<T>, value?: T | Values<T>): void {
     this.checkExpired()
     if (typeof path === 'string' && value !== undefined) {
       let cachedValue = this.get()
 
       if (isPlainObject(cachedValue)) {
-        cachedValue[path] = value
+        cachedValue[path] = value as T
       } else {
-        cachedValue = value
+        cachedValue = value as Values<T>
       }
 
       this.storage.set(this.name, toStringify(cachedValue))
@@ -36,7 +36,7 @@ export class Remember {
     }
   }
 
-  get(path?: string | string[]): Values | undefined {
+  get(path?: string | string[]): Values<T> | undefined {
     this.checkExpired()
     const cached = this.storage.get(this.name)
     if (cached === null) {
@@ -83,13 +83,13 @@ export class Remember {
         if (Date.now() >= this.expiredAt) {
           this.clear()
         } else {
-          this.set(lifePath, this.expiredAt)
+          this.set(lifePath, this.expiredAt as T)
         }
       }
     }
   }
 }
 
-export const remember = (name: string, options?: Options) => {
-  return new Remember(name, options)
+export const remember = <T>(name: string, options?: RememberOptions) => {
+  return new Remember<T>(name, options)
 }

@@ -1,5 +1,6 @@
 [package]
-name = "nr"
+name = "nm"
+description = "Rust - npm manager."
 version = "0.0.0"
 edition = "2021"
 
@@ -7,3 +8,4 @@ edition = "2021"
 
 [dependencies]
 clap = { version = "4.2.3", features = ["derive"] }
+rust-ini = "0.18.0"

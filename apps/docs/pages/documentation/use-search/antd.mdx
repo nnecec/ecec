@@ -1,31 +1,10 @@
-import { useSearch } from '@afojs/use-search'
-import {
-  Button,
-  Card,
-  Checkbox,
-  Form,
-  Input,
-  InputNumber,
-  Radio,
-  Rate,
-  Select,
-  Spin,
-  Switch,
-  Tabs,
-  Space,
-  Table,
-} from 'antd'
-import useSWR from 'swr'
+import { SearchExample } from "~/demos/use-search";
 
-const fetcher = (params: Record<string, any>) =>
-  new Promise<any[]>(resolve => {
-    setTimeout(() => {
-      resolve(
-        Object.entries(params).map(([key, value]) => ({ name: key, value, amount: Math.random() })),
-      )
-    }, 1000)
-  })
+# useSearch
 
+<SearchExample />
+
+```ts
 export const SearchExample = () => {
   const [form] = Form.useForm()
   const [search, params] = useSearch({
@@ -39,7 +18,6 @@ export const SearchExample = () => {
     async () => await fetcher(params),
   )
 
-  console.log(params)
   return (
     <div>
       <Card title="Section A">
@@ -164,3 +142,4 @@ export const SearchExample = () => {
     </div>
   )
 }
+```
