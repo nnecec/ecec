@@ -7,6 +7,7 @@ export type Params = {
 
 export interface SearchOptions {
   trigger?: string
+  searchTrigger?: string
   getValueFromEvent?: (...args: any[]) => ParamValue
   getValueProps?: (value: any) => Record<string, any>
 }

@@ -9,11 +9,10 @@ import {
   Radio,
   Rate,
   Select,
-  Spin,
-  Switch,
-  Tabs,
   Space,
+  Switch,
   Table,
+  Tabs,
 } from 'antd'
 import useSWR from 'swr'
 
@@ -34,12 +33,13 @@ export const SearchExample = () => {
     },
   })
 
+  console.log(params)
+
   const { data, isLoading, isValidating } = useSWR<any[]>(
     ['sectionA', params],
     async () => await fetcher(params),
   )
 
-  console.log(params)
   return (
     <div>
       <Card title="Section A">
@@ -135,6 +135,11 @@ export const SearchExample = () => {
             getValueProps: value => ({ checked: value }),
           })}
         />
+        <Input.Search
+          {...search('inputSearch', {
+            searchTrigger: 'onSearch',
+          })}
+        />
 
         <Table
           loading={isLoading || isValidating}
@@ -159,7 +164,7 @@ export const SearchExample = () => {
               search({ page, pageSize })
             },
           }}
-        ></Table>
+        />
       </Card>
     </div>
   )

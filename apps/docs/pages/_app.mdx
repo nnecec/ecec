@@ -1,5 +1,19 @@
 import '../styles/globals.css'
+import { useMemo } from 'react'
+import {
+  useQuery,
+  useMutation,
+  useQueryClient,
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query'
 
 export default function App({ Component, pageProps }) {
-  return <Component {...pageProps} />
+  const queryClient = useMemo(() => new QueryClient(), [])
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <Component {...pageProps} />
+    </QueryClientProvider>
+  )
 }

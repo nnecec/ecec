@@ -6,6 +6,9 @@ import type React from 'react'
 
 import type { Params, SearchOptions, UseSearchOptions } from './types'
 
+export const isPlainObject = (obj: unknown): obj is Record<string, any> =>
+  !!obj && obj.constructor === Object
+
 const defaultGetValue = (e: unknown) => {
   if (
     e !== null &&
@@ -39,29 +42,42 @@ export const useSearch = (
     return initialParams ?? {}
   })
 
-  const search = useMemoizedFn((name?: string | Params, options: SearchOptions = {}) => {
-    const { trigger = 'onChange', getValueFromEvent, getValueProps } = options
+  const search = useMemoizedFn((name?: string | Params, options: SearchOptions = {}): any => {
+    const {
+      trigger = 'onChange',
+      searchTrigger = 'onChange',
+      getValueFromEvent,
+      getValueProps,
+    } = options
 
     if (typeof name === 'string' && name.length > 0) {
       const valueProp =
         typeof getValueProps === 'function' ? getValueProps(params[name]) : { value: params[name] }
 
+      const changeValue = (e: unknown) => {
+        const value =
+          typeof getValueFromEvent === 'function' ? getValueFromEvent(e) : defaultGetValue(e)
+
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { [name]: dropedParam, ...restParams } = params
+        // remove nullish key
+        const nextParams =
+          value === null || value === undefined || value === ''
+            ? restParams
+            : { ...restParams, [name]: value }
+
+        setParams(nextParams)
+        reme.set(nextParams)
+        return nextParams
+      }
+
       return {
         ...valueProp,
         [trigger]: (e: unknown) => {
-          const value =
-            typeof getValueFromEvent === 'function' ? getValueFromEvent(e) : defaultGetValue(e)
-
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          const { [name]: dropedParam, ...restParams } = params
-          // remove nullish key
-          const nextParams =
-            value === null || value === undefined || value === ''
-              ? restParams
-              : { ...restParams, [name]: value }
-
-          setParams(nextParams)
-          reme.set(nextParams)
+          changeValue(e)
+        },
+        [searchTrigger]: (e: unknown) => {
+          const nextParams = changeValue(e)
           scopeOptions?.onSearch?.(nextParams)
         },
       }
@@ -71,12 +87,7 @@ export const useSearch = (
       reme.set(nextParams)
       scopeOptions?.onSearch?.(nextParams)
     }
-    console.log(`Check the search params ${name}`)
-    return
   })
 
   return [search, params] as const
 }
-
-export const isPlainObject = (obj: unknown): obj is Record<string, any> =>
-  !!obj && obj.constructor === Object
