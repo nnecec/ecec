@@ -5,10 +5,10 @@ import {
   remember,
 } from '@afojs/remember'
 
-const count = remember('count')
-const countLocation = remember('count', { storage: createLocationStorage() })
-const countLS = remember('count', { storage: createLocalStorage() })
-const countSS = remember('count', { storage: createSessionStorage() })
+const count = remember<number>('count')
+const countLocation = remember<number>('count', { storage: createLocationStorage() })
+const countLS = remember<number>('count', { storage: createLocalStorage() })
+const countSS = remember<number>('count', { storage: createSessionStorage() })
 
 const adapters = {
   memory: count,
@@ -37,7 +37,7 @@ export const RememberExample = () => {
               </button>
               <button
                 onClick={() => {
-                  const num = count.get() as number
+                  const num = count.get()
                   console.log('increment 1 =', num)
                   count.set(num + 1)
                 }}
@@ -46,7 +46,7 @@ export const RememberExample = () => {
               </button>
               <button
                 onClick={() => {
-                  const num = count.get() as number
+                  const num = count.get()
                   console.log('decrement 1 =', num)
                   count.set(num - 1)
                 }}

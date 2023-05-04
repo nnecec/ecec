@@ -1,7 +1,7 @@
 import { createCacheStorage } from './adapter'
 import { isPlainObject, toParsed, toStringify } from './utils'
 
-import type { RememberOptions, Storage, Values } from './types'
+import type { RememberOptions, Storage } from './types'
 
 export class Remember<T = any> {
   storage: Storage
@@ -17,17 +17,17 @@ export class Remember<T = any> {
     this.checkExpired()
   }
 
-  set(value: Values<T>): void
-  set(path: string, value: T | Values<T>): void
-  set(path: string | Values<T>, value?: T | Values<T>): void {
+  set(value: T): void
+  set(path: string, value: T): void
+  set(path: string | T, value?: T): void {
     this.checkExpired()
     if (typeof path === 'string' && value !== undefined) {
       let cachedValue = this.get()
 
       if (isPlainObject(cachedValue)) {
-        cachedValue[path] = value as T
+        cachedValue[path] = value
       } else {
-        cachedValue = value as Values<T>
+        cachedValue = value
       }
 
       this.storage.set(this.name, toStringify(cachedValue))
@@ -36,7 +36,7 @@ export class Remember<T = any> {
     }
   }
 
-  get(path?: string | string[]): Values<T> | undefined {
+  get(path?: string | string[]): T | undefined {
     this.checkExpired()
     const cached = this.storage.get(this.name)
     if (cached === null) {
@@ -90,6 +90,6 @@ export class Remember<T = any> {
   }
 }
 
-export const remember = <T>(name: string, options?: RememberOptions) => {
+export const remember = <T = any>(name: string, options?: RememberOptions) => {
   return new Remember<T>(name, options)
 }
