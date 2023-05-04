@@ -10,6 +10,7 @@ export interface SearchOptions {
   searchTrigger?: string
   getValueFromEvent?: (...args: any[]) => ParamValue
   getValueProps?: (value: any) => Record<string, any>
+  [K:string]: any
 }
 
 export type UseSearchOptions = {
