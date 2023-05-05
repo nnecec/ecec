@@ -4,14 +4,17 @@ import { SearchExample } from "~/demos/use-search/antd";
 
 <SearchExample />
 
-```ts
+```tsx
 export const SearchExample = () => {
   const [form] = Form.useForm()
-  const [search, params] = useSearch({
-    onInitialize(params) {
-      form.setFieldsValue(params)
+  const [search, params] = useSearch(
+    'antd-use-search',
+    {
+      onInitialize(params) {
+        form.setFieldsValue(params)
+      },
     },
-  })
+  )
 
   const { data, isLoading, isValidating } = useSWR<any[]>(
     ['sectionA', params],
@@ -105,12 +108,17 @@ export const SearchExample = () => {
               key: '3',
             },
           ]}
-          {...search('tab', { getValueProps: value => ({ activeKey: value }) })}
+          {...search('tab', { valuePropName: 'activeKey' })}
         />
 
         <Switch
           {...search('opened', {
             getValueProps: value => ({ checked: value }),
+          })}
+        />
+        <Input.Search
+          {...search('inputSearch', {
+            searchTrigger: 'onSearch',
           })}
         />
 
@@ -120,10 +128,6 @@ export const SearchExample = () => {
             {
               title: 'Name',
               dataIndex: 'name',
-            },
-            {
-              title: 'Amount',
-              dataIndex: 'amount',
             },
             {
               title: 'Value',
@@ -137,7 +141,7 @@ export const SearchExample = () => {
               search({ page, pageSize })
             },
           }}
-        ></Table>
+        />
       </Card>
     </div>
   )

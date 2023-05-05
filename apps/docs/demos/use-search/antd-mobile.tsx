@@ -60,9 +60,7 @@ export const SearchExample = () => {
             onChange() {
               queryClient.resetQueries({ queryKey: ['list'] })
             },
-            getValueProps(value) {
-              return { activeKey: `${value}` }
-            },
+            valuePropName: 'activeKey',
           })}
         >
           <Tabs.Tab title="水果" key="fruits" />

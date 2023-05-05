@@ -1,7 +1,7 @@
 {
   "name": "@afojs/use-remember",
   "version": "0.0.1",
-  "homepage": "https://github.com/nnecec/afo/tree/main/packages/remember",
+  "homepage": "https://github.com/nnecec/afo/tree/main/packages/use-remember",
   "repository": {
     "type": "git",
     "url": "https://github.com/nnecec/afo"
