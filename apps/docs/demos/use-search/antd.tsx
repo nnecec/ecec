@@ -16,24 +16,29 @@ import {
 } from 'antd'
 import useSWR from 'swr'
 
-const fetcher = (params: Record<string, any>) =>
-  new Promise<any[]>(resolve => {
+const fetcher = (params: Record<string, any>) => {
+  return new Promise<any[]>(resolve => {
     setTimeout(() => {
       resolve(
-        Object.entries(params).map(([key, value]) => ({ name: key, value, amount: Math.random() })),
+        Object.entries(params).map(([key, value]) => ({
+          name: key,
+          value: typeof value === 'string' ? value : `${value}`,
+        })),
       )
     }, 1000)
   })
+}
 
 export const SearchExample = () => {
   const [form] = Form.useForm()
-  const [search, params] = useSearch({
-    onInitialize(params) {
-      form.setFieldsValue(params)
+  const [search, params] = useSearch(
+    // 'antd-use-search',
+    {
+      onInitialize(params) {
+        form.setFieldsValue(params)
+      },
     },
-  })
-
-  console.log(params)
+  )
 
   const { data, isLoading, isValidating } = useSWR<any[]>(
     ['sectionA', params],
@@ -127,12 +132,12 @@ export const SearchExample = () => {
               key: '3',
             },
           ]}
-          {...search('tab', { getValueProps: value => ({ activeKey: value }) })}
+          {...search('tab', { valuePropName: 'activeKey' })}
         />
 
         <Switch
           {...search('opened', {
-            getValueProps: value => ({ checked: value }),
+            valuePropName: 'checked',
           })}
         />
         <Input.Search
@@ -147,10 +152,6 @@ export const SearchExample = () => {
             {
               title: 'Name',
               dataIndex: 'name',
-            },
-            {
-              title: 'Amount',
-              dataIndex: 'amount',
             },
             {
               title: 'Value',

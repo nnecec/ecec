@@ -6,7 +6,8 @@
     "baseUrl": ".",
     "paths": {
       "@afojs/react-utils": ["packages/react-utils/src"],
-      "@afojs/use-search": ["packages/use-search/src"]
+      "@afojs/use-search": ["packages/use-search/src"],
+      "@afojs/use-remember": ["packages/use-remember/src"]
     }
   },
   "exclude": ["dist", "build", "node_modules"]

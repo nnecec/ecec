@@ -8,6 +8,8 @@ import type { Params, SearchOptions, UseSearchOptions } from './types'
 export const isPlainObject = (obj: unknown): obj is Record<string, any> =>
   !!obj && obj.constructor === Object
 
+const DefaultSearchName = 'afojs/use-search'
+
 const defaultGetValue = (e: unknown) => {
   if (e !== null && typeof e === 'object' && 'value' in e) {
     return e.value
@@ -21,9 +23,11 @@ export const useSearch = (
   scope?: string | UseSearchOptions,
   useSearchOptions?: UseSearchOptions,
 ) => {
-  const searchName = typeof scope === 'string' ? scope : 'use-search'
+  const searchName = typeof scope === 'string' ? scope : DefaultSearchName
   const searchOptions = typeof scope === 'string' ? useSearchOptions : (scope as UseSearchOptions)
-  const remember = useRemember(searchName, { storage: createLocationStorage() })
+  const remember = useRemember(searchName, {
+    storage: searchName === DefaultSearchName ? undefined : createLocationStorage(),
+  })
 
   const [internalParams, setInternalParams] = useState<Params>(() => {
     const initialParams = remember.get() as Params
@@ -39,22 +43,27 @@ export const useSearch = (
       searchTrigger = trigger,
       getValueFromEvent,
       getValueProps,
+      valuePropName = 'value',
     } = options
+
+    const triggerSearch = (nextParams: Params) => {
+      setParams(nextParams)
+      remember.set(nextParams)
+      searchOptions?.onSearch?.(nextParams)
+    }
 
     if (typeof name === 'string' && name.length > 0) {
       const valueProp =
         typeof getValueProps === 'function'
           ? getValueProps(internalParams[name])
-          : { value: internalParams[name] }
-
-      const triggerSearch = (nextParams: Params) => {
-        setParams(nextParams)
-        searchOptions?.onSearch?.(nextParams)
-      }
+          : { [valuePropName]: internalParams[name] }
 
       return {
         ...valueProp,
-        [searchTrigger]: () => triggerSearch(internalParams),
+        [searchTrigger]: (e: any) => {
+          options[searchTrigger]?.(e)
+          triggerSearch(internalParams)
+        },
         [trigger]: (e: any) => {
           options[trigger]?.(e)
 
@@ -69,9 +78,8 @@ export const useSearch = (
               : { ...restParams, [name]: newValue }
 
           setInternalParams(nextParams)
-          remember.set(nextParams)
 
-          if (trigger === searchTrigger) {
+          if (searchTrigger === trigger) {
             triggerSearch(nextParams)
           }
         },
@@ -79,9 +87,7 @@ export const useSearch = (
     } else if (isPlainObject(name)) {
       const nextParams = { ...internalParams, ...name }
       setInternalParams(nextParams)
-      setParams(nextParams)
-      remember.set(nextParams)
-      searchOptions?.onSearch?.(nextParams)
+      triggerSearch(nextParams)
     }
   }
 
