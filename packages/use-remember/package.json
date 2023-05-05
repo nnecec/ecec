@@ -1,7 +1,7 @@
 {
-  "name": "@afojs/react-utils",
+  "name": "@afojs/use-remember",
   "version": "0.0.1",
-  "homepage": "https://github.com/nnecec/afo/tree/main/packages/react-utils",
+  "homepage": "https://github.com/nnecec/afo/tree/main/packages/remember",
   "repository": {
     "type": "git",
     "url": "https://github.com/nnecec/afo"
@@ -22,11 +22,12 @@
     "dev": "bunchee src/index.ts --format esm,cjs --watch --dts"
   },
   "dependencies": {
+    "@afojs/remember": "workspace:*",
     "react": "^18.2.0"
   },
   "devDependencies": {
-    "@types/node": "^18.16.3",
     "@types/react": "^18.2.5",
-    "bunchee": "^3.1.1"
+    "bunchee": "^3.1.1",
+    "typescript": "^5.0.4"
   }
 }

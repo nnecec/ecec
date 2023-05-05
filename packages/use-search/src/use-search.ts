@@ -1,5 +1,5 @@
-import { useMemo, useState } from 'react'
-import { createLocationStorage, remember } from '@afojs/remember'
+import { useState } from 'react'
+import { createLocationStorage, useRemember } from '@afojs/use-remember'
 
 import type React from 'react'
 
@@ -23,16 +23,10 @@ export const useSearch = (
 ) => {
   const searchName = typeof scope === 'string' ? scope : 'use-search'
   const searchOptions = typeof scope === 'string' ? useSearchOptions : (scope as UseSearchOptions)
-
-  const reme = useMemo(() => {
-    if (typeof document !== 'undefined') {
-      return remember(searchName, { storage: createLocationStorage() })
-    }
-    return remember(searchName)
-  }, [searchName])
+  const remember = useRemember(searchName, { storage: createLocationStorage() })
 
   const [internalParams, setInternalParams] = useState<Params>(() => {
-    const initialParams = reme.get() as Params
+    const initialParams = remember.get() as Params
     typeof searchOptions?.onInitialize === 'function' && searchOptions.onInitialize(initialParams)
     return initialParams ?? {}
   })
@@ -75,7 +69,7 @@ export const useSearch = (
               : { ...restParams, [name]: newValue }
 
           setInternalParams(nextParams)
-          reme.set(nextParams)
+          remember.set(nextParams)
 
           if (trigger === searchTrigger) {
             triggerSearch(nextParams)
@@ -86,7 +80,7 @@ export const useSearch = (
       const nextParams = { ...internalParams, ...name }
       setInternalParams(nextParams)
       setParams(nextParams)
-      reme.set(nextParams)
+      remember.set(nextParams)
       searchOptions?.onSearch?.(nextParams)
     }
   }

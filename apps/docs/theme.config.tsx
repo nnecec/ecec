@@ -1,5 +1,3 @@
-import React from 'react'
-
 import type { DocsThemeConfig } from 'nextra-theme-docs'
 
 const config: DocsThemeConfig = {
@@ -23,7 +21,7 @@ const config: DocsThemeConfig = {
     return {
       titleTemplate: '%s – afo',
     }
-  }
+  },
 }
 
 export default config
