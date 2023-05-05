@@ -25,14 +25,14 @@ export const useSearch = (
 ) => {
   const searchName = typeof scope === 'string' ? scope : DefaultSearchName
   const searchOptions = typeof scope === 'string' ? useSearchOptions : (scope as UseSearchOptions)
-  const remember = useRemember(searchName, {
+  const remember = useRemember<Params>(searchName, {
     storage: searchName === DefaultSearchName ? undefined : createLocationStorage(),
   })
 
   const [internalParams, setInternalParams] = useState<Params>(() => {
-    const initialParams = remember.get() as Params
+    const initialParams = remember.get() ?? searchOptions?.initialValues ?? {}
     typeof searchOptions?.onInitialize === 'function' && searchOptions.onInitialize(initialParams)
-    return initialParams ?? {}
+    return initialParams
   })
 
   const [params, setParams] = useState(internalParams)

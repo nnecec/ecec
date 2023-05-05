@@ -1,6 +1,9 @@
 use ini::Ini;
+use std::collections::HashMap;
 use std::env;
 use std::path::Path;
+
+use crate::constant::get_default_registries;
 
 pub fn read_ini(ini_file: &str) -> Result<Ini, ini::Error> {
     let os = env::consts::OS;
@@ -17,6 +20,15 @@ pub fn read_ini(ini_file: &str) -> Result<Ini, ini::Error> {
     Ini::load_from_file(&path)
 }
 
-pub fn get_registry_list(content: Ini) {
-    content.section("registry")
+pub fn get_registries(content: &Ini) -> HashMap<&str, &str> {
+    let mut registries = get_default_registries();
+
+    for (section, prop) in content.iter() {
+        for (k, v) in prop.iter() {
+            if k == "registry" {
+                registries.insert(section.unwrap_or("unknown"), v);
+            }
+        }
+    }
+    registries
 }

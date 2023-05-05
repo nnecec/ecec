@@ -3,8 +3,8 @@ import { remember } from '@afojs/remember'
 
 import type { Remember, RememberOptions } from '@afojs/remember'
 
-export const useRemember = (name: string, options?: RememberOptions) => {
-  const rememberRef = useRef<Remember>(remember(name))
+export const useRemember = <T = any>(name: string, options?: RememberOptions) => {
+  const rememberRef = useRef<Remember<T>>(remember(name))
 
   useEffect(() => {
     if (typeof document !== 'undefined') {

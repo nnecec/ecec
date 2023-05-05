@@ -12,10 +12,11 @@ export interface SearchOptions {
   getValueFromEvent?: (...args: any[]) => ParamValue
   getValueProps?: (value: any) => Record<string, any>
   valuePropName?: string
-  [K:string]: any
+  [K: string]: any
 }
 
 export type UseSearchOptions = {
-  onSearch?: (params: Params) => void
-  onInitialize?: (params: Params) => void
+  onSearch?: (params?: Params) => void
+  onInitialize?: (params?: Params) => void
+  initialValues?: Params
 }

@@ -34,6 +34,10 @@ export const SearchExample = () => {
   const [search, params] = useSearch(
     // 'antd-use-search',
     {
+      initialValues: {
+        page: 1,
+        pageSize: 5,
+      },
       onInitialize(params) {
         form.setFieldsValue(params)
       },
@@ -94,17 +98,11 @@ export const SearchExample = () => {
                 <Checkbox value="A" style={{ lineHeight: '32px' }}>
                   A
                 </Checkbox>
-
                 <Checkbox value="D" style={{ lineHeight: '32px' }}>
                   D
                 </Checkbox>
-
                 <Checkbox value="E" style={{ lineHeight: '32px' }}>
                   E
-                </Checkbox>
-
-                <Checkbox value="F" style={{ lineHeight: '32px' }}>
-                  F
                 </Checkbox>
               </Space>
             </Checkbox.Group>

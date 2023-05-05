@@ -9,7 +9,7 @@
       "request": "launch",
       "name": "Debug executable 'nm'",
       "cargo": {
-        "args": ["build", "--bin=nm", "--package=nm"],
+        "args": ["run", "--bin=nm", "--package=nm"],
         "filter": {
           "name": "nm",
           "kind": "bin"
