@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-pub fn get_default_registries() -> HashMap<&'static str, &'static  str> {
+pub fn get_default_registries() -> HashMap<&'static str, &'static str> {
     HashMap::from([
         ("npm", "https://registry.npmjs.org"),
         ("yarn", "https://registry.yarnpkg.com"),

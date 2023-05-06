@@ -6,15 +6,12 @@ import {
   InfiniteScroll,
   List,
   Picker,
-  PullToRefresh,
   SearchBar,
-  Switch,
   Tabs,
 } from 'antd-mobile'
 
 const fetcher = params => {
   const { page, ...other } = params
-  console.log(other)
   return new Promise<any>(resolve => {
     setTimeout(() => {
       if (page >= 5) {
@@ -35,7 +32,6 @@ const fetcher = params => {
 export const SearchExample = () => {
   const queryClient = useQueryClient()
   const [search, params] = useSearch()
-  const [visible, setVisible] = useState(false)
 
   useEffect(() => {
     if (typeof document !== 'undefined') {
