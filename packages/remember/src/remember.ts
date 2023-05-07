@@ -17,26 +17,29 @@ export class Remember<T = any> {
     this.checkExpired()
   }
 
-  set(value: T): void
+  set(value: Record<string, T>): void
   set(path: string, value: T): void
-  set(path: string | T, value?: T): void {
+  set(path: string | Record<string, T>, value?: T): void {
     this.checkExpired()
     if (typeof path === 'string' && value !== undefined) {
       let cachedValue = this.get()
 
-      if (isPlainObject(cachedValue)) {
+      if (cachedValue) {
         cachedValue[path] = value
       } else {
-        cachedValue = value
+        cachedValue = { [path]: value }
       }
 
       this.storage.set(this.name, toStringify(cachedValue))
-    } else if (path !== undefined && value === undefined) {
+    } else if (isPlainObject(path) && value === undefined) {
       this.storage.set(this.name, toStringify(path))
     }
   }
 
-  get(path?: string | string[]): T | undefined {
+  get(): Record<string, T>
+  get(path: string): T
+  get(path: string[]): Record<string, T>
+  get(path?: string | string[]): Record<string, T> | T | undefined {
     this.checkExpired()
     const cached = this.storage.get(this.name)
     if (cached === null) {
@@ -45,11 +48,11 @@ export class Remember<T = any> {
     const values = toParsed(cached)
 
     if (Array.isArray(path)) {
-      return values
+      return values as Record<string, T>
     } else if (typeof path === 'string') {
-      return values[path]
+      return values[path] as T
     }
-    return values
+    return values as Record<string, T>
   }
 
   remove(keys?: string | string[]): void {

@@ -30,25 +30,25 @@ export const RememberExample = () => {
               <button
                 onClick={() => {
                   console.log('initial =', 0)
-                  count.set(0)
+                  count.set('count', 0)
                 }}
               >
                 initial
               </button>
               <button
                 onClick={() => {
-                  const num = count.get()
+                  const num = count.get('count')
                   console.log('increment 1 =', num)
-                  count.set(num + 1)
+                  count.set('count', num + 1)
                 }}
               >
                 increment
               </button>
               <button
                 onClick={() => {
-                  const num = count.get()
+                  const num = count.get('count')
                   console.log('decrement 1 =', num)
-                  count.set(num - 1)
+                  count.set('count', num - 1)
                 }}
               >
                 decrement
