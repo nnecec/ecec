@@ -1,6 +1,8 @@
 # @afojs/use-search
 
-- useSearch
+- UI 无关
+- 整合请求数据
+- 支持 location 同步
 
 ## Usage
 
@@ -25,9 +27,12 @@ export const App = () => {
     fetch(`${url}?${new URLSearchParams(params).toString()}`)
   })
 
-  // there are two conditions of search function
-  // first, you can pass a field name, the search function will affect the field of params.
-  // other, pass nothing, the search function will merge received params to the useSearch's params.
+  /**
+   * there are two conditions of search function
+   *
+   * first, you can pass a field name, the search function will affect the field of params.
+   * other, pass nothing, the search function will merge received params to the useSearch's params.
+   */
 
   return (
     <div>
@@ -54,27 +59,34 @@ export const App = () => {
           { label: 'Open', value: 1 },
           { label: 'Close', value: 0 },
         ]}
-        {...search('status')}
-      />
-
-      <Switch
-        checked={params.switch}
-        onChange={value => {
-          search({ switch: value })
-        }}
-      />
-
-      <SearchInput {...search('searchInput', { trigger: 'onConfirm' })} />
-      <CustomPicker
-        {...search('customPicker', {
-          getValueFromEvent: e => e[0],
-          getValueProps: value => ({ value: [value] }),
+        {...search('status', {
+          onChange: () => {
+            // your change
+          },
         })}
       />
 
-      <SearchBar {...search('searchbar', { trigger: 'onSearch' })} />
+      <Switch
+        {...search('status', {
+          valuePropName: 'checked',
+        })}
+      />
 
-      <Picker columns={columns} {...search('picker', { trigger: 'onConfirm' })}>
+      <Input.Search {...search('input-search', { searchTrigger: 'onSearch' })} />
+
+      <Picker
+        columns={[
+          [
+            { label: 'a', value: 'a' },
+            { label: 'b', value: 'b' },
+          ],
+        ]}
+        {...search('picker', {
+          trigger: 'onConfirm',
+          getValueFromEvent: e => e[0],
+          getValueProps: value => ({ value: [value] }),
+        })}
+      >
         {(items, { open }) => {
           return (
             <Space align="center">
@@ -86,6 +98,105 @@ export const App = () => {
           )
         }}
       </Picker>
+    </div>
+  )
+}
+```
+
+```tsx
+const usePickerBox = () => {
+  return {
+    children: (items, { open }) => {
+      return (
+        <Space align="center">
+          <Button onClick={open}>选择</Button>
+          {items.every(item => item === null)
+            ? '未选择'
+            : items.map(item => item?.label ?? '未选择').join(' - ')}
+        </Space>
+      )
+    },
+    trigger: 'onConfirm',
+    getValueFromEvent: e => e[0],
+    getValueProps: value => ({ value: [value] }),
+  }
+}
+
+const App = () => {
+  return (
+    <Picker
+      columns={[
+        [
+          { label: 'a', value: 'a' },
+          { label: 'b', value: 'b' },
+        ],
+      ]}
+      {...usePickerBox()}
+    />
+  )
+}
+```
+
+```tsx
+const App = () => {
+  const queryClient = useQueryClient()
+  const [search, params] = useSearch()
+
+  const { data, error, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage, status } =
+    useInfiniteQuery({
+      queryKey: ['list', params],
+      queryFn: ({ pageParam = 0 }) => fetcher({ page: pageParam, ...params }),
+      getNextPageParam: (lastPage: any) => lastPage.nextPage,
+    })
+
+  return (
+    <div>
+      <List>
+        {data?.pages?.map(group =>
+          group.list?.map(item => (
+            <List.Item key={item}>
+              <p>{item.name}</p>
+              <p>{item.tabs}</p>
+              <p>
+                {item.picker1} {item.picker2 ? `-${item.picker2}` : ''}
+              </p>
+            </List.Item>
+          )),
+        )}
+      </List>
+
+      <InfiniteScroll
+        loadMore={async () => {
+          await fetchNextPage()
+        }}
+        hasMore={!!hasNextPage || !isFetchingNextPage}
+      />
+    </div>
+  )
+}
+
+const App = () => {
+  const [search, params] = useSearch()
+  const { InfiniteScroll, list, error, isLoading } = usePaginationBox({
+    queryKey: ['list', params],
+    queryFn: query => fetcher({ ...query, ...params }),
+  })
+
+  return (
+    <div>
+      <List>
+        {list?.map(item => (
+          <List.Item key={item}>
+            <p>{item.name}</p>
+            <p>{item.tabs}</p>
+            <p>
+              {item.picker1} {item.picker2 ? `-${item.picker2}` : ''}
+            </p>
+          </List.Item>
+        ))}
+      </List>
+
+      <InfiniteScroll />
     </div>
   )
 }

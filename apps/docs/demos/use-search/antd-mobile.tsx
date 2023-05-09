@@ -1,14 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useSearch } from '@afojs/use-search'
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query'
-import {
-  Button,
-  InfiniteScroll,
-  List,
-  Picker,
-  SearchBar,
-  Tabs,
-} from 'antd-mobile'
+import { Button, InfiniteScroll, List, Picker, SearchBar, Tabs, PullToRefresh } from 'antd-mobile'
 
 const fetcher = params => {
   const { page, ...other } = params
@@ -101,25 +94,27 @@ export const SearchExample = () => {
         </div>
       </div>
 
-      <List>
-        {data?.pages?.map(group =>
-          group.list?.map(item => (
-            <List.Item key={item}>
-              <p>{item.name}</p>
-              <p>{item.tabs}</p>
-              <p>
-                {item.picker1} {item.picker2 ? `-${item.picker2}` : ''}
-              </p>
-            </List.Item>
-          )),
-        )}
-      </List>
+      <PullToRefresh onRefresh={() => queryClient.resetQueries({ queryKey: ['list'] })}>
+        <List>
+          {data?.pages?.map(group =>
+            group.list?.map(item => (
+              <List.Item key={item}>
+                <p>{item.name}</p>
+                <p>{item.tabs}</p>
+                <p>
+                  {item.picker1} {item.picker2 ? `-${item.picker2}` : ''}
+                </p>
+              </List.Item>
+            )),
+          )}
+        </List>
+      </PullToRefresh>
 
       <InfiniteScroll
         loadMore={async () => {
           await fetchNextPage()
         }}
-        hasMore={!!hasNextPage || !isFetchingNextPage}
+        hasMore={!!hasNextPage && !isFetchingNextPage}
       />
     </div>
   )

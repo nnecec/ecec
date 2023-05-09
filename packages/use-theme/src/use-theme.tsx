@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react'
-import { useLocalStorage,useMedia } from '@afojs/react-utils'
+import { useLocalStorage, useMedia } from '@afojs/react-utils'
 
 import type { Dispatch, ReactNode, SetStateAction } from 'react'
 
@@ -13,7 +13,7 @@ type ThemeContextType = {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
 
-function ThemeProvider({ children }: { children: ReactNode }) {
+function ThemeProvider({ children }: { children: ReactNode }): ReactNode {
   const [selectedTheme = 'auto', setTheme] = useLocalStorage<Theme>('auto')
   const prefersDarkMode = useMedia('(prefers-color-scheme: dark)', false)
 

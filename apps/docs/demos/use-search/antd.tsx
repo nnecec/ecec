@@ -21,12 +21,17 @@ const fetcher = (params: Record<string, any>) => {
   return new Promise<any[]>(resolve => {
     setTimeout(() => {
       resolve(
-        Object.entries(params).map(([key, value]) => ({
-          name: key,
-          value: typeof value === 'string' ? value : `${value}`,
-        })),
+        Object.entries(params)
+          .map(([key, value]) => {
+            if (value === undefined) return undefined
+            return {
+              name: key,
+              value: typeof value === 'string' ? value : `${value}`,
+            }
+          })
+          .filter(Boolean),
       )
-    }, 1000)
+    }, 500)
   })
 }
 
