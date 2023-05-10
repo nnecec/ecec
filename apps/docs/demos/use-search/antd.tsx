@@ -38,7 +38,7 @@ const fetcher = (params: Record<string, any>) => {
 export const SearchExample = () => {
   const [form] = Form.useForm()
   const [search, params] = useSearch(
-    // 'antd-use-search',
+    'antd-use-search',
     {
       initialValues: {
         page: 1,
@@ -160,6 +160,7 @@ export const SearchExample = () => {
             {
               title: 'Value',
               dataIndex: 'value',
+              // render: text => useBoolText(text),
             },
           ]}
           dataSource={data ?? []}
