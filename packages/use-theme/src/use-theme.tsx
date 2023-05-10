@@ -13,7 +13,7 @@ type ThemeContextType = {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
 
-function ThemeProvider({ children }: { children: ReactNode }): ReactNode {
+function ThemeProvider({ children }: { children: ReactNode }): JSX.Element {
   const [selectedTheme = 'auto', setTheme] = useLocalStorage<Theme>('auto')
   const prefersDarkMode = useMedia('(prefers-color-scheme: dark)', false)
 
