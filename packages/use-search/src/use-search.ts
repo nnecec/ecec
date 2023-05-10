@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { createLocationStorage, useRemember } from '@afojs/use-remember'
 
 import type React from 'react'
@@ -34,6 +34,13 @@ export const useSearch = (
     typeof searchOptions?.onInitialize === 'function' && searchOptions.onInitialize(initialParams)
     return initialParams
   })
+
+  // dirty implementation
+  useEffect(() => {
+    const initialParams = remember.get() ?? searchOptions?.initialValues ?? {}
+    setInternalParams(initialParams)
+    typeof searchOptions?.onInitialize === 'function' && searchOptions.onInitialize(initialParams)
+  }, [remember])
 
   const [params, setParams] = useState(internalParams)
 
