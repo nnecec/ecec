@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useSearch } from '@afojs/use-search'
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query'
-import { Button, InfiniteScroll, List, Picker, SearchBar, Tabs, PullToRefresh } from 'antd-mobile'
+import { Button, List, Picker, SearchBar, Tabs } from 'antd-mobile'
+import { usePaginationBox } from './use-pagination-box'
 
 const fetcher = params => {
   const { page, ...other } = params
@@ -13,7 +14,7 @@ const fetcher = params => {
       }
       resolve({
         list: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'].map(t => ({
-          name: t,
+          name: `${t}-${page}`,
           ...other,
         })),
         nextPage: page + 1,
@@ -24,20 +25,16 @@ const fetcher = params => {
 
 export const SearchExample = () => {
   const queryClient = useQueryClient()
-  const [search, params] = useSearch()
+  const [search, params] = useSearch({
+    initialValues: {
+      tabs: 'fruits',
+    },
+  })
 
-  useEffect(() => {
-    if (typeof document !== 'undefined') {
-      document.documentElement.dataset.prefersColorScheme = 'light'
-    }
-  }, [])
-
-  const { data, error, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage, status } =
-    useInfiniteQuery({
-      queryKey: ['list', params],
-      queryFn: ({ pageParam = 0 }) => fetcher({ page: pageParam, ...params }),
-      getNextPageParam: (lastPage: any) => lastPage.nextPage,
-    })
+  const { data, InfiniteScroll, PullToRefresh } = usePaginationBox({
+    queryKey: ['list', params],
+    queryFn: async pageParams => await fetcher({ ...pageParams, ...params }),
+  })
 
   return (
     <div className="h-[667px] w-[390px] overflow-y-auto border bg-white" id="antd-mobile-demo">
@@ -94,15 +91,15 @@ export const SearchExample = () => {
         </div>
       </div>
 
-      <PullToRefresh onRefresh={() => queryClient.resetQueries({ queryKey: ['list'] })}>
+      <PullToRefresh>
         <List>
           {data?.pages?.map(group =>
             group.list?.map(item => (
-              <List.Item key={item}>
+              <List.Item key={item.name}>
                 <p>{item.name}</p>
                 <p>{item.tabs}</p>
                 <p>
-                  {item.picker1} {item.picker2 ? `-${item.picker2}` : ''}
+                  {item.picker1} {item.picker2 ? `-${item.picker2}` : null}
                 </p>
               </List.Item>
             )),
@@ -110,12 +107,7 @@ export const SearchExample = () => {
         </List>
       </PullToRefresh>
 
-      <InfiniteScroll
-        loadMore={async () => {
-          await fetchNextPage()
-        }}
-        hasMore={!!hasNextPage && !isFetchingNextPage}
-      />
+      <InfiniteScroll />
     </div>
   )
 }
