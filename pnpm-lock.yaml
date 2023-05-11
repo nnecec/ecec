@@ -185,9 +185,9 @@ importers:
       '@afojs/react-utils':
         specifier: workspace:*
         version: link:../react-utils
-      '@afojs/use-remember':
+      '@afojs/remember':
         specifier: workspace:*
-        version: link:../use-remember
+        version: link:../remember
       react:
         specifier: ^18.2.0
         version: 18.2.0

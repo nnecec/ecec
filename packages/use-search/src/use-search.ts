@@ -1,5 +1,6 @@
-import { useState } from 'react'
-import { createLocationStorage, useRemember } from '@afojs/use-remember'
+import { useEffect, useMemo, useState } from 'react'
+
+import { remember, createLocationStorage } from '@afojs/remember'
 
 import type React from 'react'
 
@@ -10,7 +11,9 @@ export const isPlainObject = (obj: unknown): obj is Record<string, any> =>
 
 const DefaultSearchName = 'afojs/use-search'
 
-const defaultGetValue = (e: unknown) => {
+const defaultGetValue = (args: any[]) => {
+  const e = args[0]
+
   if (e !== null && typeof e === 'object' && 'value' in e) {
     return e.value
   } else if (e !== null && typeof e === 'object' && 'target' in e) {
@@ -25,24 +28,26 @@ export const useSearch = (
 ) => {
   const searchName = typeof scope === 'string' ? scope : DefaultSearchName
   const searchOptions = typeof scope === 'string' ? useSearchOptions : (scope as UseSearchOptions)
-  const remember = useRemember<Params>(searchName, {
-    storage: searchName === DefaultSearchName ? undefined : createLocationStorage(),
-  })
 
-  const [internalParams, setInternalParams] = useState<Params>(() => {
-    const initialParams = remember.get() ?? searchOptions?.initialValues ?? {}
-    typeof searchOptions?.onInitialize === 'function' && searchOptions.onInitialize(initialParams)
-    return initialParams
-  })
+  const reme = useMemo(() => {
+    if (typeof document !== 'undefined') {
+      return remember(searchName, {
+        storage: searchName === DefaultSearchName ? undefined : createLocationStorage(),
+      })
+    }
+    return remember(searchName)
+  }, [searchName])
 
-  // dirty implementation
-  // useEffect(() => {
-  //   const initialParams = remember.get() ?? {}
-  //   setInternalParams(initialParams)
-  //   typeof searchOptions?.onInitialize === 'function' && searchOptions.onInitialize(initialParams)
-  // }, [remember])
-
+  const [internalParams, setInternalParams] = useState<Params>({})
   const [params, setParams] = useState(internalParams)
+
+  // update params from reme
+  useEffect(() => {
+    const initialParams = reme.get() ?? searchOptions?.initialValues ?? {}
+    typeof searchOptions?.onInitialize === 'function' && searchOptions.onInitialize(initialParams)
+    setInternalParams(initialParams)
+    setParams(initialParams)
+  }, [reme])
 
   const search = (name?: string | Params, options: SearchOptions = {}): any => {
     const {
@@ -55,7 +60,7 @@ export const useSearch = (
 
     const triggerSearch = (nextParams: Params) => {
       setParams(nextParams)
-      remember.set(nextParams)
+      reme.set(nextParams)
       searchOptions?.onSearch?.(nextParams)
     }
 
@@ -71,11 +76,13 @@ export const useSearch = (
           options[searchTrigger]?.(e)
           triggerSearch(internalParams)
         },
-        [trigger]: (e: any) => {
-          options[trigger]?.(e)
+        [trigger]: (...args: any[]) => {
+          options[trigger]?.(args)
 
           const newValue =
-            typeof getValueFromEvent === 'function' ? getValueFromEvent(e) : defaultGetValue(e)
+            typeof getValueFromEvent === 'function'
+              ? getValueFromEvent(args)
+              : defaultGetValue(args)
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
           const { [name]: dropedParam, ...restParams } = internalParams
           // remove nullish key
@@ -83,7 +90,7 @@ export const useSearch = (
             newValue === null || newValue === undefined || newValue === ''
               ? restParams
               : { ...restParams, [name]: newValue }
-
+          console.log(nextParams)
           setInternalParams(nextParams)
 
           if (searchTrigger === trigger) {

@@ -24,7 +24,7 @@
   "dependencies": {
     "@afojs/emitter": "workspace:*",
     "@afojs/react-utils": "workspace:*",
-    "@afojs/use-remember": "workspace:*",
+    "@afojs/remember": "workspace:*",
     "react": "^18.2.0"
   },
   "devDependencies": {
