@@ -2,7 +2,10 @@ import { useEffect, useState } from 'react'
 import { useSearch } from '@afojs/use-search'
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query'
 import { Button, List, Picker, SearchBar, Tabs } from 'antd-mobile'
+
+import { useConfirmBox } from './use-confirm-box'
 import { usePaginationBox } from './use-pagination-box'
+import { usePickerBox } from './use-picker-box'
 
 const fetcher = params => {
   const { page, ...other } = params
@@ -23,6 +26,20 @@ const fetcher = params => {
   })
 }
 
+const remover = params => {
+  console.log(params)
+  return new Promise<any>((resolve, reject) => {
+    setTimeout(() => {
+      const isSuccess = Math.random() > 0.5
+      if (isSuccess) {
+        resolve('Success!')
+      } else {
+        reject(new Error('Verify failed!'))
+      }
+    }, 1000)
+  })
+}
+
 export const SearchExample = () => {
   const queryClient = useQueryClient()
   const [search, params] = useSearch({
@@ -30,10 +47,18 @@ export const SearchExample = () => {
       tabs: 'fruits',
     },
   })
+  const queryKey = ['list', params]
 
   const { data, InfiniteScroll, PullToRefresh } = usePaginationBox({
-    queryKey: ['list', params],
+    queryKey,
     queryFn: async pageParams => await fetcher({ ...pageParams, ...params }),
+  })
+
+  const remove = useConfirmBox({
+    resetKey: queryKey,
+    mutationFn: data => remover(data),
+    title: item => `确认删除${item.name}吗？`,
+    content: '数据删除后将无法恢复，请确认后操作！',
   })
 
   return (
@@ -81,13 +106,8 @@ export const SearchExample = () => {
               ],
             ]}
             {...search('picker2', { trigger: 'onConfirm' })}
-          >
-            {([value], { open }) => (
-              <Button onClick={open} block fill="none">
-                {value ? value.label : '请选择'}
-              </Button>
-            )}
-          </Picker>
+            {...usePickerBox()}
+          />
         </div>
       </div>
 
@@ -101,6 +121,7 @@ export const SearchExample = () => {
                 <p>
                   {item.picker1} {item.picker2 ? `-${item.picker2}` : null}
                 </p>
+                <Button onClick={() => remove(item)}>Remove</Button>
               </List.Item>
             )),
           )}

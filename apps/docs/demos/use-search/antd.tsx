@@ -1,4 +1,3 @@
-import { useMemo } from 'react'
 import { useSearch } from '@afojs/use-search'
 import {
   Button,
@@ -23,7 +22,7 @@ const fetcher = (params: Record<string, any>) => {
       resolve(
         Object.entries(params)
           .map(([key, value]) => {
-            if (value === undefined) return undefined
+            if (value === undefined) return null
             return {
               name: key,
               value: typeof value === 'string' ? value : `${value}`,
@@ -37,18 +36,15 @@ const fetcher = (params: Record<string, any>) => {
 
 export const SearchExample = () => {
   const [form] = Form.useForm()
-  const [search, params] = useSearch(
-    'antd-use-search',
-    {
-      initialValues: {
-        page: 1,
-        pageSize: 5,
-      },
-      onInitialize(params) {
-        form.setFieldsValue(params)
-      },
+  const [search, params] = useSearch('antd-use-search', {
+    initialValues: {
+      page: 1,
+      pageSize: 5,
     },
-  )
+    onInitialize(params) {
+      form.setFieldsValue(params)
+    },
+  })
 
   const { data, isLoading, isValidating } = useSWR<any[]>(
     ['sectionA', params],
@@ -161,6 +157,12 @@ export const SearchExample = () => {
               title: 'Value',
               dataIndex: 'value',
               // render: text => useBoolText(text),
+            },
+            {
+              dataIndex: 'Operation',
+              render() {
+                return <Button>Delete</Button>
+              },
             },
           ]}
           dataSource={data ?? []}
