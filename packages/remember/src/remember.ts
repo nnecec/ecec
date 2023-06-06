@@ -6,14 +6,14 @@ import type { RememberOptions, Storage } from './types'
 export class Remember<T = any> {
   storage: Storage
   name: string
-  /** unit: seconds  */
+  /** unit: milliseconds  */
   maxAge?: number
   expiredAt?: number
 
   constructor(name: string, options: RememberOptions = {}) {
     this.name = name
     this.storage = options.storage ?? createCacheStorage()
-    this.maxAge = typeof options.maxAge === 'number' ? options.maxAge * 1000 : undefined
+    this.maxAge = typeof options.maxAge === 'number' ? options.maxAge : undefined
     this.checkExpired()
   }
 

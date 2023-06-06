@@ -1,7 +1,7 @@
 {
-  "name": "@afojs/button",
+  "name": "@afojs/ui",
   "version": "0.0.1",
-  "homepage": "https://github.com/nnecec/afo/tree/main/packages/button",
+  "homepage": "https://github.com/nnecec/afo/tree/main/packages/ui",
   "repository": {
     "type": "git",
     "url": "https://github.com/nnecec/afo"

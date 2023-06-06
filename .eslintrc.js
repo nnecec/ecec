@@ -13,4 +13,7 @@ module.exports = {
     },
   },
   ignorePatterns: ['target', 'packages/**/dist', 'packages/**/.turbo'],
+  rules: {
+    '@typescript-eslint/no-explicit-any': "off",
+  },
 }

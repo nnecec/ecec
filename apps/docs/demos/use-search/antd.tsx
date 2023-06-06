@@ -16,11 +16,12 @@ import {
 } from 'antd'
 import useSWR from 'swr'
 
-const fetcher = (params: Record<string, any>) => {
+const fetcher = (params?: Record<string, any>) => {
+  console.log(params)
   return new Promise<any[]>(resolve => {
     setTimeout(() => {
       resolve(
-        Object.entries(params)
+        Object.entries(params ?? {})
           .map(([key, value]) => {
             if (value === undefined) return null
             return {
@@ -36,19 +37,19 @@ const fetcher = (params: Record<string, any>) => {
 
 export const SearchExample = () => {
   const [form] = Form.useForm()
-  const [search, params] = useSearch('antd-use-search', {
-    initialValues: {
-      page: 1,
-      pageSize: 5,
-    },
-    onInitialize(params) {
+  const [search, params] = useSearch({
+    name: 'test-antd',
+    // initialValues: {
+    //   page: 1,
+    //   pageSize: 5,
+    // },
+    onInit(params) {
       form.setFieldsValue(params)
     },
   })
 
-  const { data, isLoading, isValidating } = useSWR<any[]>(
-    ['sectionA', params],
-    async () => await fetcher(params),
+  const { data, isLoading, isValidating } = useSWR<any[]>(['sectionA', params], () =>
+    fetcher(params),
   )
 
   return (

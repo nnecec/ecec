@@ -2,6 +2,7 @@ import type { Storage } from '../types'
 
 export const createSessionStorage = (): Storage => {
   return {
+    name: 'session-storage',
     set (key: string, value: string) {
       window.sessionStorage.setItem(key, value)
     },

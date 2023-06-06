@@ -1,13 +1,11 @@
-import { useEffect, useState } from 'react'
 import { useSearch } from '@afojs/use-search'
-import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query'
-import { Button, List, Picker, SearchBar, Tabs } from 'antd-mobile'
+import { useQueryClient } from '@tanstack/react-query'
+import { Button, InfiniteScroll, List, Picker, PullToRefresh, SearchBar, Tabs } from 'antd-mobile'
 
 import { useConfirmBox } from './use-confirm-box'
 import { usePaginationBox } from './use-pagination-box'
-import { usePickerBox } from './use-picker-box'
 
-const fetcher = params => {
+const fetcher = (params: any) => {
   const { page, ...other } = params
   return new Promise<any>(resolve => {
     setTimeout(() => {
@@ -26,7 +24,7 @@ const fetcher = params => {
   })
 }
 
-const remover = params => {
+const remover = (params: any) => {
   console.log(params)
   return new Promise<any>((resolve, reject) => {
     setTimeout(() => {
@@ -49,9 +47,9 @@ export const SearchExample = () => {
   })
   const queryKey = ['list', params]
 
-  const { data, InfiniteScroll, PullToRefresh } = usePaginationBox({
+  const { data, infiniteScrollProps, pullToRefreshProps } = usePaginationBox({
     queryKey,
-    queryFn: async pageParams => await fetcher({ ...pageParams, ...params }),
+    queryFn: async (pageParams: any) => await fetcher({ ...pageParams, ...params }),
   })
 
   const remove = useConfirmBox({
@@ -106,15 +104,20 @@ export const SearchExample = () => {
               ],
             ]}
             {...search('picker2', { trigger: 'onConfirm' })}
-            {...usePickerBox()}
-          />
+          >
+            {([value], { open }) => (
+              <Button onClick={open} block fill="none">
+                {value ? value.label : '请选择'}
+              </Button>
+            )}
+          </Picker>
         </div>
       </div>
 
-      <PullToRefresh>
+      <PullToRefresh {...pullToRefreshProps}>
         <List>
           {data?.pages?.map(group =>
-            group.list?.map(item => (
+            group.list?.map((item: any) => (
               <List.Item key={item.name}>
                 <p>{item.name}</p>
                 <p>{item.tabs}</p>
@@ -128,7 +131,7 @@ export const SearchExample = () => {
         </List>
       </PullToRefresh>
 
-      <InfiniteScroll />
+      <InfiniteScroll {...infiniteScrollProps} />
     </div>
   )
 }

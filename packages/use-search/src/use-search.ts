@@ -1,108 +1,77 @@
-import { useEffect, useMemo, useState } from 'react'
+'use client'
 
-import { remember, createLocationStorage } from '@afojs/remember'
+import { useMemo, useState } from 'react'
+import { createLocationStorage, remember } from '@afojs/remember'
 
-import type React from 'react'
+import { useCore } from './core'
+import { defaultGetValue, isPlainObject } from './utils'
 
-import type { Params, SearchOptions, UseSearchOptions } from './types'
+import type { Params, SearchOptions, UseSearchProps } from './types'
 
-export const isPlainObject = (obj: unknown): obj is Record<string, any> =>
-  !!obj && obj.constructor === Object
+const DEFAULT_NAME = 'afo/use-search'
 
-const DefaultSearchName = 'afojs/use-search'
-
-const defaultGetValue = (args: any[]) => {
-  const e = args[0]
-
-  if (e !== null && typeof e === 'object' && 'value' in e) {
-    return e.value
-  } else if (e !== null && typeof e === 'object' && 'target' in e) {
-    return (e as React.ChangeEvent<HTMLInputElement>).target.value
-  }
-  return e
-}
-
-export const useSearch = (
-  scope?: string | UseSearchOptions,
-  useSearchOptions?: UseSearchOptions,
-) => {
-  const searchName = typeof scope === 'string' ? scope : DefaultSearchName
-  const searchOptions = typeof scope === 'string' ? useSearchOptions : (scope as UseSearchOptions)
+export const useSearch = (props: UseSearchProps = {}) => {
+  const [params, updateParams] = useState<Params>()
 
   const reme = useMemo(() => {
-    if (typeof document !== 'undefined') {
-      return remember(searchName, {
-        storage: searchName === DefaultSearchName ? undefined : createLocationStorage(),
-      })
-    }
-    return remember(searchName)
-  }, [searchName])
+    const searchName = props.name ?? DEFAULT_NAME
 
-  const [internalParams, setInternalParams] = useState<Params>({})
-  const [params, setParams] = useState(internalParams)
+    return remember(searchName, {
+      storage:
+        searchName === DEFAULT_NAME || typeof window === 'undefined'
+          ? undefined
+          : createLocationStorage(),
+    })
+  }, [props.name])
 
-  // update params from reme
-  useEffect(() => {
-    const initialParams = reme.get() ?? searchOptions?.initialValues ?? {}
-    typeof searchOptions?.onInitialize === 'function' && searchOptions.onInitialize(initialParams)
-    setInternalParams(initialParams)
-    setParams(initialParams)
-  }, [reme])
+  const core = useCore({ ...props, initialValues: reme.get() ?? props.initialValues }, params => {
+    updateParams({ ...params })
+    reme.set({ ...params })
+  })
 
-  const search = (name?: string | Params, options: SearchOptions = {}): any => {
-    const {
-      trigger = 'onChange',
-      searchTrigger = trigger,
-      getValueFromEvent,
-      getValueProps,
-      valuePropName = 'value',
-    } = options
-
-    const triggerSearch = (nextParams: Params) => {
-      setParams(nextParams)
-      reme.set(nextParams)
-      searchOptions?.onSearch?.(nextParams)
-    }
-
+  function search(params: Params): void
+  function search(name: string, options: SearchOptions): Record<string, any>
+  function search(name: string | Params, options: SearchOptions = {}) {
     if (typeof name === 'string' && name.length > 0) {
+      const {
+        trigger = 'onChange',
+        searchTrigger = trigger,
+        getValueFromEvent,
+        getValueProps,
+        valuePropName = 'value',
+      } = options
+
+      const param = core.get(name)
+
       const valueProp =
-        typeof getValueProps === 'function'
-          ? getValueProps(internalParams[name])
-          : { [valuePropName]: internalParams[name] }
+        typeof getValueProps === 'function' ? getValueProps(param) : { [valuePropName]: param }
 
       return {
         ...valueProp,
-        [searchTrigger]: (e: any) => {
-          options[searchTrigger]?.(e)
-          triggerSearch(internalParams)
+        [searchTrigger]: (...args: any[]) => {
+          options[searchTrigger]?.(...args)
+          core.trigger()
         },
         [trigger]: (...args: any[]) => {
-          options[trigger]?.(args)
+          options[trigger]?.(...args)
 
-          const newValue =
+          const nextValue =
             typeof getValueFromEvent === 'function'
-              ? getValueFromEvent(args)
-              : defaultGetValue(args)
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          const { [name]: dropedParam, ...restParams } = internalParams
-          // remove nullish key
-          const nextParams =
-            newValue === null || newValue === undefined || newValue === ''
-              ? restParams
-              : { ...restParams, [name]: newValue }
-          console.log(nextParams)
-          setInternalParams(nextParams)
+              ? getValueFromEvent(...args)
+              : defaultGetValue(args[0])
 
+          core.setParam(name, nextValue)
           if (searchTrigger === trigger) {
-            triggerSearch(nextParams)
+            core.trigger()
           }
         },
       }
     } else if (isPlainObject(name)) {
-      const nextParams = { ...internalParams, ...name }
-      setInternalParams(nextParams)
-      triggerSearch(nextParams)
+      core.setParams(name)
+      core.trigger()
+      return
     }
+    throw new Error(`invalid search name: ${name}`)
   }
 
   return [search, params] as const

@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { Button, Dialog, Toast } from 'antd-mobile'
+import { Dialog, Toast } from 'antd-mobile'
 
 export const useConfirmBox = ({ resetKey, mutationFn, title, ...props }) => {
   const queryClient = useQueryClient()
@@ -24,15 +24,4 @@ export const useConfirmBox = ({ resetKey, mutationFn, title, ...props }) => {
       },
     })
   }
-}
-
-export const useButtonBox = options => {
-  return options.map(option => {
-    const { label, hide, ...rest } = option
-    return (
-      <Button key={label} {...rest}>
-        {label}
-      </Button>
-    )
-  })
 }

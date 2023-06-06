@@ -1,5 +1,6 @@
 export const createLocationStorage = () => {
   return {
+    name: 'location-storage',
     set: (key: string, value: string) => {
       const query = new URLSearchParams(location.search.slice(1))
       query.set(key, value)

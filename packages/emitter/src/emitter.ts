@@ -6,10 +6,13 @@ import type {
   WildCardEventHandlerList,
 } from './types'
 
+/**
+ * forken from https://github.com/developit/mitt
+ */
 export class Emitter<Events extends Record<EventType, unknown>> {
   private __all: EventHandlerMap<Events>
 
-  constructor (all?: EventHandlerMap<Events>) {
+  constructor(all?: EventHandlerMap<Events>) {
     this.__all = all || new Map()
   }
 
@@ -19,16 +22,12 @@ export class Emitter<Events extends Record<EventType, unknown>> {
    * @param {Function} handler Function to call in response to given event
    * @memberOf emitter
    */
-  public on<Key extends keyof Events> (
-    type: Key,
-    handler: GenericEventHandler<Events>,
-  ) {
-    const handlers: Array<GenericEventHandler<Events>> | undefined =
-      this.__all!.get(type)
+  public on<Key extends keyof Events>(type: Key, handler: GenericEventHandler<Events>) {
+    const handlers: Array<GenericEventHandler<Events>> | undefined = this.__all.get(type)
     if (handlers) {
       handlers.push(handler)
     } else {
-      this.__all!.set(type, [handler] as EventHandlerList<Events[keyof Events]>)
+      this.__all.set(type, [handler] as EventHandlerList<Events[keyof Events]>)
     }
   }
 
@@ -39,17 +38,13 @@ export class Emitter<Events extends Record<EventType, unknown>> {
    * @param {Function} [handler] Handler function to remove
    * @memberOf emitter
    */
-  public off<Key extends keyof Events> (
-    type: Key,
-    handler?: GenericEventHandler<Events>,
-  ) {
-    const handlers: Array<GenericEventHandler<Events>> | undefined =
-      this.__all.get(type)
+  public off<Key extends keyof Events>(type: Key, handler?: GenericEventHandler<Events>) {
+    const handlers: Array<GenericEventHandler<Events>> | undefined = this.__all.get(type)
     if (handlers) {
       if (handler) {
         handlers.splice(handlers.indexOf(handler) >>> 0, 1)
       } else {
-        this.__all!.set(type, [])
+        this.__all.set(type, [])
       }
     }
   }
@@ -64,25 +59,24 @@ export class Emitter<Events extends Record<EventType, unknown>> {
    * @param {Any} [evt] Any value (object is recommended and powerful), passed to each handler
    * @memberOf emitter
    */
-  public emit<Key extends keyof Events> (type: Key, evt?: Events[Key]) {
-    let handlers = this.__all!.get(type)
+  public emit<Key extends keyof Events>(type: Key, evt?: Events[Key]) {
+    let handlers = this.__all.get(type)
     if (handlers) {
-      [...(handlers as EventHandlerList<Events[keyof Events]>)]
-        .map(handler => {
-          handler(evt!)
-        })
+      for (const handler of handlers as EventHandlerList<Events[keyof Events]>) {
+        handler(evt!)
+      }
     }
 
-    handlers = this.__all!.get('*')
+    handlers = this.__all.get('*')
     if (handlers) {
-      [...(handlers as WildCardEventHandlerList<Events>)].map(handler => {
+      for (const handler of handlers as WildCardEventHandlerList<Events>) {
         handler(type, evt!)
-      })
+      }
     }
   }
 }
 
-export function emitter<Events extends Record<EventType, unknown>> (
+export function emitter<Events extends Record<EventType, unknown>>(
   all?: EventHandlerMap<Events>,
 ): Emitter<Events> {
   return new Emitter(all)

@@ -3,10 +3,10 @@ import { useLocalStorage, useMedia } from '@afojs/react-utils'
 
 import type { Dispatch, ReactNode, SetStateAction } from 'react'
 
-export type Theme = 'auto' | 'dark' | 'light'
+export type Theme = 'system' | 'dark' | 'light'
 
 type ThemeContextType = {
-  theme: Omit<Theme, 'auto'>
+  theme: Omit<Theme, 'system'>
   setTheme: Dispatch<SetStateAction<Theme | undefined>>
   selectedTheme: Theme
 }
@@ -14,10 +14,10 @@ type ThemeContextType = {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
 
 function ThemeProvider({ children }: { children: ReactNode }): JSX.Element {
-  const [selectedTheme = 'auto', setTheme] = useLocalStorage<Theme>('auto')
+  const [selectedTheme = 'system', setTheme] = useLocalStorage<Theme>('system')
   const prefersDarkMode = useMedia('(prefers-color-scheme: dark)', false)
 
-  const theme = selectedTheme === 'auto' ? (prefersDarkMode ? 'dark' : 'light') : selectedTheme
+  const theme = selectedTheme === 'system' ? (prefersDarkMode ? 'dark' : 'light') : selectedTheme
 
   return (
     <ThemeContext.Provider value={{ selectedTheme, theme, setTheme }}>

@@ -1,5 +1,4 @@
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query'
-import { InfiniteScroll, PullToRefresh } from 'antd-mobile'
 
 export const usePaginationBox = ({ queryKey, queryFn, ...rest }) => {
   const queryClient = useQueryClient()
@@ -14,17 +13,14 @@ export const usePaginationBox = ({ queryKey, queryFn, ...rest }) => {
   return {
     data,
     error,
-    InfiniteScroll: props => (
-      <InfiniteScroll
-        loadMore={async () => {
-          await fetchNextPage()
-        }}
-        hasMore={!!hasNextPage && !isFetchingNextPage}
-        {...props}
-      />
-    ),
-    PullToRefresh: props => (
-      <PullToRefresh onRefresh={() => queryClient.resetQueries({ queryKey })} {...props} />
-    ),
+    infiniteScrollProps: {
+      loadMore: async () => {
+        await fetchNextPage()
+      },
+      hasMore: !!hasNextPage && !isFetchingNextPage,
+    },
+    pullToRefreshProps: {
+      onRefresh: () => queryClient.resetQueries({ queryKey }),
+    },
   }
 }

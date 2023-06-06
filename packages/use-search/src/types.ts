@@ -1,4 +1,6 @@
-export type ParamKey = string | number
+import type { ReactNode } from 'react'
+
+export type ParamKey = string
 export type ParamValue = any
 
 export type Params = {
@@ -15,8 +17,13 @@ export interface SearchOptions {
   [K: string]: any
 }
 
-export type UseSearchOptions = {
+export type CoreProps = {
   onSearch?: (params?: Params) => void
-  onInitialize?: (params?: Params) => void
+  onInit?: (params?: Params) => void
   initialValues?: Params
+}
+
+export type UseSearchProps = CoreProps & {
+  name?: string
+  children?: ReactNode
 }
