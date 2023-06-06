@@ -1,37 +1,32 @@
-import { button, ButtonVariantProps } from '@afojs/theme'
+import { useCallback, useMemo } from 'react'
 import { Slot } from '@radix-ui/react-slot'
-import { MouseEventHandler, Ref, useMemo } from 'react'
+
+import type { MouseEventHandler, Ref } from 'react'
+import type React from 'react'
+
+import { button } from '../theme'
+
+import type { ButtonVariantProps } from '../theme'
 
 export interface UseButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-  ButtonVariantProps {
-  /**
-   * Ref to the DOM node.
-   */
-  ref?: Ref<HTMLButtonElement | null>
-  /**
-   * Button click event handler.
-   */
+  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'color'>,
+    ButtonVariantProps {
+  ref?: Ref<HTMLButtonElement>
   onClick?: MouseEventHandler<HTMLButtonElement>
-
   asChild?: boolean
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
-  variant?: 'solid' | 'outline' | 'ghost'
-  radius?: 'xs'| 'sm' | 'md' | 'lg' | 'xl'
 }
 
 export function useButton(props: UseButtonProps) {
-
   const {
     ref,
     asChild,
     children,
     className,
     size = 'md',
-    color =  'default',
+    color = 'default',
     variant = 'solid',
     radius = 'md',
-    disabled =  false,
+    disabled = false,
     loading = false,
     onClick,
     style,
@@ -55,25 +50,19 @@ export function useButton(props: UseButtonProps) {
     [size, color, variant, disabled, loading, className],
   )
 
-  const getButtonProps: PropGetter = useCallback(
+  const getButtonProps = useCallback(
     (props = {}) => ({
-      'data-disabled': dataAttr(isDisabled),
-      'data-focus': dataAttr(isFocused),
-      'data-pressed': dataAttr(isPressed),
-      'data-focus-visible': dataAttr(isFocusVisible),
-      'data-hover': dataAttr(isHovered),
-      'data-loading': dataAttr(isLoading),
-      ...mergeProps(ariaButtonProps, focusProps, hoverProps, otherProps, props),
+      'data-disabled': disabled,
+      'data-loading': loading,
+      otherProps,
+      props,
       style: {
         ...style,
         ...props?.style,
         WebkitTapHighlightColor: 'transparent',
       },
     }),
-    [
-      style,
-      loading,
-      disabled,
+    [disabled, loading, otherProps, style],
   )
 
   return {

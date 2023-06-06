@@ -103,22 +103,6 @@ importers:
         specifier: ^5.1.3
         version: 5.1.3
 
-  packages/button:
-    dependencies:
-      '@radix-ui/react-slot':
-        specifier: ^1.0.2
-        version: 1.0.2(@types/react@18.2.6)(react@18.2.0)
-      react:
-        specifier: ^18.2.0
-        version: 18.2.0
-    devDependencies:
-      '@types/react':
-        specifier: ^18.2.6
-        version: 18.2.6
-      bunchee:
-        specifier: ^3.1.1
-        version: 3.1.1(typescript@5.0.4)
-
   packages/emitter:
     devDependencies:
       bunchee:
@@ -169,21 +153,24 @@ importers:
         specifier: ^5.1.3
         version: 5.1.3
 
-  packages/theme:
+  packages/ui:
     dependencies:
+      '@radix-ui/react-slot':
+        specifier: ^1.0.2
+        version: 1.0.2(@types/react@18.2.8)(react@18.2.0)
       react:
         specifier: ^18.2.0
         version: 18.2.0
       tailwind-variants:
-        specifier: ^0.0.5
-        version: 0.0.5(typescript@5.0.4)
+        specifier: ^0.1.5
+        version: 0.1.5(tailwindcss@3.3.2)
     devDependencies:
       '@types/react':
         specifier: ^18.2.6
-        version: 18.2.6
+        version: 18.2.8
       bunchee:
         specifier: ^3.1.1
-        version: 3.1.1(typescript@5.0.4)
+        version: 3.2.0(typescript@5.1.3)
 
   packages/use-search:
     dependencies:
@@ -1473,8 +1460,7 @@ packages:
     resolution: {integrity: sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==}
     dev: false
 
-<<<<<<< Updated upstream
-  /@radix-ui/react-compose-refs@1.0.1(@types/react@18.2.6)(react@18.2.0):
+  /@radix-ui/react-compose-refs@1.0.1(@types/react@18.2.8)(react@18.2.0):
     resolution: {integrity: sha512-fDSBgd44FKHa1FRMU59qBMPFcl2PZE+2nmqunj+BWFyYYjnhIDWL2ItDs3rrbJDQOtzt5nIebLCQc4QRfz6LJw==}
     peerDependencies:
       '@types/react': '*'
@@ -1483,12 +1469,12 @@ packages:
       '@types/react':
         optional: true
     dependencies:
-      '@babel/runtime': 7.21.5
-      '@types/react': 18.2.6
+      '@babel/runtime': 7.22.3
+      '@types/react': 18.2.8
       react: 18.2.0
     dev: false
 
-  /@radix-ui/react-slot@1.0.2(@types/react@18.2.6)(react@18.2.0):
+  /@radix-ui/react-slot@1.0.2(@types/react@18.2.8)(react@18.2.0):
     resolution: {integrity: sha512-YeTpuq4deV+6DusvVUW4ivBgnkHwECUu0BiN43L5UCDFgdhsRUWAghhTF5MbvNTPzmiFOx90asDSUjWuCNapwg==}
     peerDependencies:
       '@types/react': '*'
@@ -1497,18 +1483,14 @@ packages:
       '@types/react':
         optional: true
     dependencies:
-      '@babel/runtime': 7.21.5
-      '@radix-ui/react-compose-refs': 1.0.1(@types/react@18.2.6)(react@18.2.0)
-      '@types/react': 18.2.6
+      '@babel/runtime': 7.22.3
+      '@radix-ui/react-compose-refs': 1.0.1(@types/react@18.2.8)(react@18.2.0)
+      '@types/react': 18.2.8
       react: 18.2.0
     dev: false
 
-  /@rc-component/color-picker@1.1.1(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-MKYqgEncpISQiZIaj8ykcdzZewgjslEfDo2iHg627jPnt+DbWIKG1T8MS55qXjuxkokgL0cNueyGnOndfaaNKw==}
-=======
   /@rc-component/color-picker@1.2.0(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-IitJ6RWGHs7btI1AqzGPrehr5bueWLGDUyMKwDwvFunfSDo/o8g/95kUG55vC5EYLM0ZJ3SDfw45OrW5KAx3oA==}
->>>>>>> Stashed changes
     peerDependencies:
       react: '>=16.9.0'
       react-dom: '>=16.9.0'
@@ -1910,7 +1892,7 @@ packages:
   /@swc/helpers@0.5.0:
     resolution: {integrity: sha512-SjY/p4MmECVVEWspzSRpQEM3sjR17sP8PbGxELWrT+YZMBfiUyt1MRUNjMV23zohwlG2HYtCQOsCwsTHguXkyg==}
     dependencies:
-      tslib: 2.5.2
+      tslib: 2.5.3
     dev: true
 
   /@swc/helpers@0.5.1:
@@ -2965,17 +2947,6 @@ packages:
   /cjs-module-lexer@1.2.2:
     resolution: {integrity: sha512-cOU9usZw8/dXIXKtwa8pM0OTJQuJkxMN6w30csNRUerHfeQ5R6U3kkU/FtJeIf3M202OHfY2U8ccInBG7/xogA==}
     dev: true
-
-  /class-variance-authority@0.4.0(typescript@5.0.4):
-    resolution: {integrity: sha512-74enNN8O9ZNieycac/y8FxqgyzZhZbxmCitAtAeUrLPlxjSd5zA7LfpprmxEcOmQBnaGs5hYhiSGnJ0mqrtBLQ==}
-    peerDependencies:
-      typescript: '>= 4.5.5 < 5'
-    peerDependenciesMeta:
-      typescript:
-        optional: true
-    dependencies:
-      typescript: 5.0.4
-    dev: false
 
   /classnames@2.3.2:
     resolution: {integrity: sha512-CSbhY4cFEJRe6/GQzIk5qXZ4Jeg5pcsP7b5peFSDpffpe1cqjASH/n9UTjBwOp6XpMSTwQ8Za2K5V02ueA7Tmw==}
@@ -8196,14 +8167,14 @@ packages:
     resolution: {integrity: sha512-mUTmDbcU+IhOvJ0c42eLQ/nRkvolTqfpVaVQRSxfJAv9TabS6Y2zW/1wKpKLdKzyL3Gh8j6NTLl6MWNmvOM6kA==}
     dev: false
 
-  /tailwind-variants@0.0.5(typescript@5.0.4):
-    resolution: {integrity: sha512-88Vtuo6HnD3Y1zo628QNGUV5H2FHC8hS/x+YlWOy+/ib4ymfyCayWqdAHUeUt+bQTIMRUa7OuViLuPR06A3mnw==}
+  /tailwind-variants@0.1.5(tailwindcss@3.3.2):
+    resolution: {integrity: sha512-/dQnADaHlt/3xSDcOYnTvTwvgDFpz+Nq++XNw3mCfIkBFoJhRJ4x3WG2ZQ9cWUqAFjVaRfdlG3KVYqs9bKlIhg==}
     engines: {node: '>=16.x', pnpm: '>=7.x'}
+    peerDependencies:
+      tailwindcss: '*'
     dependencies:
-      class-variance-authority: 0.4.0(typescript@5.0.4)
       tailwind-merge: 1.13.0
-    transitivePeerDependencies:
-      - typescript
+      tailwindcss: 3.3.2
     dev: false
 
   /tailwindcss@3.3.2:
@@ -8378,14 +8349,8 @@ packages:
     resolution: {integrity: sha512-336iVw3rtn2BUK7ORdIAHTyxHGRIHVReokCR3XjbckJMK7ms8FysBfhLR8IXnAgy7T0PTPNBWKiH514FOW/WSg==}
     dev: true
 
-<<<<<<< Updated upstream
-  /tslib@2.5.2:
-    resolution: {integrity: sha512-5svOrSA2w3iGFDs1HibEVBGbDrAY82bFQ3HZ3ixB+88nsbsWQoKqDRb5UBYAUPEzbBn6dAp5gRNXglySbx1MlA==}
-=======
   /tslib@2.5.3:
     resolution: {integrity: sha512-mSxlJJwl3BMEQCUNnxXBU9jP4JBktcEGhURcPR6VQVlnP0FdDEsIaz0C35dXNGLyRfrATNofF0F5p2KPxQgB+w==}
-    dev: false
->>>>>>> Stashed changes
 
   /tsutils@3.21.0(typescript@5.1.3):
     resolution: {integrity: sha512-mHKK3iUXL+3UF6xL5k0PEhKRUBKPBCv/+RkEOpjRWxxx27KKRBmmA60A9pgOUvMi8GKhRMPEmjBRPzs2W7O1OA==}
@@ -8522,6 +8487,7 @@ packages:
     resolution: {integrity: sha512-XH627E9vkeqhlZFQuL+UsyAXEnibT0kWR2FWONlr4sTjvxyJYnyefgrkyECLzM5NenmKzRAy2rR/OlYLA1HkZw==}
     engines: {node: '>=14.17'}
     hasBin: true
+    dev: true
 
   /unbox-primitive@1.0.2:
     resolution: {integrity: sha512-61pPlCD9h51VoreyJ0BReideM3MDKMKnh6+V9L08331ipq6Q8OFXZYiqP6n/tbHx4s5I9uRhcye6BrbkizkBDw==}

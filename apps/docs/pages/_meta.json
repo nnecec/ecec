@@ -1,5 +1,5 @@
 {
-  "index":{
+  "index": {
     "title": "Homepage",
     "type": "page",
     "display": "hidden",
@@ -7,8 +7,12 @@
       "layout": "raw"
     }
   },
-  "documentation":{
+  "documentation": {
     "title": "Documentation",
+    "type": "page"
+  },
+  "ui": {
+    "title": "UI",
     "type": "page"
   }
 }
