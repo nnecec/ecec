@@ -3,7 +3,7 @@ import {
   createLocationStorage,
   createSessionStorage,
   remember,
-} from '@afojs/remember'
+} from '@ecec/remember'
 
 const count = remember<number>('count')
 const countLocation = remember<number>('count', { storage: createLocationStorage() })

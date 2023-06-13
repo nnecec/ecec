@@ -1,10 +1,10 @@
 {
-  "name": "@afojs/use-theme",
+  "name": "@ecec/use-theme",
   "version": "0.0.1",
-  "homepage": "https://github.com/nnecec/afo/tree/main/packages/use-theme",
+  "homepage": "https://github.com/nnecec/ecec/tree/main/packages/use-theme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/nnecec/afo"
+    "url": "https://github.com/nnecec/ecec"
   },
   "license": "MIT",
   "exports": {
@@ -22,11 +22,11 @@
     "dev": "bunchee src/index.ts --format esm,cjs --watch --dts"
   },
   "dependencies": {
-    "@afojs/react-utils": "workspace:*",
+    "@ecec/react-utils": "workspace:*",
     "react": "^18.2.0"
   },
   "devDependencies": {
-    "@types/react": "^18.2.8",
-    "bunchee": "^3.2.0"
+    "@types/react": "^18.2.12",
+    "bunchee": "^3.3.3"
   }
 }

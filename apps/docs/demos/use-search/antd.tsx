@@ -1,4 +1,4 @@
-import { useSearch } from '@afojs/use-search'
+import { useSearch } from '@ecec/use-search'
 import {
   Button,
   Card,

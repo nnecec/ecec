@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react'
-import { useLocalStorage, useMedia } from '@afojs/react-utils'
+import { useLocalStorage, useMedia } from '@ecec/react-utils'
 
 import type { Dispatch, ReactNode, SetStateAction } from 'react'
 

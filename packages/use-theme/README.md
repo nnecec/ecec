@@ -1,1 +1,1 @@
-# @afojs/use-theme
+# @ecec/use-theme

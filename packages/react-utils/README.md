@@ -1,4 +1,4 @@
-# @afojs/react-utils
+# @ecec/react-utils
 
 - useLocalStorage
 - useMedia

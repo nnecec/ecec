@@ -1,4 +1,4 @@
-import { useSearch } from '@afojs/use-search'
+import { useSearch } from '@ecec/use-search'
 import { useQueryClient } from '@tanstack/react-query'
 import { Button, InfiniteScroll, List, Picker, PullToRefresh, SearchBar, Tabs } from 'antd-mobile'
 

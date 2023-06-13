@@ -5,7 +5,7 @@
 ## Usage
 
 ```ts
-import { Emitter, emitter } from '@afojs/emitter'
+import { Emitter, emitter } from '@ecec/emitter'
 
 const mi = new Emitter()
 // or
@@ -15,7 +15,7 @@ mi.on('say', name => {
   console.log(name)
 })
 
-mi.emit('say', 'afo') // afo
+mi.emit('say', 'ecec') // ecec
 mi.off('say')
 ```
 

@@ -2,8 +2,8 @@
   "index": {
     "title": "Get Started"
   },
-  "emitter": "@afojs/emitter",
-  "remember": "@afojs/remember",
-  "use-search": "@afojs/use-search",
-  "use-theme": "@afojs/use-theme"
+  "emitter": "@ecec/emitter",
+  "remember": "@ecec/remember",
+  "use-search": "@ecec/use-search",
+  "use-theme": "@ecec/use-theme"
 }

@@ -1,14 +1,14 @@
 'use client'
 
 import { useMemo, useState } from 'react'
-import { createLocationStorage, remember } from '@afojs/remember'
+import { createLocationStorage, remember } from '@ecec/remember'
 
 import { useCore } from './core'
 import { defaultGetValue, isPlainObject } from './utils'
 
 import type { Params, SearchOptions, UseSearchProps } from './types'
 
-const DEFAULT_NAME = 'afo/use-search'
+const DEFAULT_NAME = 'ecec/use-search'
 
 export const useSearch = (props: UseSearchProps = {}) => {
   const [params, updateParams] = useState<Params>()

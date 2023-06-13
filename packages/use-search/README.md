@@ -1,4 +1,4 @@
-# @afojs/use-search
+# @ecec/use-search
 
 - UI 无关
 - 整合请求数据
@@ -9,7 +9,7 @@
 ```jsx
 import { Form, Input, Switch } from 'antd'
 import { SearchBar } from 'antd-mobile'
-import { useSearch } from '@afojs/use-search'
+import { useSearch } from '@ecec/use-search'
 import useSWR from 'swr'
 import { CustomPicker, SearchInput } from '~/components'
 
