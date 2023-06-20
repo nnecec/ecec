@@ -6,17 +6,17 @@ import { Remember, remember } from './remember'
 const storageMock = (() => {
   let store: any = {}
   return {
-    getItem(key: string) {
-      return store[key]
-    },
-    setItem(key: string, value: any) {
-      store[key] = value.toString()
-    },
     clear() {
       store = {}
     },
+    getItem(key: string) {
+      return store[key]
+    },
     removeItem(key: string) {
       delete store[key]
+    },
+    setItem(key: string, value: any) {
+      store[key] = value.toString()
     },
   }
 })()

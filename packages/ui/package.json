@@ -24,10 +24,10 @@
   "dependencies": {
     "@radix-ui/react-slot": "^1.0.2",
     "react": "^18.2.0",
-    "tailwind-variants": "^0.1.6"
+    "tailwind-variants": "^0.1.8"
   },
   "devDependencies": {
-    "@types/react": "^18.2.12",
-    "bunchee": "^3.3.3"
+    "@types/react": "^18.2.13",
+    "bunchee": "^3.4.1"
   }
 }

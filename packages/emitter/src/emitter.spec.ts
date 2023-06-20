@@ -32,15 +32,15 @@ describe('emitter', () => {
 describe('mitt#', () => {
   const eventType = Symbol('eventType')
   type Events = {
-    foo: unknown
-    constructor: unknown
-    FOO: unknown
-    bar: unknown
     Bar: unknown
-    'baz:bat!': unknown
-    'baz:baT!': unknown
+    FOO: unknown
     Foo: unknown
+    bar: unknown
+    'baz:baT!': unknown
+    'baz:bat!': unknown
+    constructor: unknown
     [eventType]: unknown
+    foo: unknown
   }
   let events: EventHandlerMap<Events>, inst: Emitter<Events>
 

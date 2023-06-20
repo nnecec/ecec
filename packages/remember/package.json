@@ -22,7 +22,7 @@
     "dev": "bunchee src/index.ts --format esm,cjs --watch --dts"
   },
   "devDependencies": {
-    "bunchee": "^3.3.3",
+    "bunchee": "^3.4.1",
     "typescript": "^5.1.3"
   }
 }
