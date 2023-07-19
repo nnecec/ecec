@@ -9,7 +9,7 @@ export interface ButtonProps extends UseButtonProps {
 }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
-  const { Component, domRef, children, styles, getButtonProps } = useButton({
+  const { Component, children, domRef, getButtonProps, styles } = useButton({
     ref,
     ...props,
   })

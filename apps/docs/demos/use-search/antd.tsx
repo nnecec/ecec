@@ -1,19 +1,5 @@
 import { useSearch } from '@ecec/use-search'
-import {
-  Button,
-  Card,
-  Checkbox,
-  Form,
-  Input,
-  InputNumber,
-  Radio,
-  Rate,
-  Select,
-  Space,
-  Switch,
-  Table,
-  Tabs,
-} from 'antd'
+import { Button, Col, Form, Input, Row, Space, Table, Tabs } from 'antd'
 import useSWR from 'swr'
 
 const fetcher = (params?: Record<string, any>) => {
@@ -25,8 +11,7 @@ const fetcher = (params?: Record<string, any>) => {
           .map(([key, value]) => {
             if (value === undefined) return null
             return {
-              name: key,
-              value: typeof value === 'string' ? value : `${value}`,
+              [key]: typeof value === 'string' ? value : `${value}`,
             }
           })
           .filter(Boolean),
@@ -35,146 +20,109 @@ const fetcher = (params?: Record<string, any>) => {
   })
 }
 
+const layout = {
+  labelCol: { span: 8 },
+  wrapperCol: { span: 16 },
+}
+
 export const SearchExample = () => {
   const [form] = Form.useForm()
   const [search, params] = useSearch({
-    name: 'test-antd',
-    // initialValues: {
-    //   page: 1,
-    //   pageSize: 5,
-    // },
+    defaultValue: {
+      page: 1,
+      pageSize: 10,
+    },
+    name: 'account-manage',
     onInit(params) {
       form.setFieldsValue(params)
     },
   })
 
-  const { data, isLoading, isValidating } = useSWR<any[]>(['sectionA', params], () =>
-    fetcher(params),
-  )
-
+  const { data, isLoading, mutate } = useSWR<any[]>(['sectionA', params], () => fetcher(params))
+  console.log(data)
   return (
-    <div>
-      <Card title="Section A">
-        <Form form={form} onFinish={values => search(values)}>
-          <Form.Item name="input" label="Input">
-            <Input />
-          </Form.Item>
-          <Form.Item name="select" label="Select" hasFeedback>
-            <Select placeholder="select a country">
-              <Select.Option value="china">China</Select.Option>
-              <Select.Option value="usa">U.S.A</Select.Option>
-            </Select>
-          </Form.Item>
-
-          <Form.Item name="select-multiple" label="Select[multiple]">
-            <Select mode="multiple" placeholder="Please select favourite colors">
-              <Select.Option value="red">Red</Select.Option>
-              <Select.Option value="green">Green</Select.Option>
-              <Select.Option value="blue">Blue</Select.Option>
-            </Select>
-          </Form.Item>
-
-          <Form.Item label="InputNumber">
-            <Form.Item name="input-number" noStyle>
-              <InputNumber min={1} max={10} />
+    <div className="bg-white">
+      <Form
+        className="mb-4 bg-white p-4"
+        {...layout}
+        onFinish={values => {
+          search({ ...values, page: 1 })
+          mutate()
+        }}
+        form={form}
+      >
+        <Row gutter={16}>
+          <Col span={8}>
+            <Form.Item label="UserName" name="userName">
+              <Input />
             </Form.Item>
-            <span className="ant-form-text" style={{ marginLeft: 8 }}>
-              machines
-            </span>
-          </Form.Item>
+          </Col>
+          <Col span={8}>
+            <Form.Item label="UserId" name="userId">
+              <Input />
+            </Form.Item>
+          </Col>
+          <Col span={8}>
+            <Form.Item label="Mobile" name="mobile">
+              <Input />
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row justify="end">
+          <Space>
+            <Button
+              onClick={() => {
+                form.resetFields()
+                search(form.getFieldsValue())
+              }}
+            >
+              Reset
+            </Button>
+            <Button htmlType="submit" type="primary">
+              Search
+            </Button>
+          </Space>
+        </Row>
+      </Form>
 
-          <Form.Item name="switch" label="Switch" valuePropName="checked">
-            <Switch />
-          </Form.Item>
+      <Tabs
+        {...search('status', {
+          valuePropName: 'activeKey',
+        })}
+        items={[
+          { key: '1', label: 'Enable' },
+          { key: '0', label: 'Disabled' },
+          { key: '-1', label: 'Cancelled' },
+        ]}
+      />
 
-          <Form.Item name="radio-group" label="Radio.Group">
-            <Radio.Group>
-              <Radio value="a">item 1</Radio>
-              <Radio value="b">item 2</Radio>
-              <Radio value="c">item 3</Radio>
-            </Radio.Group>
-          </Form.Item>
-
-          <Form.Item name="checkbox-group" label="Checkbox.Group">
-            <Checkbox.Group>
-              <Space>
-                <Checkbox value="A" style={{ lineHeight: '32px' }}>
-                  A
-                </Checkbox>
-                <Checkbox value="D" style={{ lineHeight: '32px' }}>
-                  D
-                </Checkbox>
-                <Checkbox value="E" style={{ lineHeight: '32px' }}>
-                  E
-                </Checkbox>
-              </Space>
-            </Checkbox.Group>
-          </Form.Item>
-
-          <Form.Item name="rate" label="Rate">
-            <Rate />
-          </Form.Item>
-
-          <Button htmlType="submit">Submit</Button>
-        </Form>
-
-        <Tabs
-          items={[
-            {
-              label: 'Tab 1',
-              key: '1',
-            },
-            {
-              label: 'Tab 2',
-              key: '2',
-            },
-            {
-              label: 'Tab 3',
-              key: '3',
-            },
-          ]}
-          {...search('tab', { valuePropName: 'activeKey' })}
-        />
-
-        <Switch
-          {...search('opened', {
-            valuePropName: 'checked',
-          })}
-        />
-        <Input.Search
-          {...search('inputSearch', {
-            searchTrigger: 'onSearch',
-          })}
-        />
-
-        <Table
-          loading={isLoading || isValidating}
-          columns={[
-            {
-              title: 'Name',
-              dataIndex: 'name',
-            },
-            {
-              title: 'Value',
-              dataIndex: 'value',
-              // render: text => useBoolText(text),
-            },
-            {
-              dataIndex: 'Operation',
-              render() {
-                return <Button>Delete</Button>
-              },
-            },
-          ]}
-          dataSource={data ?? []}
-          pagination={{
-            pageSize: 5,
-            onChange(page, pageSize) {
-              search({ page, pageSize })
-            },
-          }}
-        />
-      </Card>
+      <Table
+        columns={[
+          {
+            dataIndex: 'userId',
+            title: 'UserId',
+          },
+          {
+            dataIndex: 'userName',
+            title: 'UserName',
+          },
+          {
+            dataIndex: 'mobile',
+            title: 'Mobile',
+          },
+          {
+            dataIndex: 'status',
+            title: 'Status',
+          },
+        ]}
+        pagination={{
+          onChange(page, pageSize) {
+            search({ page, pageSize })
+          },
+        }}
+        dataSource={data ?? []}
+        loading={isLoading}
+      />
     </div>
   )
 }

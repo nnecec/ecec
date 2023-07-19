@@ -11,25 +11,23 @@ import type { ButtonVariantProps } from '../theme'
 export interface UseButtonProps
   extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'color'>,
     ButtonVariantProps {
-  ref?: Ref<HTMLButtonElement>
-  onClick?: MouseEventHandler<HTMLButtonElement>
   asChild?: boolean
+  onClick?: MouseEventHandler<HTMLButtonElement>
+  ref?: Ref<HTMLButtonElement>
 }
 
 export function useButton(props: UseButtonProps) {
   const {
-    ref,
     asChild,
     children,
     className,
-    size = 'md',
     color = 'default',
-    variant = 'solid',
-    radius = 'md',
     disabled = false,
     loading = false,
-    onClick,
+    ref,
+    size = 'md',
     style,
+    variant = 'solid',
     ...otherProps
   } = props
 
@@ -40,24 +38,25 @@ export function useButton(props: UseButtonProps) {
   const styles = useMemo(
     () =>
       button({
-        size,
+        className,
         color,
-        variant,
         disabled,
         loading,
-        className,
+        size,
+        variant,
       }),
     [size, color, variant, disabled, loading, className],
   )
 
   const getButtonProps = useCallback(
-    (props = {}) => ({
+    (props: any = {}) => ({
       'data-disabled': disabled,
       'data-loading': loading,
       otherProps,
       props,
       style: {
         ...style,
+        // eslint-disable-next-line unicorn/consistent-destructuring
         ...props?.style,
         WebkitTapHighlightColor: 'transparent',
       },
@@ -69,8 +68,8 @@ export function useButton(props: UseButtonProps) {
     Component,
     children,
     domRef,
-    styles,
     getButtonProps,
+    styles,
   }
 }
 

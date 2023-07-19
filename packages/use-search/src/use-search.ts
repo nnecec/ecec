@@ -1,5 +1,3 @@
-'use client'
-
 import { useMemo, useState } from 'react'
 import { createLocationStorage, remember } from '@ecec/remember'
 
@@ -8,36 +6,35 @@ import { defaultGetValue, isPlainObject } from './utils'
 
 import type { Params, SearchOptions, UseSearchProps } from './types'
 
-const DEFAULT_NAME = 'ecec/use-search'
-
 export const useSearch = (props: UseSearchProps = {}) => {
-  const [params, updateParams] = useState<Params>()
+  const [params, updateParams] = useState<Params>({})
 
-  const reme = useMemo(() => {
-    const searchName = props.name ?? DEFAULT_NAME
+  const { defaultValue, name } = props
 
-    return remember(searchName, {
-      storage:
-        searchName === DEFAULT_NAME || typeof window === 'undefined'
-          ? undefined
-          : createLocationStorage(),
-    })
-  }, [props.name])
+  const reme = useMemo(
+    () =>
+      name
+        ? remember(name, {
+            storage: typeof document === 'undefined' ? undefined : createLocationStorage(),
+          })
+        : undefined,
+    [name],
+  )
 
-  const core = useCore({ ...props, initialValues: reme.get() ?? props.initialValues }, params => {
+  const core = useCore({ ...props, defaultValue: reme?.get() ?? defaultValue }, params => {
     updateParams({ ...params })
-    reme.set({ ...params })
+    name && reme?.set(params)
   })
 
   function search(params: Params): void
   function search(name: string, options: SearchOptions): Record<string, any>
-  function search(name: string | Params, options: SearchOptions = {}) {
+  function search(name: Params | string, options: SearchOptions = {}) {
     if (typeof name === 'string' && name.length > 0) {
       const {
-        trigger = 'onChange',
-        searchTrigger = trigger,
         getValueFromEvent,
         getValueProps,
+        trigger = 'onChange',
+        searchTrigger = trigger,
         valuePropName = 'value',
       } = options
 
@@ -48,11 +45,11 @@ export const useSearch = (props: UseSearchProps = {}) => {
 
       return {
         ...valueProp,
-        [searchTrigger]: (...args: any[]) => {
+        [searchTrigger](...args: any[]) {
           options[searchTrigger]?.(...args)
           core.trigger()
         },
-        [trigger]: (...args: any[]) => {
+        [trigger](...args: any[]) {
           options[trigger]?.(...args)
 
           const nextValue =

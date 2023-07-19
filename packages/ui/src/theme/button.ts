@@ -45,238 +45,238 @@ export const button = tv({
     'data-[focus-visible=true]:ring-offset-background',
     'data-[focus-visible=true]:dark:ring-offset-background-dark',
   ],
+  compoundVariants: [
+    // solid / color
+    {
+      class: solid.default,
+      color: 'default',
+      variant: 'solid',
+    },
+    {
+      class: solid.primary,
+      color: 'primary',
+      variant: 'solid',
+    },
+    {
+      class: solid.secondary,
+      color: 'secondary',
+      variant: 'solid',
+    },
+    {
+      class: solid.success,
+      color: 'success',
+      variant: 'solid',
+    },
+    {
+      class: solid.warning,
+      color: 'warning',
+      variant: 'solid',
+    },
+    {
+      class: solid.danger,
+      color: 'danger',
+      variant: 'solid',
+    },
+    // bordered / color
+    {
+      class: bordered.default,
+      color: 'default',
+      variant: 'bordered',
+    },
+    {
+      class: bordered.primary,
+      color: 'primary',
+      variant: 'bordered',
+    },
+    {
+      class: bordered.secondary,
+      color: 'secondary',
+      variant: 'bordered',
+    },
+    {
+      class: bordered.success,
+      color: 'success',
+      variant: 'bordered',
+    },
+    {
+      class: bordered.warning,
+      color: 'warning',
+      variant: 'bordered',
+    },
+    {
+      class: bordered.danger,
+      color: 'danger',
+      variant: 'bordered',
+    },
+    // flat / color
+    {
+      class: flat.default,
+      color: 'default',
+      variant: 'flat',
+    },
+    {
+      class: flat.primary,
+      color: 'primary',
+      variant: 'flat',
+    },
+    {
+      class: flat.secondary,
+      color: 'secondary',
+      variant: 'flat',
+    },
+    {
+      class: flat.success,
+      color: 'success',
+      variant: 'flat',
+    },
+    {
+      class: flat.warning,
+      color: 'warning',
+      variant: 'flat',
+    },
+    {
+      class: flat.danger,
+      color: 'danger',
+      variant: 'flat',
+    },
+    // ghost / color
+    {
+      class: ghost.default,
+      color: 'default',
+      variant: 'ghost',
+    },
+    {
+      class: ghost.primary,
+      color: 'primary',
+      variant: 'ghost',
+    },
+    {
+      class: ghost.secondary,
+      color: 'secondary',
+      variant: 'ghost',
+    },
+    {
+      class: ghost.success,
+      color: 'success',
+      variant: 'ghost',
+    },
+    {
+      class: ghost.warning,
+      color: 'warning',
+      variant: 'ghost',
+    },
+    {
+      class: ghost.danger,
+      color: 'danger',
+      variant: 'ghost',
+    },
+    {
+      class: 'transition-[transform,background]',
+      variant: 'ghost',
+    },
+    // isInGroup / radius
+    {
+      class: 'rounded-none  first:rounded-l last:rounded-r',
+      isInGroup: true,
+      radius: 'base',
+    },
+    {
+      class: 'rounded-none  first:rounded-l-sm last:rounded-r-sm',
+      isInGroup: true,
+      radius: 'sm',
+    },
+    {
+      class: 'rounded-none  first:rounded-l-md last:rounded-r-md',
+      isInGroup: true,
+      radius: 'md',
+    },
+    {
+      class: 'rounded-none  first:rounded-l-lg last:rounded-r-lg',
+      isInGroup: true,
+      radius: 'lg',
+    },
+    {
+      class: 'rounded-none  first:rounded-l-xl last:rounded-r-xl',
+      isInGroup: true,
+      radius: 'xl',
+    },
+    {
+      class: 'rounded-none  first:rounded-l-2xl last:rounded-r-2xl',
+      isInGroup: true,
+      radius: '2xl',
+    },
+    {
+      class: 'rounded-none  first:rounded-l-3xl last:rounded-r-3xl',
+      isInGroup: true,
+      radius: '3xl',
+    },
+    {
+      class: 'rounded-none  first:rounded-l-full last:rounded-r-full',
+      isInGroup: true,
+      radius: 'full',
+    },
+    // isInGroup / bordered / ghost
+    {
+      class: '[&:not(:first-child)]:border-l-0',
+      isInGroup: true,
+      variant: ['bordered', 'ghost'],
+    },
+  ],
+  defaultVariants: {
+    color: 'default',
+    disabled: false,
+    fullWidth: false,
+    loading: false,
+    radius: 'xl',
+    size: 'md',
+    variant: 'solid',
+  },
   variants: {
-    variant: {
-      solid: '',
-      bordered: 'border-2 bg-transparent',
-      flat: '',
-      ghost: 'bg-transparent',
-    },
-    size: {
-      xs: 'h-6 min-w-[5rem] gap-1 px-2 text-xs',
-      sm: 'h-8 min-w-[6rem] gap-2 px-3 text-sm',
-      md: 'h-10 min-w-[7rem] gap-2 px-4 text-sm',
-      lg: 'h-12 min-w-[8rem] gap-3 px-6 text-base',
-      xl: 'h-14 min-w-[10rem] gap-3 px-8 text-lg',
-    },
     color: {
+      danger: '',
       default: '',
       primary: '',
       secondary: '',
       success: '',
       warning: '',
-      danger: '',
-    },
-    radius: {
-      none: 'rounded-none',
-      base: 'rounded',
-      sm: 'rounded-sm',
-      md: 'rounded-md',
-      lg: 'rounded-lg',
-      xl: 'rounded-xl',
-      '2xl': 'rounded-2xl',
-      '3xl': 'rounded-3xl',
-      full: 'rounded-full',
-    },
-    fullWidth: {
-      true: 'w-full',
     },
     disabled: {
       true: 'pointer-events-none opacity-50',
     },
-    loading: {
-      true: 'pointer-events-none opacity-50',
+    fullWidth: {
+      true: 'w-full',
     },
     isInGroup: {
       true: '[&:not(:first-child):not(:last-child)]:rounded-none',
     },
+    loading: {
+      true: 'pointer-events-none opacity-50',
+    },
+    radius: {
+      '2xl': 'rounded-2xl',
+      '3xl': 'rounded-3xl',
+      base: 'rounded',
+      full: 'rounded-full',
+      lg: 'rounded-lg',
+      md: 'rounded-md',
+      none: 'rounded-none',
+      sm: 'rounded-sm',
+      xl: 'rounded-xl',
+    },
+    size: {
+      lg: 'h-12 min-w-[8rem] gap-3 px-6 text-base',
+      md: 'h-10 min-w-[7rem] gap-2 px-4 text-sm',
+      sm: 'h-8 min-w-[6rem] gap-2 px-3 text-sm',
+      xl: 'h-14 min-w-[10rem] gap-3 px-8 text-lg',
+      xs: 'h-6 min-w-[5rem] gap-1 px-2 text-xs',
+    },
+    variant: {
+      bordered: 'border-2 bg-transparent',
+      flat: '',
+      ghost: 'bg-transparent',
+      solid: '',
+    },
   },
-  defaultVariants: {
-    size: 'md',
-    variant: 'solid',
-    color: 'default',
-    radius: 'xl',
-    fullWidth: false,
-    disabled: false,
-    loading: false,
-  },
-  compoundVariants: [
-    // solid / color
-    {
-      variant: 'solid',
-      color: 'default',
-      class: solid.default,
-    },
-    {
-      variant: 'solid',
-      color: 'primary',
-      class: solid.primary,
-    },
-    {
-      variant: 'solid',
-      color: 'secondary',
-      class: solid.secondary,
-    },
-    {
-      variant: 'solid',
-      color: 'success',
-      class: solid.success,
-    },
-    {
-      variant: 'solid',
-      color: 'warning',
-      class: solid.warning,
-    },
-    {
-      variant: 'solid',
-      color: 'danger',
-      class: solid.danger,
-    },
-    // bordered / color
-    {
-      variant: 'bordered',
-      color: 'default',
-      class: bordered.default,
-    },
-    {
-      variant: 'bordered',
-      color: 'primary',
-      class: bordered.primary,
-    },
-    {
-      variant: 'bordered',
-      color: 'secondary',
-      class: bordered.secondary,
-    },
-    {
-      variant: 'bordered',
-      color: 'success',
-      class: bordered.success,
-    },
-    {
-      variant: 'bordered',
-      color: 'warning',
-      class: bordered.warning,
-    },
-    {
-      variant: 'bordered',
-      color: 'danger',
-      class: bordered.danger,
-    },
-    // flat / color
-    {
-      variant: 'flat',
-      color: 'default',
-      class: flat.default,
-    },
-    {
-      variant: 'flat',
-      color: 'primary',
-      class: flat.primary,
-    },
-    {
-      variant: 'flat',
-      color: 'secondary',
-      class: flat.secondary,
-    },
-    {
-      variant: 'flat',
-      color: 'success',
-      class: flat.success,
-    },
-    {
-      variant: 'flat',
-      color: 'warning',
-      class: flat.warning,
-    },
-    {
-      variant: 'flat',
-      color: 'danger',
-      class: flat.danger,
-    },
-    // ghost / color
-    {
-      variant: 'ghost',
-      color: 'default',
-      class: ghost.default,
-    },
-    {
-      variant: 'ghost',
-      color: 'primary',
-      class: ghost.primary,
-    },
-    {
-      variant: 'ghost',
-      color: 'secondary',
-      class: ghost.secondary,
-    },
-    {
-      variant: 'ghost',
-      color: 'success',
-      class: ghost.success,
-    },
-    {
-      variant: 'ghost',
-      color: 'warning',
-      class: ghost.warning,
-    },
-    {
-      variant: 'ghost',
-      color: 'danger',
-      class: ghost.danger,
-    },
-    {
-      variant: 'ghost',
-      class: 'transition-[transform,background]',
-    },
-    // isInGroup / radius
-    {
-      isInGroup: true,
-      radius: 'base',
-      class: 'rounded-none  first:rounded-l last:rounded-r',
-    },
-    {
-      isInGroup: true,
-      radius: 'sm',
-      class: 'rounded-none  first:rounded-l-sm last:rounded-r-sm',
-    },
-    {
-      isInGroup: true,
-      radius: 'md',
-      class: 'rounded-none  first:rounded-l-md last:rounded-r-md',
-    },
-    {
-      isInGroup: true,
-      radius: 'lg',
-      class: 'rounded-none  first:rounded-l-lg last:rounded-r-lg',
-    },
-    {
-      isInGroup: true,
-      radius: 'xl',
-      class: 'rounded-none  first:rounded-l-xl last:rounded-r-xl',
-    },
-    {
-      isInGroup: true,
-      radius: '2xl',
-      class: 'rounded-none  first:rounded-l-2xl last:rounded-r-2xl',
-    },
-    {
-      isInGroup: true,
-      radius: '3xl',
-      class: 'rounded-none  first:rounded-l-3xl last:rounded-r-3xl',
-    },
-    {
-      isInGroup: true,
-      radius: 'full',
-      class: 'rounded-none  first:rounded-l-full last:rounded-r-full',
-    },
-    // isInGroup / bordered / ghost
-    {
-      isInGroup: true,
-      variant: ['bordered', 'ghost'],
-      class: '[&:not(:first-child)]:border-l-0',
-    },
-  ],
 })
 
 // size: {
@@ -299,13 +299,13 @@ export const button = tv({
  */
 export const buttonGroup = tv({
   base: 'inline-flex h-auto items-center justify-center',
+  defaultVariants: {
+    fullWidth: false,
+  },
   variants: {
     fullWidth: {
       true: 'w-full',
     },
-  },
-  defaultVariants: {
-    fullWidth: false,
   },
 })
 

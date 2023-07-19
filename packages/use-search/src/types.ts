@@ -20,7 +20,7 @@ export interface SearchOptions {
 export type CoreProps = {
   onSearch?: (params?: Params) => void
   onInit?: (params?: Params) => void
-  initialValues?: Params
+  defaultValue?: Params
 }
 
 export type UseSearchProps = CoreProps & {

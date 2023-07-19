@@ -11,16 +11,16 @@ const countLS = remember<number>('count', { storage: createLocalStorage() })
 const countSS = remember<number>('count', { storage: createSessionStorage() })
 
 const adapters = {
-  memory: count,
   localStorage: countLS,
-  sessionStorage: countSS,
   location: countLocation,
+  memory: count,
+  sessionStorage: countSS,
 }
 
 export const RememberExample = () => {
   return (
     <div>
-      <b>open `devtool - console` to view. </b>
+      <b>open `devtool - console` to view data. </b>
       {Object.entries(adapters).map(([name, adapter]) => {
         const count = adapter
         return (
