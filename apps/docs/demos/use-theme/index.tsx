@@ -1,11 +1,11 @@
-import { ThemeProvider,useTheme } from '@ecec/use-theme'
+import { ThemeProvider, useTheme } from '@ecec/hooks'
 
 export const UseThemeExampleInternal = () => {
-  const { theme, setTheme, selectedTheme } = useTheme()
-  
+  const { selectedTheme, setTheme, theme } = useTheme()
+
   return (
     <div className="flex gap-2">
-      <select value={selectedTheme} onChange={e => setTheme(e.target.value as any)}>
+      <select onChange={e => setTheme(e.target.value as any)} value={selectedTheme}>
         <option value="auto">auto</option>
         <option value="light">light</option>
         <option value="dark">dark</option>

@@ -1,4 +1,4 @@
-import { useSearch } from '@ecec/use-search'
+import { useSearch } from '@ecec/hooks'
 import { Button, Col, Form, Input, Row, Space, Table, Tabs } from 'antd'
 import useSWR from 'swr'
 

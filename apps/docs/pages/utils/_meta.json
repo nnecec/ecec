@@ -4,6 +4,5 @@
   },
   "emitter": "@ecec/emitter",
   "remember": "@ecec/remember",
-  "use-search": "@ecec/use-search",
-  "use-theme": "@ecec/use-theme"
+  "hooks": "@ecec/hooks"
 }
