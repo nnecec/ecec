@@ -1,6 +1,6 @@
 import { SearchExample } from '~/demos/use-search/antd'
 
-# @ecec/use-search
+# `import { useSearch } from '@ecec/hooks'`
 
 ## Features
 
@@ -16,26 +16,26 @@ import { SearchExample } from '~/demos/use-search/antd'
 ## Usage
 
 ```jsx
-import { useSearch } from "@dian/common/components/search-box";
+import { useSearch } from '@dian/common/components/search-box'
 
 function App() {
   const [search, params] = useSearch({
-    name: "account-manage",
+    name: 'account-manage',
     defaultValue: {
       page: 1,
       pageSize: 10,
     },
     onInit(params) {
-      form.setFieldsValue(params);
+      form.setFieldsValue(params)
     },
-  });
+  })
 
-  const queryKey = ["/nile/api/v1/user/users", params];
+  const queryKey = ['/nile/api/v1/user/users', params]
 
   const { data, isLoading, refetch } = useQuery({
     queryKey,
     queryFn: ({ queryKey }) => zApi.get(queryKey[0], { params }),
-  });
+  })
 
   return (
     <div>
@@ -43,9 +43,9 @@ function App() {
         className="bg-white p-4 mb-4"
         {...layout}
         form={form}
-        onFinish={(values) => {
-          search({ ...values, page: 1 });
-          refetch();
+        onFinish={values => {
+          search({ ...values, page: 1 })
+          refetch()
         }}
       >
         <Row gutter={16}>
@@ -69,8 +69,8 @@ function App() {
           <Space>
             <Button
               onClick={() => {
-                form.resetFields();
-                search(form.getFieldsValue());
+                form.resetFields()
+                search(form.getFieldsValue())
               }}
             >
               重置
@@ -83,11 +83,11 @@ function App() {
       </Form>
 
       <Tabs
-        {...search("status", {
+        {...search('status', {
           onChange() {
-            queryClient.resetQueries({ queryKey: ["/nile/api/v1/user/users"] });
+            queryClient.resetQueries({ queryKey: ['/nile/api/v1/user/users'] })
           },
-          valuePropName: "activeKey",
+          valuePropName: 'activeKey',
         })}
       >
         <Tabs.Tab title="启用中" key="1" />
@@ -100,20 +100,20 @@ function App() {
         loading={isLoading}
         columns={[
           {
-            title: "用户ID",
-            dataIndex: "userId",
+            title: '用户ID',
+            dataIndex: 'userId',
           },
           {
-            title: "用户名",
-            dataIndex: "userName",
+            title: '用户名',
+            dataIndex: 'userName',
           },
           {
-            title: "手机号",
-            dataIndex: "mobile",
+            title: '手机号',
+            dataIndex: 'mobile',
           },
           {
-            title: "状态",
-            dataIndex: "status",
+            title: '状态',
+            dataIndex: 'status',
           },
         ]}
         pagination={{
@@ -121,12 +121,12 @@ function App() {
           pageSize: params.pageSize,
           current: params.page,
           onChange(page, pageSize) {
-            search({ page, pageSize });
+            search({ page, pageSize })
           },
         }}
       />
     </div>
-  );
+  )
 }
 ```
 
@@ -137,17 +137,17 @@ function App() {
 ```ts
 type UseSearchOptions = {
   // Callback when search is triggered
-  onSearch?: (params?: Params) => void;
+  onSearch?: (params?: Params) => void
 
   //  Callback after initial values are retrieved
-  onInit?: (params?: Params) => void;
+  onInit?: (params?: Params) => void
 
   //  Default values, lower priority than cached window.location values
-  defaultValue?: Params;
+  defaultValue?: Params
 
   //  Query parameter name for recording and syncing with window.location
-  name?: string;
-};
+  name?: string
+}
 ```
 
 ### search
@@ -160,19 +160,19 @@ type UseSearchOptions = {
   ```ts
   interface SearchOptions {
     // When useSearch collects values
-    trigger?: string;
+    trigger?: string
 
     // Event that triggers search
-    searchTrigger?: string;
+    searchTrigger?: string
 
     // Custom get value from onChange event
-    getValueFromEvent?: (...args: any[]) => ParamValue;
+    getValueFromEvent?: (...args: any[]) => ParamValue
 
     // Convert value before passing to component, will override valuePropsName
-    getValueProps?: (value: any) => { [value: string]: any };
+    getValueProps?: (value: any) => { [value: string]: any }
 
     // Rename prop for controlled value
-    valuePropName?: string;
+    valuePropName?: string
   }
   ```
 

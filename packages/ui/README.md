@@ -1,1 +1,1 @@
-# @ecec/use-theme
+# @ecec/ui
