@@ -1,14 +1,14 @@
 import { createContext, useContext } from 'react'
-import { useLocalStorage, useMedia } from '@ecec/react-utils'
+import { useLocalStorage, useMedia } from '@ecec/hooks'
 
 import type { Dispatch, ReactNode, SetStateAction } from 'react'
 
-export type Theme = 'system' | 'dark' | 'light'
+export type Theme = 'dark' | 'light' | 'system'
 
 type ThemeContextType = {
-  theme: Omit<Theme, 'system'>
-  setTheme: Dispatch<SetStateAction<Theme | undefined>>
   selectedTheme: Theme
+  setTheme: Dispatch<SetStateAction<Theme | undefined>>
+  theme: Omit<Theme, 'system'>
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
@@ -20,7 +20,7 @@ function ThemeProvider({ children }: { children: ReactNode }): JSX.Element {
   const theme = selectedTheme === 'system' ? (prefersDarkMode ? 'dark' : 'light') : selectedTheme
 
   return (
-    <ThemeContext.Provider value={{ selectedTheme, theme, setTheme }}>
+    <ThemeContext.Provider value={{ selectedTheme, setTheme, theme }}>
       {children}
     </ThemeContext.Provider>
   )

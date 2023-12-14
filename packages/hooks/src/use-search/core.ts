@@ -3,10 +3,10 @@ import { useRef } from 'react'
 import type { CoreProps, ParamKey, Params, ParamValue } from './types'
 
 export class Core {
-  name?: string;
-  params: Params;
-  onSearch?: (params: Params) => any;
-  callback?: (params: Params) => any;
+  name?: string
+  params: Params
+  onSearch?: (params: Params) => any
+  callback?: (params: Params) => any
 
   constructor (props: CoreProps, callback?: (params: Params) => any) {
     this.params = props.defaultValue ?? {}
@@ -15,12 +15,11 @@ export class Core {
     this.onSearch = props.onSearch
 
     props.onInit?.(this.params)
-    callback?.(this.params)
+    this.trigger()
   }
 
   setParam (key: ParamKey, value: ParamValue) {
     if (value === null || value === undefined || value === '') {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { [key]: dropped, ...restParams } = this.params
       this.params = restParams
       return
@@ -30,7 +29,7 @@ export class Core {
 
   setParams (params: Params) {
     Object.entries(params).forEach(([key, value]) => this.setParam(key, value))
-    this.callback?.(this.params)
+    this.trigger()
   }
 
   get (key: ParamKey) {

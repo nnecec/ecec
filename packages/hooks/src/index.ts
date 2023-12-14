@@ -1,2 +1,6 @@
+export * from './use-anchor'
+export * from './use-local-storage'
+export * from './use-match-media'
+export * from './use-memozied-fn'
 export * from './use-search'
 export * from './use-theme'

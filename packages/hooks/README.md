@@ -1,1 +1,3 @@
-# @ecec/use-theme
+# @ecec/hooks
+
+Hooks collection

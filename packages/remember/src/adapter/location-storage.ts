@@ -1,4 +1,14 @@
 export const createLocationStorage = () => {
+  if (typeof window === 'undefined') {
+    return {
+      name: 'location-storage',
+      set: () => {},
+      get: () => '',
+      remove: () => {},
+      clear: () => {},
+    }
+  }
+  const location = window.location
   return {
     clear: () => {
       const url = `${location.pathname}`

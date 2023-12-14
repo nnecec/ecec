@@ -2,12 +2,12 @@
   "$schema": "https://json.schemastore.org/tsconfig",
   "extends": "@nnecec/tsconfig/react.json",
   "compilerOptions": {
-    "composite": false,
-    "noUnusedLocals": false,
     "baseUrl": ".",
     "paths": {
-      "@ecec/react-utils": ["packages/react-utils/src"],
-      "@ecec/hooks": ["packages/hooks/src"]
+      "@ecec/hooks": ["packages/hooks/src"],
+      "@ecec/remember": ["packages/remember/src"],
+      "@ecec/ui": ["packages/ui/src"],
+      "@ecec/emitter": ["packages/emitter/src"]
     }
   },
   "exclude": ["dist", "build", "node_modules"]
