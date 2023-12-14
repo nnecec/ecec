@@ -27,7 +27,7 @@
     "tailwind-variants": "^0.1.18"
   },
   "devDependencies": {
-    "@types/react": "^18.2.38",
-    "bunchee": "^3.9.2"
+    "@types/react": "^18.2.45",
+    "bunchee": "^4.0.0"
   }
 }

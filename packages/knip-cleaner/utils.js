@@ -77,6 +77,23 @@ export function checkInnerCall(source, symbol) {
     }
   })
 
+  // A={A}
+  source
+    .find(j.JSXExpressionContainer, {
+      expression: { name: symbol },
+    })
+    .forEach(() => {
+      if (!innerCall) innerCall = true
+    })
+  // ...A
+  source
+    .find(j.MemberExpression, {
+      object: { name: symbol },
+    })
+    .forEach(() => {
+      if (!innerCall) innerCall = true
+    })
+
   return innerCall
 }
 

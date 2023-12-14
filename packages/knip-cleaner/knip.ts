@@ -1,7 +1,7 @@
 import type { KnipConfig } from 'knip'
 
 const config: KnipConfig = {
-  entry: ['src/index.jsx', 'src/index.tsx'],
+  entry: ['src/index.jsx', 'src/index.tsx', 'src/entry/index.tsx'],
   project: ['src/**/*.{js,jsx}', 'src/**/*.{ts,tsx}'],
   ignore: ['e2e/**', 'babel.config.js', 'config/**', 'knip*'],
   paths: {

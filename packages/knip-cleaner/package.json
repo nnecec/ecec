@@ -8,6 +8,6 @@
   "dependencies": {
     "execa": "^8.0.1",
     "jscodeshift": "^0.15.1",
-    "knip": "^3.7.0"
+    "knip": "^3.8.0"
   }
 }

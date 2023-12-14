@@ -1,67 +1,70 @@
-import { useMemo, useState } from 'react'
-import { createLocationStorage, remember } from '@ecec/remember'
+import { useState } from 'react'
 
 import { useCore } from './core'
 import { defaultGetValue, isPlainObject } from './utils'
 
 import type { Params, SearchOptions, UseSearchProps } from './types'
+import { useRemember } from './remember'
 
 export const useSearch = (props: UseSearchProps = {}) => {
-  const [params, updateParams] = useState<Params>({})
+  const { name, defaultValue } = props
+  const remember = useRemember(name)
+  const initialState = remember?.get() ?? defaultValue
+  const [params, updateParams] = useState<Params>(initialState ?? {})
+  const [displays, updateDisplays] = useState<Params>(params)
 
-  const { defaultValue, name } = props
-
-  const reme = useMemo(
-    () =>
-      name
-        ? remember(name, {
-            storage: typeof document === 'undefined' ? undefined : createLocationStorage(),
-          })
-        : undefined,
-    [name],
-  )
-
-  const core = useCore({ ...props, defaultValue: reme?.get() ?? defaultValue }, params => {
+  const core = useCore({ ...props, defaultValue: initialState }, params => {
     updateParams({ ...params })
-    name && reme?.set(params)
+    updateDisplays({ ...params })
+    remember?.set(params)
   })
 
   function search(params: Params): void
   function search(name: string, options: SearchOptions): Record<string, any>
-  function search(name: Params | string, options: SearchOptions = {}) {
+  function search(name: string | Params, options: SearchOptions = {}) {
     if (typeof name === 'string' && name.length > 0) {
       const {
-        getValueFromEvent,
-        getValueProps,
         trigger = 'onChange',
         searchTrigger = trigger,
+        getValueFromEvent,
+        getValueProps,
         valuePropName = 'value',
       } = options
 
-      const param = core.get(name)
+      const param = displays[name]
 
-      const valueProp =
-        typeof getValueProps === 'function' ? getValueProps(param) : { [valuePropName]: param }
+      const valueProp = typeof getValueProps === 'function' ? getValueProps(param) : { [valuePropName]: param }
+
+      const searchTriggers = typeof searchTrigger === 'string' ? [searchTrigger] : searchTrigger
+
+      const triggers = Object.fromEntries([
+        ...searchTriggers.map(searchTrigger => [
+          searchTrigger,
+          (...args: any[]) => {
+            options[searchTrigger]?.(...args)
+            core.trigger()
+          },
+        ]),
+        [
+          trigger,
+          (...args: any[]) => {
+            options[trigger]?.(...args)
+
+            const nextValue =
+              typeof getValueFromEvent === 'function' ? getValueFromEvent(...args) : defaultGetValue(args[0])
+
+            core.setParam(name, nextValue)
+            updateDisplays({ ...displays, [name]: nextValue })
+            if (searchTriggers.includes(trigger)) {
+              core.trigger()
+            }
+          },
+        ],
+      ])
 
       return {
         ...valueProp,
-        [searchTrigger](...args: any[]) {
-          options[searchTrigger]?.(...args)
-          core.trigger()
-        },
-        [trigger](...args: any[]) {
-          options[trigger]?.(...args)
-
-          const nextValue =
-            typeof getValueFromEvent === 'function'
-              ? getValueFromEvent(...args)
-              : defaultGetValue(args[0])
-
-          core.setParam(name, nextValue)
-          if (searchTrigger === trigger) {
-            core.trigger()
-          }
-        },
+        ...triggers,
       }
     } else if (isPlainObject(name)) {
       core.setParams(name)

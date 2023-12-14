@@ -32,7 +32,7 @@ interface AnchorProps {
   offsetTop?: number
 }
 
-export const useAnchor: AnchorProps = ({ getContainer, items = [], offsetTop = 0 }: AnchorProps) => {
+export const useAnchor = ({ getContainer, items = [], offsetTop = 0 }: AnchorProps) => {
   const [currentLink, setCurrentLink] = useState('')
   const animating = useRef(false)
   const getCurrentContainer = getContainer ?? getDefaultContainer
@@ -51,7 +51,7 @@ export const useAnchor: AnchorProps = ({ getContainer, items = [], offsetTop = 0
         }
       }
     }
-    return passedLinks.at(-1) ?? items[0]
+    return passedLinks.at(-1)! ?? items[0]
   }
 
   function handleScroll() {

@@ -53,6 +53,9 @@ interface ScrollToOptions {
 }
 
 export function scrollTo(y: number, options: ScrollToOptions = {}) {
+  if (typeof window === 'undefined') {
+    return
+  }
   const { callback, duration = 450, getContainer = () => window } = options
   const container = getContainer()
   const scrollTop = getScroll(container, true)
@@ -70,12 +73,12 @@ export function scrollTo(y: number, options: ScrollToOptions = {}) {
       ;(container as HTMLElement).scrollTop = nextScrollTop
     }
     if (time < duration) {
-      raf(frameFunc)
+      window.requestAnimationFrame(frameFunc)
     } else if (typeof callback === 'function') {
       callback()
     }
   }
-  raf(frameFunc)
+  window.requestAnimationFrame(frameFunc)
 }
 
 export type ThrottledFunction<TArgs extends any[]> = {

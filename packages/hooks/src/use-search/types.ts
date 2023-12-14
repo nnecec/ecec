@@ -10,7 +10,7 @@ export type Params = {
 // API Reference: https://ant.design/components/form-cn#formitem
 export interface SearchOptions {
   trigger?: string
-  searchTrigger?: string
+  searchTrigger?: string | string[]
   getValueFromEvent?: (...args: any[]) => ParamValue
   getValueProps?: (value: any) => Record<string, any>
   valuePropName?: string
