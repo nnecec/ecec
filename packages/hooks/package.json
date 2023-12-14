@@ -22,30 +22,13 @@
     "dev": "bunchee src/index.ts --format esm,cjs --watch --dts"
   },
   "dependencies": {
-<<<<<<< HEAD
-    "@ecec/react-utils": "workspace:*",
-    "react": "^18.2.0",
-    "@mantine/hooks": "^7.1.2",
-    "@ecec/remember": "workspace:*"
-  },
-  "devDependencies": {
-    "@types/react": "^18.2.28",
-    "bunchee": "^3.9.0"
-=======
     "@ecec/remember": "workspace:*",
     "@mantine/hooks": "^7.3.1",
     "react": "^18.2.0"
   },
   "devDependencies": {
-<<<<<<<< HEAD:packages/react-utils/package.json
-    "@types/node": "^20.8.4",
-    "@types/react": "^18.2.28",
-    "bunchee": "^3.9.0"
-========
     "@types/node": "^20.10.4",
     "@types/react": "^18.2.45",
     "bunchee": "^4.0.0"
->>>>>>>> dev:packages/hooks/package.json
->>>>>>> dev
   }
 }
