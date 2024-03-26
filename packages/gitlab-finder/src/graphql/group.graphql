@@ -1,0 +1,11 @@
+{
+  group(fullPath: "fed") {
+    name
+    projects {
+      nodes {
+        fullPath
+        name
+      }
+    }
+  }
+}

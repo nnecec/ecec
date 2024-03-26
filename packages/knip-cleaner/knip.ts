@@ -9,6 +9,8 @@ const config: KnipConfig = {
     lodash: ['lodash-es'],
     moment: ['@dian/dayjs'],
   },
+  ignoreMembers: ['render', 'defaultProps', 'getDerivedStateFromError'],
+  include: ['classMembers'],
   rules: {
     unlisted: 'off',
     unresolved: 'off',

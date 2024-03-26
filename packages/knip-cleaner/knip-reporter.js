@@ -3,10 +3,11 @@
 /* eslint-disable unicorn/no-array-callback-reference */
 import fs from 'node:fs/promises'
 import path from 'node:path'
+import { inspect } from 'node:util'
 
 import j from 'jscodeshift'
 
-import { checkInnerCall, getFileSource, traverse } from './utils.js'
+import { checkInternalCalls, getFileSource, traverse } from './utils.js'
 
 /**
  * @type {import('knip').Reporter}
@@ -44,7 +45,6 @@ class Cleaner {
       if (['defaultProps', 'getDerivedStateFromError'].includes(symbol)) {
         return
       }
-
       source.find(j.ClassProperty, { key: { name: symbol } }).remove()
       source.find(j.MethodDefinition, { key: { name: symbol } }).remove()
       const content = source.toSource()
@@ -63,7 +63,7 @@ class Cleaner {
             path.node.declaration?.type === 'ClassDeclaration' &&
             path.node.declaration.id.name === symbol
           ) {
-            const innerCall = checkInnerCall(source, symbol)
+            const innerCall = checkInternalCalls(source, symbol)
             if (innerCall) {
               path.replace(path.node.declaration)
             } else {
@@ -76,7 +76,7 @@ class Cleaner {
             path.node.declaration?.type === 'FunctionDeclaration' &&
             path.node.declaration.id.name === symbol
           ) {
-            const innerCall = checkInnerCall(source, symbol)
+            const innerCall = checkInternalCalls(source, symbol)
 
             if (innerCall) {
               path.replace(path.node.declaration)
@@ -90,7 +90,7 @@ class Cleaner {
             path.node.declaration?.type === 'VariableDeclaration' &&
             path.node.declaration?.declarations[0].id.name === symbol
           ) {
-            const innerCall = checkInnerCall(source, symbol)
+            const innerCall = checkInternalCalls(source, symbol)
 
             if (innerCall) {
               path.replace(path.node.declaration)

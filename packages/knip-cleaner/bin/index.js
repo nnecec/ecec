@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url'
 
 import { $ } from 'execa'
 
-console.log(`⚙️ ${new Date().toLocaleString()} start kniping...`)
+console.log(`⚙️ ${new Date().toLocaleString()} start knip...`)
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const dir = cwd()
@@ -15,9 +15,6 @@ chdir(__dirname)
 
 await $({ stdio: 'inherit' })`knip --version`
 
-// await $({
-//   stdio: 'inherit',
-// })`knip --config ${relativePath}/knip.ts --directory ${dir}`
 await $({
   stdio: 'inherit',
 })`knip --config ${relativePath}/knip.ts --reporter ${relativePath}/knip-reporter.js --directory ${dir}`

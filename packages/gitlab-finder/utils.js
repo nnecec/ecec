@@ -13,7 +13,7 @@ import j from 'jscodeshift'
  * @param {string} symbol - the symbol to search for
  * @return {boolean} true if there is an inner call to the symbol, false otherwise
  */
-export function checkInternalCalls(source, symbol) {
+export function checkInnerCall(source, symbol) {
   let innerCall = false
   // = A()
   source
@@ -120,8 +120,8 @@ export async function traverse(record, callback) {
   for (const file of Object.keys(record)) {
     for (const { filePath, symbol } of Object.values(record[file])) {
       const source = await getFileSource(filePath)
-
       try {
+        // eslint-disable-next-line n/no-callback-literal
         await callback({ filePath, source, symbol })
       } catch (error) {
         console.log('file error', inspect(record[file], false, null, true), inspect(error))
@@ -130,11 +130,6 @@ export async function traverse(record, callback) {
   }
 }
 
-/**
- *
- * @param {string} filePath
- * @returns {import('jscodeshift').Collection<any>}
- */
 export async function getFileSource(filePath) {
   const content = await fs.readFile(path.resolve(filePath), {
     encoding: 'utf8',

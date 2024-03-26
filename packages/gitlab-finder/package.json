@@ -1,0 +1,12 @@
+{
+  "name": "@ecec/gitlab-finder",
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx src/index.ts"
+  },
+  "dependencies": {
+    "got": "^14.2.1",
+    "tsx": "^4.7.1"
+  }
+}
